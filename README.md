@@ -11,6 +11,7 @@ are there any knowledge requirements the participants should fullfill
 who can be contacted for this challenge for questions etc. (Slack-handle)
 
 - Jordan Chiu (Slack handle: @Jordan Chiu)
+- Filipe Prezado (Slack handle: @fprezado)
 
 ## Template Setup
 HowTo for getting the template up and running
