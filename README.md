@@ -42,7 +42,7 @@ Here is a list of potential scenarios your team could develop. Feel free to inve
 ## Need to know
 are there any knowledge requirements the participants should fullfill
 
-## Hack-Coaches
+## Hack Coaches
 who can be contacted for this challenge for questions etc. (Slack-handle)
 
 - Jordan Chiu (Slack handle: @Jordan Chiu)
