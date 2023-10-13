@@ -1,8 +1,19 @@
-# maestro-challenge
-come and join us build the next generation of in-vehicle software orchestration and applications
+# Maestro Challenge 🚗💻🎶
+Do you want to be the next maestro of the next generation of vehicle software? The time is now!
+
+Imagine yourself as the **maestro** you have lines of code. You are not just writing code. You are composing a masterpiece that will drive the future of transportation. Your work will ensure that every component, from the engine control unit to the infotainment system, works in perfect harmony. So, step up to the podium, take a deep breath, and let your creativity flow. The stage is set for you to become the maestro of in-vehicle software! 🚗💻🎶.
 
 ## About
-what is the idea behind the challenge. what are the high level goals
+Come hack with us, and create an in-vehicle application that will leverage an software orchestrators to build scenarios!
+
+# Scenario Ideas
+
+Here’s a list of potential scenarios your team could develop. Feel free to invent your own scenarios too. Let your creativity shine ☀️ and have fun!
+
+-
+
+# High-Level Diagrams
+
 
 ## Need to know
 are there any knowledge requirements the participants should fullfill
