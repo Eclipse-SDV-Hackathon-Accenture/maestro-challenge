@@ -47,6 +47,8 @@ who can be contacted for this challenge for questions etc. (Slack-handle)
 
 - Jordan Chiu (Slack handle: @Jordan Chiu)
 - Filipe Prezado (Slack handle: @fprezado)
+- Chatree Akasarn (Slack handle: @Chatree Akasarn)
+- Oliver Klapper (Slack handle: @Oliver Klapper)
 
 ## TODO Template Setup
 TODO: Include "how-tos" and tutorials for getting the template up and running.
@@ -64,7 +66,7 @@ TODO: Include "how-tos" and tutorials for getting the template up and running.
 
 
 ### In-Vehicle Software Orchestrators
-- [Eclipse Ankaios](https://eclipse-ankaios.github.io/ankaios/0.1/): Ankaios provides workload and container orchestration for automotive High Performance Computing (HPC) software . While it can be used for various fields of applications, it is developed from scratch for automotive use cases and provides a slim yet powerful solution to manage containerized applications. It supports various container runtimes with Podman as the first one, but other container runtimes and even native applications can be supported. Eclipse Ankaios is independent of existing communication frameworks like SOME/IP, DDS, or REST API.
+- [Eclipse Ankaios](https://eclipse-ankaios.github.io/ankaios): Ankaios provides workload and container orchestration for automotive High Performance Computing (HPC) software . While it can be used for various fields of applications, it is developed from scratch for automotive use cases and provides a slim yet powerful solution to manage containerized applications. It supports various container runtimes with Podman as the first one, but other container runtimes and even native applications can be supported. Eclipse Ankaios is independent of existing communication frameworks like SOME/IP, DDS, or REST API.
 
 - [Eclipse BlueChi](https://github.com/containers/bluechi): BlueChi is a systemd service controller intended for multi-node environments with a predefined number of nodes and with a focus on highly regulated ecosystems such as those requiring functional safety. Potential use cases can be found in domains such as transportation, where services need to be controlled across different edge devices and where traditional orchestration tools are not compliant with regulatory requirements.
 
