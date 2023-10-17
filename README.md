@@ -45,8 +45,8 @@ are there any knowledge requirements the participants should fullfill
 ## Hack Coaches
 who can be contacted for this challenge for questions etc. (Slack-handle)
 
-- Jordan Chiu (Slack handle: @Jordan Chiu)
-- Filipe Prezado (Slack handle: @fprezado)
+- Eclipse Agemo, Chariott, Ibeji and Freyja: Jordan Chiu (Slack handle: @Jordan Chiu)
+- Eclipse Agemo, Chariott, Ibeji and Freyja: Filipe Prezado (Slack handle: @fprezado)
 - Chatree Akasarn (Slack handle: @Chatree Akasarn)
 - Oliver Klapper (Slack handle: @Oliver Klapper)
 - Leonardo Rossetti (Slack handle: @Leonardo Rossetti)
