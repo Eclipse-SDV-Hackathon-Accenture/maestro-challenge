@@ -49,6 +49,7 @@ who can be contacted for this challenge for questions etc. (Slack-handle)
 - Filipe Prezado (Slack handle: @fprezado)
 - Chatree Akasarn (Slack handle: @Chatree Akasarn)
 - Oliver Klapper (Slack handle: @Oliver Klapper)
+- Leonardo Rossetti (Slack handle: @Leonardo Rossetti)
 
 ## TODO Template Setup
 TODO: Include "how-tos" and tutorials for getting the template up and running.
