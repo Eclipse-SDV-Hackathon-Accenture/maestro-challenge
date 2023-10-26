@@ -49,7 +49,7 @@ who can be contacted for this challenge for questions etc. (Slack-handle)
 - Eclipse Agemo, Chariott, Ibeji and Freyja: Filipe Prezado (Slack handle: @fprezado)
 - Eclipse Ankaios: Chatree Akasarn (Slack handle: @Chatree Akasarn)
 - Eclipse Ankaios: Oliver Klapper (Slack handle: @Oliver Klapper)
-- Leonardo Rossetti (Slack handle: @Leonardo Rossetti)
+- Eclipse BlueChi: Leonardo Rossetti (Slack handle: @Leonardo Rossetti)
 
 ## TODO Template Setup
 TODO: Include "how-tos" and tutorials for getting the template up and running.
