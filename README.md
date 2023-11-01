@@ -1,5 +1,19 @@
-# Maestro Challenge 🚗💻🎶
 
+# Maestro Challenge 🚗💻🎶
+- [Introduction](#introduction)
+- [About](#about)
+    - [Ankaios](#Ankaios)
+    - [BlueChi](#BlueChi)
+- [Sample Scenarios](#sample-scenarios)
+    - [Core Sample Scenario](#core-sample-scenario)
+    - [Other Sample Scenarios](#other-sample-scenarios)
+    - [Useful References for Creating and Enhancing Sample Scenarios](#useful-references-for-creating-and-enhancing-sample-scenarios)
+- [Projects Involved](#projects-involved)
+    - [In-Vehicle Software Stack](#in-vehicle-software-stack)
+    - [In-Vehicle Software Orchestrators](#in-vehicle-software-orchestrators)
+- [Hack Coaches](#hack-coaches)
+
+## Introduction
 ![Maestro](docs/diagrams//orchestra_picture.jpg)
 >Photo by <a href="https://unsplash.com/@gwundrig?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Manuel Nägeli</a>.
 
@@ -31,16 +45,51 @@ Please explore the [Projects Involved](#projects-involved) section for a deeper 
 
 Here is a list of potential scenarios your team could develop. Feel free to invent your own scenarios too. Let your creativity shine ☀️ and have fun!
 
-- The system detects that a smart trailer is being connected to a car. A signal is raised to the orchestrator indicating that a smart trailer provider is connected, and applications are required to manage the smart trailer and adjust the body functions and powertrain accordingly to ensure a smooth trip. You will have the opportunity to build this smart trailer provider and application.
+### Core Sample Scenario
 
+Scenario description:
+- The system detects that a smart trailer is being connected to a car. A signal is raised to the orchestrator indicating that a smart trailer provider is connected, and applications are required to manage the smart trailer and adjust the body functions and powertrain accordingly to ensure a smooth trip.
+
+The diagrams above ([Ankaios](#ankaios) and [BlueChi](#bluechi)) depict this core sample scenario.
+
+We provide the code for this scenario. Please refer to {TODO: INSERT_REFERENCE} for instructions on running this scenario. **Your task is to develop a Smart Trailer Application** using the vehicle signals emitted from our Smart Trailer Digital Twin provider.
+
+TODO: Provide some ideas to help the user build this Smart Trailer application. Also maybe provide some additional challenges, such as mentioning what you can do when the signals are synced to the cloud. For instance, create a web UI that displays the signals.
+
+### Other Sample Scenarios
 - Leverage OpenAI to enhance the vehicle’s user experience. You could develop an application that uses OpenAI’s GPT model to power an in-vehicle virtual assistant.
 
 - Consider using OpenAI to enhance our software orchestrators, effectively creating intelligent orchestrators! OpenAI could optimize workload placements across compute nodes and/or cloud based on factors such compute usage, memory usage, network coverage, and latency.
 
 - Create a web user interface application, such as a dashboard, that displays the various workloads' health.
 
+### Useful References for Creating and Enhancing Sample Scenarios
+TODO: This section needs to be refined out. The goal is to include key references to help users easily identify the doucmentation they need to enhance a scenario or create their scenario. If this section gets too long, we can place the contents in another document and reference it here.
+
+TODO - Some example references that may need to be included:
+- Ibeji - Adding onto the existing DT Provider: How do I add additional signals to my DT provider?
+    - Freyja - Mappings config: How does a user add new mappings when there are new DT provider signals?
+- Chariott - Service Discovery: How does a user configure their smart trailer application?
+- Freyja - Syncing signals to Azure: If a user wishes to integrate their scenario with Azure, which image would I need to pull to enable Freyja to sync to the cloud?
+
 ## Need to know
 are there any knowledge requirements the participants should fullfill
+
+## Projects Involved
+
+### In-Vehicle Software Stack
+- [Eclipse Agemo](https://github.com/eclipse-chariott/Agemo): Agemo incorporates a Pub Sub Service, a [gRPC](https://grpc.io/docs/what-is-grpc/introduction/) service that facilitates publish/subscribe operations for in-vehicle applications, including but not limited to Eclipse Ibeji and Eclipse Chariott. This service has the capability to register with Chariott, enhancing its discoverability by other applications such as Eclipse Ibeji. It offers dynamic creation and management of topics.
+
+- [Eclipse Chariott](https://github.com/eclipse-chariott/chariott): Chariott operates as a [gRPC](https://grpc.io/docs/what-is-grpc/introduction/) service, offering a unified interface for application interaction. Chariott enables [Service Discovery](https://github.com/eclipse-chariott/chariott/blob/main/service_discovery/README.md), allowing provider applications to promote their capabilities by registering with Chariott’s service registry. Consumer applications in need of specific resources and capabilities can discover them via Chariott’s service registry.
+
+- [Eclipse Freyja](https://github.com/eclipse-ibeji/freyja/): Freyja enables seamless synchronization between the vehicle’s digital twin and its cloud-based digital twin. This synchronization allows for a consistent and unified digital representation of the vehicle across both platforms.
+
+- [Eclipse Ibeji](https://github.com/eclipse-ibeji/ibeji): Ibeji is designed with the goal of enabling a digital depiction of the vehicle’s state and capabilities. It achieves this through an adaptable, open, and dynamic architecture that provides access to the vehicle’s hardware, sensors, and capabilities. This extensible framework allows for a comprehensive and accurate representation of the vehicle’s current status and potential functionalities.
+
+### In-Vehicle Software Orchestrators
+- [Eclipse Ankaios](https://eclipse-ankaios.github.io/ankaios): Ankaios provides workload and container orchestration for automotive High Performance Computing (HPC) software . While it can be used for various fields of applications, it is developed from scratch for automotive use cases and provides a slim yet powerful solution to manage containerized applications. It supports various container runtimes with Podman as the first one, but other container runtimes and even native applications can be supported. Eclipse Ankaios is independent of existing communication frameworks like SOME/IP, DDS, or REST API.
+
+- [Eclipse BlueChi](https://github.com/containers/bluechi): BlueChi is a systemd service controller intended for multi-node environments with a predefined number of nodes and with a focus on highly regulated ecosystems such as those requiring functional safety. Potential use cases can be found in domains such as transportation, where services need to be controlled across different edge devices and where traditional orchestration tools are not compliant with regulatory requirements.
 
 ## Hack Coaches
 who can be contacted for this challenge for questions etc. (Slack-handle)
@@ -51,24 +100,5 @@ who can be contacted for this challenge for questions etc. (Slack-handle)
 - Eclipse Ankaios: Oliver Klapper (Slack handle: @Oliver Klapper)
 - Eclipse BlueChi: Leonardo Rossetti (Slack handle: @Leonardo Rossetti)
 
-## TODO Template Setup
-TODO: Include "how-tos" and tutorials for getting the template up and running.
-
-## Projects Involved
-
-### In-Vehicle Stack
-- [Eclipse Agemo](https://github.com/eclipse-chariott/Agemo): Agemo incorporates a Pub Sub Service, a [gRPC](https://grpc.io/docs/what-is-grpc/introduction/) service that facilitates publish/subscribe operations for in-vehicle applications, including but not limited to Eclipse Ibeji and Eclipse Chariott. This service has the capability to register with Chariott, enhancing its discoverability by other applications such as Eclipse Ibeji. It offers dynamic creation and management of topics.
-
-- [Eclipse Chariott](https://github.com/eclipse-chariott/chariott): Chariott operates as a [gRPC](https://grpc.io/docs/what-is-grpc/introduction/) service, offering a unified interface for application interaction. Chariott enables [Service Discovery](https://github.com/eclipse-chariott/chariott/blob/main/service_discovery/README.md), allowing provider applications to promote their capabilities by registering with Chariott’s service registry. Consumer applications in need of specific resources and capabilities can discover them via Chariott’s service registry.
-
-- [Eclipse Freyja](https://github.com/eclipse-ibeji/freyja/): Freyja enables seamless synchronization between the vehicle’s digital twin and its cloud-based digital twin. This synchronization allows for a consistent and unified digital representation of the vehicle across both platforms.
-
-- [Eclipse Ibeji](https://github.com/eclipse-ibeji/ibeji): Ibeji is designed with the goal of enabling a digital depiction of the vehicle’s state and capabilities. It achieves this through an adaptable, open, and dynamic architecture that provides access to the vehicle’s hardware, sensors, and capabilities. This extensible framework allows for a comprehensive and accurate representation of the vehicle’s current status and potential functionalities.
-
-
-### In-Vehicle Software Orchestrators
-- [Eclipse Ankaios](https://eclipse-ankaios.github.io/ankaios): Ankaios provides workload and container orchestration for automotive High Performance Computing (HPC) software . While it can be used for various fields of applications, it is developed from scratch for automotive use cases and provides a slim yet powerful solution to manage containerized applications. It supports various container runtimes with Podman as the first one, but other container runtimes and even native applications can be supported. Eclipse Ankaios is independent of existing communication frameworks like SOME/IP, DDS, or REST API.
-
-- [Eclipse BlueChi](https://github.com/containers/bluechi): BlueChi is a systemd service controller intended for multi-node environments with a predefined number of nodes and with a focus on highly regulated ecosystems such as those requiring functional safety. Potential use cases can be found in domains such as transportation, where services need to be controlled across different edge devices and where traditional orchestration tools are not compliant with regulatory requirements.
 
 ## All Necessary Links
