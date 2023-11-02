@@ -1,0 +1,97 @@
+workloads:
+  service_registry_discovery:
+    runtime: podman
+    agent: agent_A
+    restart: true
+    updateStrategy: AT_MOST_ONCE
+    accessRights:
+      allow: []
+      deny: []
+    tags:
+      - key: project
+        value: chariott
+    runtimeConfig: |
+      image: quay.io/centos-sig-automotive/eclipse-chariott:latest
+      command: ["usr/local/bin/chariott-service-discovery"]
+      ports:
+      - containerPort: 50000
+        hostPort: 50000
+  dynamic_topic_management:
+    runtime: podman
+    agent: agent_A
+    restart: true
+    updateStrategy: AT_MOST_ONCE
+    accessRights:
+      allow: []
+      deny: []
+    tags:
+      - key: project
+        value: agemo
+    runtimeConfig: |
+      image: quay.io/centos-sig-automotive/eclipse-agemo:latest
+      command: ["/usr/local/bin/pub-sub-service"]
+      ports:
+      - containerPort: 50051
+        hostPort: 50051
+  mqtt_broker:
+    runtime: podman
+    agent: agent_A
+    restart: true
+    updateStrategy: AT_MOST_ONCE
+    accessRights:
+      allow: []
+      deny: []
+    tags:
+      - key: project
+        value: agemo
+    runtimeConfig: |
+      image: quay.io/centos-sig-automotive/eclipse-mosquitto:latest
+      ports:
+      - containerPort: 1883
+        hostPort: 1883
+  digital_twin_cloud_sync:
+    runtime: podman
+    agent: agent_A
+    restart: true
+    updateStrategy: AT_MOST_ONCE
+    accessRights:
+      allow: []
+      deny: []
+    tags:
+      - key: project
+        value: freyja
+    runtimeConfig: |
+      image: quay.io/centos-sig-automotive/eclipse-freyja:latest
+      ports:
+      - containerPort: 50052
+        hostPort: 50052
+  digital_twin_vehicle:
+    runtime: podman
+    agent: agent_A
+    restart: true
+    updateStrategy: AT_MOST_ONCE
+    accessRights:
+      allow: []
+      deny: []
+    tags:
+      - key: project
+        value: ibeji
+    runtimeConfig: |
+      image: quay.io/centos-sig-automotive/eclipse-ibeji:latest
+      command: ["/usr/local/bin/ibeji-invehicle-digital-twin"]
+      ports:
+      - containerPort: 5010
+        hostPort: 5010
+  cloud_connector:
+    runtime: podman
+    agent: agent_A
+    restart: true
+    updateStrategy: AT_MOST_ONCE
+    accessRights:
+      allow: []
+      deny: []
+    runtimeConfig: |
+      image: docker.io/library/nginx:latest
+      ports:
+      - containerPort: 50053
+        hostPort: 50053
