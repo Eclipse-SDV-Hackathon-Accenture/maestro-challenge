@@ -45,7 +45,7 @@ Please explore the [Projects Involved](#projects-involved) section for a deeper 
 
 Here is a list of potential scenarios your team could develop. Feel free to invent your own scenarios too. Let your creativity shine ☀️ and have fun!
 
-### Core Sample Scenario
+### Provided Sample Scenario
 
 Scenario description:
 - The system detects that a smart trailer is being connected to a car. A signal is raised to the orchestrator indicating that a smart trailer provider is connected, and applications are required to manage the smart trailer and adjust the body functions and powertrain accordingly to ensure a smooth trip.
@@ -64,10 +64,10 @@ TODO: Provide some ideas to help the user build this Smart Trailer application. 
 - Create a web user interface application, such as a dashboard, that displays the various workloads' health.
 
 ### Useful References for Creating and Enhancing Sample Scenarios
-TODO: This section needs to be refined out. The goal is to include key references to help users easily identify the doucmentation they need to enhance a scenario or create their scenario. If this section gets too long, we can place the contents in another document and reference it here.
+TODO: This section needs to be refined. The goal is to include key references to help users easily identify the doucmentation they need to enhance a scenario or create their scenario. If this section gets too long, we can place the contents in another document and reference it here.
 
 TODO - Some example references that may need to be included:
-- Ibeji - Adding onto the existing DT Provider: How do I add additional signals to my DT provider?
+- Ibeji - Adding onto an existing DT Provider: How do I add additional signals to my DT provider?
     - Freyja - Mappings config: How does a user add new mappings when there are new DT provider signals?
 - Chariott - Service Discovery: How does a user configure their smart trailer application?
 - Freyja - Syncing signals to Azure: If a user wishes to integrate their scenario with Azure, which image would I need to pull to enable Freyja to sync to the cloud?
