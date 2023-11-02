@@ -9,8 +9,8 @@ edition = "2021"
 license = "MIT"
 
 [dependencies]
-serde = "1.0.160"
-serde_derive = "1.0.163"
+serde = { workspace = true }
+serde_derive = { workspace = true }
 
 [lib]
 path = "src/lib.rs"
