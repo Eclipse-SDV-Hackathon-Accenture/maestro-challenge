@@ -1,0 +1,18 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+# SPDX-License-Identifier: MIT
+
+[package]
+name = "interfaces"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+
+[dependencies]
+prost = "0.12.1"
+serde = {version = "1.0.160", features = ["derive"] }
+tokio = { version = "1.33.0", features = ["macros", "rt-multi-thread"] }
+tonic = "0.10.2"
+
+[build-dependencies]
+tonic-build = "0.10.2"

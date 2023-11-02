@@ -1,0 +1,38 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+# SPDX-License-Identifier: MIT
+
+[workspace]
+
+members = [
+  # core
+  "core/proto_build",
+
+  # smart_trailer_use_case
+  "smart_trailer_use_case/digital_twin_providers/trailer_connected_provider",
+  "smart_trailer_use_case/proto_build",
+]
+
+[workspace.dependencies]
+config = "0.13.3"
+env_logger= "0.10.0"
+futures = "0.3"
+log = "0.4.20"
+paho-mqtt = "0.12"
+parking_lot = "0.12.1"
+prost = "0.12.1"
+prost-types = "0.12.1"
+regex = "1.10.2"
+serde = "1.0.190"
+serde_derive = "1.0.163"
+serde_json = "^1.0"
+show-image = "0.13.1"
+strum = "0.25"
+strum_macros = "0.25.1"
+tokio = "1.29.1"
+tokio-stream = "0.1.14"
+tonic = "0.10.2"
+tonic-build = "0.10.2"
+url = "2.3.1"
+uuid = "1.2.2"
+yaml-rust = "0.4"

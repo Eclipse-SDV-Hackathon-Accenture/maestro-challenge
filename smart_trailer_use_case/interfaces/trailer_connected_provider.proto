@@ -1,0 +1,25 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+// SPDX-License-Identifier: MIT
+
+// Trailer Connected Provider definition
+//
+// The protobuf definitions for the Trailer Connected Provider
+
+syntax = "proto3";
+package trailer_connected_provider;
+
+// The service entry point to the Trailer Connected Provider. This simple provider has one method
+// to get the "is_trailer_connected" property
+service TrailerConnectedProvider {
+  // Method which gets the value of "is_trailer_connected" property
+  rpc Get (GetRequest) returns (GetResponse);
+}
+
+message GetRequest {
+  string entity_id = 1;
+}
+
+message GetResponse {
+  bool is_trailer_connected = 1;
+}
