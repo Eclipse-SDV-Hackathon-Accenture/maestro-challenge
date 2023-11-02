@@ -2,8 +2,8 @@
 # Maestro Challenge 🚗💻🎶
 - [Introduction](#introduction)
 - [About](#about)
-    - [Ankaios](#Ankaios)
-    - [BlueChi](#BlueChi)
+    - [In-Vehicle Software Stack Orchestrated by Ankaios](#in-vehicle-software-stack-orchestrated-by-ankaios)
+    - [In-Vehicle Software Stack Orchestrated by BlueChi](#in-vehicle-software-stack-orchestrated-by-bluechi)
 - [Sample Scenarios](#sample-scenarios)
     - [Core Sample Scenario](#core-sample-scenario)
     - [Other Sample Scenarios](#other-sample-scenarios)
@@ -27,17 +27,19 @@ Come hack with us!
 
 We supply an in-vehicle stack with software orchestrators. Your assignment is to utilize our in-vehicle stack and software orchestrators to construct your own scenario or replicate the scenarios provided in our [Sample Scenarios](#sample-scenarios).
 
-The tech stack in this challenge showcases complex in-vehicle services and workloads, utilizing the vehicle’s computing resources and capabilities, as well as other in-vehicle applications. We provide two software orchestrators, Ankaios and BlueChi, to orchestrate the in-vehicle stack. Feel free to choose either for this hackathon challenge.
+The tech stack in this challenge showcases complex in-vehicle services and workloads, utilizing the vehicle’s computing resources and capabilities, as well as other in-vehicle applications.
 
 Enjoy the process of bringing your vision to life!
 
-### Ankaios
+### In-Vehicle Software Stack Orchestrated by Ankaios
 ![Ankaios](docs/diagrams/ankaios.png)
 
-### BlueChi
+### In-Vehicle Software Stack Orchestrated by BlueChi
 ![BlueChi](docs/diagrams/bluechi.png)
 
 The in-vehicle stack comprises Eclipse Ibeji, Eclipse Agemo, Eclipse Freyja, and Eclipse Chariott. This stack enables a universal vehicle model to be used across different vehicles, dynamic management of vehicle signal topics for publishing and subscribing, synchronization and conversion of in-vehicle signals to a cloud-based digital twin, and the development of applications without the need for specific knowledge about the location of the resources they use.
+
+We provide two software orchestrators, Ankaios and BlueChi, to orchestrate the in-vehicle stack. Feel free to choose either for this hackathon challenge.
 
 Please explore the [Projects Involved](#projects-involved) section for a deeper dive into the projects that are part of this challenge.
 
@@ -45,12 +47,14 @@ Please explore the [Projects Involved](#projects-involved) section for a deeper 
 
 Here is a list of potential scenarios your team could develop. Feel free to invent your own scenarios too. Let your creativity shine ☀️ and have fun!
 
+Please note that it is not necessary to use both orchestrators. You can choose either one to implement your scenario.
+
 ### Provided Sample Scenario
 
 Scenario description:
 - The system detects that a smart trailer is being connected to a car. A signal is raised to the orchestrator indicating that a smart trailer provider is connected, and applications are required to manage the smart trailer and adjust the body functions and powertrain accordingly to ensure a smooth trip.
 
-The diagrams above ([Ankaios](#ankaios) and [BlueChi](#bluechi)) depict this core sample scenario.
+The diagrams above ([Ankaios](#ankaios) and [BlueChi](#bluechi)) depict this provided sample scenario.
 
 We provide the code for this scenario. Please refer to {TODO: INSERT_REFERENCE} for instructions on running this scenario. **Your task is to develop a Smart Trailer Application** using the vehicle signals emitted from our Smart Trailer Digital Twin provider.
 
@@ -64,13 +68,26 @@ TODO: Provide some ideas to help the user build this Smart Trailer application. 
 - Create a web user interface application, such as a dashboard, that displays the various workloads' health.
 
 ### Useful References for Creating and Enhancing Sample Scenarios
+
+This section offers guidance for creating a new sample scenario or improving the [Provided Sample Scenario](#provided-sample-scenario). While it does not provide a comprehensive list of resources, it aims to steer you in the right direction. If this section does not provide the guidance you need, please refer to the respective project’s documentation. See [Projects Involved](#projects-involved) for the project links.
+
 TODO: This section needs to be refined. The goal is to include key references to help users easily identify the doucmentation they need to enhance a scenario or create their scenario. If this section gets too long, we can place the contents in another document and reference it here.
 
 TODO - Some example references that may need to be included:
-- Ibeji - Adding onto an existing DT Provider: How do I add additional signals to my DT provider?
-    - Freyja - Mappings config: How does a user add new mappings when there are new DT provider signals?
-- Chariott - Service Discovery: How does a user configure their smart trailer application?
-- Freyja - Syncing signals to Azure: If a user wishes to integrate their scenario with Azure, which image would I need to pull to enable Freyja to sync to the cloud?
+- Ibeji:
+    - Reference the tutorial on how to write DTDL and create a vehicle model?
+        - DTDL is just a reference representation of a vehicle hardware, and DTDL is not explicility parsed by anything
+    - Reference the tutorial on creating DT provider
+        - This tutorial would cover adding new signals to a DT provider
+        - Include instructions on how to use managed subscribe, but through the Ibeji module. Users will not need to know that they are contacting Agemo.
+    - Reference the tutorial on consuming signals from Ibeji
+    - Freyja - Mappings config: Need to mention that "after adding a new signal to your DT provider, modify the mapping config to map the DT provider’s signal with the Cloud."
+- Chariott:
+    - How to use service discovery to register and discover applications
+    - How to find any of our services
+        Example: Ibeji's endpoint can be found through service discovery.
+- Freyja - Syncing signals to the cloud:
+    - If a user wishes to integrate their scenario with Azure, which image would I need to pull to enable Freyja to sync to the cloud?
 
 ## Need to know
 are there any knowledge requirements the participants should fullfill
