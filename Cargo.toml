@@ -5,12 +5,12 @@
 [workspace]
 
 members = [
-  # core
-  "core/proto_build",
+  # in-vehicle-stack
+  "in-vehicle-stack/proto_build",
 
   # smart_trailer_use_case
-  "smart_trailer_use_case/digital_twin_providers/trailer_connected_provider",
-  "smart_trailer_use_case/proto_build",
+  "scenarios/smart_trailer_use_case/digital_twin_providers/trailer_connected_provider",
+  "scenarios/smart_trailer_use_case/proto_build",
 ]
 
 [workspace.dependencies]

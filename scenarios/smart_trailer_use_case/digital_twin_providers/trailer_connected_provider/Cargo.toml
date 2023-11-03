@@ -4,12 +4,10 @@ version = "0.1.0"
 edition = "2021"
 license = "MIT"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 digital-twin-model = { path = "../../digital-twin-model" }
 env_logger = { workspace = true }
-interfaces = { path = "../../../core/proto_build"}
+interfaces = { path = "../../../../in-vehicle-stack/proto_build"}
 log = { workspace = true }
 serde = { workspace = true }
 serde_derive = { workspace = true }

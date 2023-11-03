@@ -10,7 +10,7 @@ use interfaces::chariott::service_discovery::core::v1::DiscoverRequest;
 use interfaces::invehicle_digital_twin::v1::invehicle_digital_twin_client::InvehicleDigitalTwinClient;
 use interfaces::invehicle_digital_twin::v1::{EndpointInfo, EntityAccessInfo, RegisterRequest};
 use log::{debug, info, LevelFilter};
-use smart_trailer_interfaces::trailer_connected_provider::v1::trailer_connected_provider_server::TrailerConnectedProviderServer;
+use smart_trailer_interfaces::digital_twin_get_provider::v1::digital_twin_get_provider_server::DigitalTwinGetProviderServer;
 use std::net::SocketAddr;
 use tokio::signal;
 use tonic::transport::Server;
@@ -127,7 +127,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let addr: SocketAddr = PROVIDER_AUTHORITY.parse()?;
     let provider_impl = TrailerConnectedProviderImpl::default();
     let server_future = Server::builder()
-        .add_service(TrailerConnectedProviderServer::new(provider_impl))
+        .add_service(DigitalTwinGetProviderServer::new(provider_impl))
         .serve(addr);
     info!("The HTTP server is listening on address '{PROVIDER_AUTHORITY}'");
 

@@ -1,6 +1,6 @@
-## Core
+## In Vehicle Stack
 
-This core directory contains files related to the In-Vehicle Stack (Eclipse Chariott, Ibeji, Agemo,
+This in-vehicle stack directory contains files related to the In-Vehicle Stack (Eclipse Chariott, Ibeji, Agemo,
 and Freyja).
 
 ### Interfaces
