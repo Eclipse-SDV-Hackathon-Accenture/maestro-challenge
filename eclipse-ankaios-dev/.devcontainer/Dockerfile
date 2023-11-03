@@ -5,7 +5,9 @@ RUN apt-get update && apt-get -y install \
     # Add your development tools here ...
     # Cleanup
     && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* \
+    && curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o /usr/bin/yq \
+    && chmod +x /usr/bin/yq
 
 # Trust all repositories in this container
 RUN git config --global --add safe.directory '*'
