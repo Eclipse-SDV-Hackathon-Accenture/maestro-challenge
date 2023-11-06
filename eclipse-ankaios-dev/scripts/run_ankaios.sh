@@ -1,12 +1,13 @@
 #!/bin/bash
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+ANKAIOS_SERVER_URL=http://127.0.0.1:25551
 
 echo '[Starting Ankaios cluster ...]'
 $SCRIPT_DIR/run_ankaios_default.sh &
 
 sleep 3;
-while [ `ank -s http://127.0.0.1:25551 get state workloadStates |  yq '.workloadStates.[] | select(.workloadName == "hello") | .executionState' | grep -c ExecSucceeded` = 0 ]; do 
+while [ `ank -s $ANKAIOS_SERVER_URL get state workloadStates |  yq '.workloadStates.[] | select(.workloadName == "hello") | .executionState' | grep -c ExecSucceeded` = 0 ]; do 
   sleep 3; 
 done
 
@@ -16,9 +17,9 @@ cat $SCRIPT_DIR/../config/startupState.yaml | yq '.workloads.* | path | .[-1]' |
 do
   yq ".workloads.$p | {\"currentState\": {\"workloads\": {\"$p\": .}}}"< $SCRIPT_DIR/../config/startupState.yaml > /tmp/currentState.yaml
   echo "Starting workload '$p' ..."
-  ank -s http://127.0.0.1:25551 set state -f /tmp/currentState.yaml currentState.workloads.$p
+  ank -s $ANKAIOS_SERVER_URL set state -f /tmp/currentState.yaml currentState.workloads.$p
   while true; do
-    if [ $(ank -s http://127.0.0.1:25551 get state workloadStates |  yq ".workloadStates.[] | select(.workloadName == \"$p\") | .executionState" | grep -Ec '(ExecRunning|ExecFailed)') = 1 ]
+    if [ $(ank -s $ANKAIOS_SERVER_URL get state workloadStates |  yq ".workloadStates.[] | select(.workloadName == \"$p\") | .executionState" | grep -Ec '(ExecRunning|ExecFailed|ExecSucceeded)') = 1 ]
     then
         break
     fi
