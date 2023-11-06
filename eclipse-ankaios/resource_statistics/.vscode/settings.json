@@ -1,0 +1,11 @@
+{
+    "files.insertFinalNewline": true,
+    "cSpell.words": [
+        "actix"
+    ],
+    "markdown-preview-github-styles.colorTheme": "light",
+    "[rust]": {
+        "editor.defaultFormatter": "rust-lang.rust-analyzer",
+        "editor.formatOnSave": true
+    }
+}
