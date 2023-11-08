@@ -9,17 +9,25 @@ members = [
   "in-vehicle-stack/proto_build",
 
   # smart_trailer_use_case
+  "scenarios/smart_trailer_use_case/applications/smart_trailer_application",
+  "scenarios/smart_trailer_use_case/digital_twin_providers/common",
   "scenarios/smart_trailer_use_case/digital_twin_providers/trailer_connected_provider",
+  "scenarios/smart_trailer_use_case/digital_twin_providers/trailer_properties_provider",
   "scenarios/smart_trailer_use_case/proto_build",
 ]
 
 [workspace.dependencies]
 env_logger= "0.10.0"
 log = "0.4.20"
+paho-mqtt = "0.12"
+parking_lot = "0.12.1"
 prost = "0.12.1"
 serde = "1.0.190"
 serde_derive = "1.0.163"
 serde_json = "^1.0"
+strum = "0.25"
+strum_macros = "0.25.1"
 tokio = "1.29.1"
 tonic = "0.10.2"
 tonic-build = "0.10.2"
+uuid = "1.2.2"

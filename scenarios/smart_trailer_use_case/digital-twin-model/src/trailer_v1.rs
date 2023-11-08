@@ -11,7 +11,7 @@ pub mod trailer {
         pub const ID: &str = "dtmi:sdv:Trailer:Weight;1";
         pub const NAME: &str = "TrailerWeight";
         pub const DESCRIPTION: &str = "The weight of the trailer";
-        pub type TYPE = f32;
+        pub type TYPE = i32;
     }
 
     pub mod is_trailer_connected {

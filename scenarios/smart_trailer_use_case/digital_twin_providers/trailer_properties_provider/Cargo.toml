@@ -1,5 +1,9 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+# SPDX-License-Identifier: MIT
+
 [package]
-name = "trailer_connected_provider"
+name = "trailer_properties_provider"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
@@ -10,9 +14,16 @@ digital_twin_providers_common = { path = "../common" }
 env_logger = { workspace = true }
 interfaces = { path = "../../../../in-vehicle-stack/proto_build"}
 log = { workspace = true }
+paho-mqtt = { workspace = true }
+parking_lot = { workspace = true }
 serde = { workspace = true }
 serde_derive = { workspace = true }
 serde_json = { workspace = true }
 smart_trailer_interfaces = { path = "../../proto_build" }
+strum = { workspace = true }
+strum_macros = { workspace = true }
 tokio = { workspace = true, features = ["macros", "rt-multi-thread", "signal"] }
 tonic = { workspace = true }
+
+[features]
+containerize = ["digital_twin_providers_common/containerize"]
