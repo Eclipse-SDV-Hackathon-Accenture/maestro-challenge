@@ -5,7 +5,7 @@
     - [In-Vehicle Software Stack Orchestrated by Ankaios](#in-vehicle-software-stack-orchestrated-by-ankaios)
     - [In-Vehicle Software Stack Orchestrated by BlueChi](#in-vehicle-software-stack-orchestrated-by-bluechi)
 - [Sample Scenarios](#sample-scenarios)
-    - [Core Sample Scenario](#core-sample-scenario)
+    - [Provided Sample Scenario](#provided-sample-scenario)
     - [Other Sample Scenarios](#other-sample-scenarios)
     - [Useful References for Creating and Enhancing Sample Scenarios](#useful-references-for-creating-and-enhancing-sample-scenarios)
 - [Projects Involved](#projects-involved)
@@ -37,7 +37,7 @@ Enjoy the process of bringing your vision to life!
 ### In-Vehicle Software Stack Orchestrated by BlueChi
 ![BlueChi](docs/diagrams/bluechi.png)
 
-The in-vehicle stack comprises Eclipse Ibeji, Eclipse Agemo, Eclipse Freyja, and Eclipse Chariott. This stack enables a universal vehicle model to be used across different vehicles, dynamic management of vehicle signal topics for publishing and subscribing, synchronization and conversion of in-vehicle signals to a cloud-based digital twin, and the development of applications without the need for specific knowledge about the location of the resources they use.
+The in-vehicle stack comprises Eclipse Ibeji, Eclipse Agemo, Eclipse Freyja, and Eclipse Chariott. This stack enables a universal vehicle model to be used across different vehicles, dynamic management of vehicle signal topics for publishing and subscribing, synchronization of in-vehicle signals to a cloud-based digital twin, and the development of applications without the need for specific knowledge about the location of the resources they use.
 
 We provide two software orchestrators, Ankaios and BlueChi, to orchestrate the in-vehicle stack. Feel free to choose either for this hackathon challenge.
 
@@ -52,7 +52,7 @@ Please note that it is not necessary to use both orchestrators. You can choose e
 ### Provided Sample Scenario
 
 Scenario description:
-- The system detects that a smart trailer is being connected to a car. A signal is raised to the orchestrator indicating that a smart trailer provider is connected, and applications are required to manage the smart trailer and adjust the body functions and powertrain accordingly to ensure a smooth trip.
+- The system detects that a smart trailer is being connected to a car. A signal is raised to the orchestrator to start up the necessary providers and applications to manage the smart trailer. Some example applications could include displaying the signals or adjusting the body functions and powertrain accordingly to ensure a smooth trip.
 
 The diagrams above ([Ankaios](#ankaios) and [BlueChi](#bluechi)) depict this provided sample scenario.
 
