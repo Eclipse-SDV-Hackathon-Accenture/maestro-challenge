@@ -90,7 +90,7 @@ TODO - Some example references that may need to be included:
     - If a user wishes to integrate their scenario with Azure, which image would I need to pull to enable Freyja to sync to the cloud?
 
 ## Need to know
-- Basic knowledge about containerization technologies and tools (e.g. Docker, Podman)
+- You need basic knowledge about containerization technologies and tools (e.g. Docker, Podman), but if you have not dealt with it yet, don't worry, just check out a little tutorial (https://docs.docker.com/get-started/) to get a basic understanding of containers and you are prepared.
 - Basic skills to deal with distributed systems
 
 ## Projects Involved
