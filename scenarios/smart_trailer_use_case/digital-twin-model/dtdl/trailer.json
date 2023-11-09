@@ -10,7 +10,7 @@
             "@id": "dtmi:sdv:Trailer:Weight;1",
             "name": "TrailerWeight",
             "description": "The weight of the trailer",
-            "schema": "float"
+            "schema": "integer"
           },
           {
             "@type": "Property",
