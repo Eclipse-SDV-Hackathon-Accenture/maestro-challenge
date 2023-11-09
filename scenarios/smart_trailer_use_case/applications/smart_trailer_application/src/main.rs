@@ -33,9 +33,11 @@ const FREQUENCY_MS_FLAG: &str = "freq_ms=";
 const MQTT_CLIENT_ID: &str = "smart-trailer-consumer";
 
 // TODO: These could be added in configuration
-const SERVICE_DISCOVERY_URI: &str = "http://0.0.0.0:50000";
+const CHARIOTT_SERVICE_DISCOVERY_URI: &str = "http://0.0.0.0:50000";
 
-/// Get subscription information from managed subscribe endpoint.
+const DEFAULT_FREQUENCY_MS: u64 = 10000; // 10 seconds
+
+/// Get trailer weight's subscription information from managed subscribe endpoint.
 ///
 /// # Arguments
 /// * `managed_subscribe_uri` - The managed subscribe URI.
@@ -156,7 +158,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Get the In-vehicle Digital Twin Uri from the service discovery system
     // This could be enhanced to add retries for robustness
     let invehicle_digital_twin_uri = discover_service_using_chariott(
-        SERVICE_DISCOVERY_URI,
+        CHARIOTT_SERVICE_DISCOVERY_URI,
         INVEHICLE_DIGITAL_TWIN_SERVICE_NAMESPACE,
         INVEHICLE_DIGITAL_TWIN_SERVICE_NAME,
         INVEHICLE_DIGITAL_TWIN_SERVICE_VERSION,
@@ -166,7 +168,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     .await?;
 
     // Get subscription constraints.
-    let default_frequency_ms: u64 = 10000;
     let frequency_ms = env::args()
         .find_map(|arg| {
             if arg.contains(FREQUENCY_MS_FLAG) {
@@ -175,7 +176,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
             None
         })
-        .unwrap_or_else(|| default_frequency_ms.to_string());
+        .unwrap_or_else(|| DEFAULT_FREQUENCY_MS.to_string());
 
     // Retrieve the provider URI.
     let provider_endpoint_info = discover_digital_twin_provider_using_ibeji(
@@ -184,8 +185,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         digital_twin_protocol::GRPC,
         &[digital_twin_operation::MANAGEDSUBSCRIBE.to_string()],
     )
-    .await
-    .unwrap();
+    .await?;
 
     let managed_subscribe_uri = provider_endpoint_info.uri;
     info!("The Managed Subscribe URI for the TrailerWeight property's provider is {managed_subscribe_uri}");

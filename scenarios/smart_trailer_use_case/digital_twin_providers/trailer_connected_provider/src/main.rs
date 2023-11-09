@@ -25,7 +25,7 @@ use trailer_connected_provider_impl::TrailerConnectedProviderImpl;
 mod trailer_connected_provider_impl;
 
 // TODO: These could be added in configuration
-const SERVICE_DISCOVERY_URI: &str = "http://0.0.0.0:50000";
+const CHARIOTT_SERVICE_DISCOVERY_URI: &str = "http://0.0.0.0:50000";
 const PROVIDER_AUTHORITY: &str = "0.0.0.0:4020";
 
 /// Register the "is trailer connected" property's endpoint.
@@ -85,7 +85,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Get the In-vehicle Digital Twin Uri from the service discovery system
     // This could be enhanced to add retries for robustness
     let invehicle_digital_twin_uri = discover_service_using_chariott(
-        SERVICE_DISCOVERY_URI,
+        CHARIOTT_SERVICE_DISCOVERY_URI,
         INVEHICLE_DIGITAL_TWIN_SERVICE_NAMESPACE,
         INVEHICLE_DIGITAL_TWIN_SERVICE_NAME,
         INVEHICLE_DIGITAL_TWIN_SERVICE_VERSION,

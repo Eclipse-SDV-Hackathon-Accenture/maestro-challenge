@@ -28,8 +28,10 @@ use tonic::Status;
 use crate::trailer_properties_provider_impl::TrailerPropertiesProviderImpl;
 
 // TODO: These could be added in configuration
-const SERVICE_DISCOVERY_URI: &str = "http://0.0.0.0:50000";
+const CHARIOTT_SERVICE_DISCOVERY_URI: &str = "http://0.0.0.0:50000";
 const PROVIDER_AUTHORITY: &str = "0.0.0.0:4030";
+
+const DEFAULT_MIN_INTERVAL_MS: u64 = 10000; // 10 seconds
 
 /// Register the trailer weight property's endpoint.
 ///
@@ -128,7 +130,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Get the In-vehicle Digital Twin Uri from the service discovery system
     // This could be enhanced to add retries for robustness
     let invehicle_digital_twin_uri = discover_service_using_chariott(
-        SERVICE_DISCOVERY_URI,
+        CHARIOTT_SERVICE_DISCOVERY_URI,
         INVEHICLE_DIGITAL_TWIN_SERVICE_NAMESPACE,
         INVEHICLE_DIGITAL_TWIN_SERVICE_NAME,
         INVEHICLE_DIGITAL_TWIN_SERVICE_VERSION,
@@ -137,24 +139,24 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     )
     .await?;
 
-    info!("The Provider has got chariott's uri.");
-    // Start mock data stream.
-    let min_interval_ms = 10000; // 10 seconds
-    let data_stream = start_trailer_weight_data_stream(min_interval_ms);
+    debug!("The Provider retrieved Chariott's Service Discovery URI.");
 
-    info!("The Provider has started data stream.");
+    // Start mock data stream.
+    let data_stream = start_trailer_weight_data_stream(DEFAULT_MIN_INTERVAL_MS);
+    debug!("The Provider has started the trailer weight data stream.");
+
     // Setup provider management cb endpoint.
-    let provider = TrailerPropertiesProviderImpl::new(data_stream, min_interval_ms);
-    info!("Starting service.");
+    let provider = TrailerPropertiesProviderImpl::new(data_stream, DEFAULT_MIN_INTERVAL_MS);
+
     // Start service.
     let addr: SocketAddr = PROVIDER_AUTHORITY.parse()?;
     let server_future = Server::builder()
         .add_service(ManagedSubscribeCallbackServer::new(provider))
         .serve(addr);
-    info!("Started service");
+
     // This could be enhanced with retries for robustness
     register_trailer_weight(&invehicle_digital_twin_uri, &provider_uri).await?;
-    info!("The Provider has registered with ibeji.");
+    debug!("The Provider has registered with Ibeji.");
 
     server_future.await?;
 
