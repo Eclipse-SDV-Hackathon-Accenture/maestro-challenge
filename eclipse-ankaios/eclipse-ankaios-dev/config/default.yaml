@@ -11,7 +11,4 @@ workloads:
       - key: owner
         value: Ankaios team
     runtimeConfig: |
-      image: alpine:latest
-      command: ["echo"]
-      args: ["Hello Ankaios"]
-    
+      image: docker.io/library/alpine:latest

@@ -1,3 +1,4 @@
+use crate::commands::COMMANDS;
 use async_process::Command;
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
@@ -24,14 +25,6 @@ async fn exec_command(cmd: &str) -> anyhow::Result<String> {
 }
 
 async fn fetch_statistics(cache: Arc<ItemCache>, stop_signal: CancellationToken) {
-    let commands = HashMap::from([
-        ("cpu-usage", "grep 'cpu ' /proc/stat | awk '{CPU=($2+$4)*100/($2+$4+$5)} END {printf(\"%.1f\", CPU)}'"), // CPU usage in %
-        ("cpu-usage-user", "grep 'cpu ' /proc/stat | awk '{CPU=($2)*100/($2+$4+$5)} END {printf(\"%.1f\", CPU)}'"), // CPU usage user in %
-        ("cpu-usage-system", "grep 'cpu ' /proc/stat | awk '{CPU=($4)*100/($2+$4+$5)} END {printf(\"%.1f\", CPU)}'"), // CPU usage system in %
-        ("memory-usage", "awk '/MemTotal/ {TOT=$2} /MemFree/ {FREE=$2} END {printf(\"%.1f\", FREE/TOT * 100)}' /proc/meminfo"), // memory usage in %
-        ("memory-total", "awk '/MemTotal/ {printf(\"%u\", $2/1024)}' /proc/meminfo"), // total memory in KiB
-    ]);
-
     let host = exec_command("hostname")
         .await
         .unwrap_or("unknown".to_string())
@@ -40,7 +33,7 @@ async fn fetch_statistics(cache: Arc<ItemCache>, stop_signal: CancellationToken)
         .to_owned();
 
     loop {
-        for (typ, cmd) in commands.iter() {
+        for (typ, cmd) in COMMANDS.iter() {
             match Command::new("sh").args(["-c", cmd]).output().await {
                 Ok(result) => {
                     let output_stdout = String::from_utf8(result.stdout).unwrap();

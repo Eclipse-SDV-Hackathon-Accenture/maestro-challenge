@@ -1,5 +1,5 @@
 workloads:
-  service_registry_discovery:
+  service_discovery:
     runtime: podman
     agent: agent_A
     restart: true
@@ -11,28 +11,8 @@ workloads:
       - key: project
         value: chariott
     runtimeConfig: |
-      image: quay.io/centos-sig-automotive/eclipse-chariott:latest
-      command: ["usr/local/bin/chariott-service-discovery"]
-      ports:
-      - containerPort: 50000
-        hostPort: 50000
-  dynamic_topic_management:
-    runtime: podman
-    agent: agent_A
-    restart: true
-    updateStrategy: AT_MOST_ONCE
-    accessRights:
-      allow: []
-      deny: []
-    tags:
-      - key: project
-        value: agemo
-    runtimeConfig: |
-      image: quay.io/centos-sig-automotive/eclipse-agemo:latest
-      command: ["/usr/local/bin/pub-sub-service"]
-      ports:
-      - containerPort: 50051
-        hostPort: 50051
+      image: sdvblueprint.azurecr.io/sdvblueprint/eclipse-chariott/service-discovery:0.1.1
+      commandOptions: ["--network", "host"]
   mqtt_broker:
     runtime: podman
     agent: agent_A
@@ -45,11 +25,9 @@ workloads:
       - key: project
         value: agemo
     runtimeConfig: |
-      image: quay.io/centos-sig-automotive/eclipse-mosquitto:latest
-      ports:
-      - containerPort: 1883
-        hostPort: 1883
-  digital_twin_cloud_sync:
+      image: sdvblueprint.azurecr.io/sdvblueprint/eclipse-mosquitto/mqtt-broker:latest
+      commandOptions: ["--network", "host"]
+  dynamic_topic_management:
     runtime: podman
     agent: agent_A
     restart: true
@@ -59,12 +37,25 @@ workloads:
       deny: []
     tags:
       - key: project
-        value: freyja
+        value: agemo
     runtimeConfig: |
-      image: quay.io/centos-sig-automotive/eclipse-freyja:latest
-      ports:
-      - containerPort: 50052
-        hostPort: 50052
+      image: sdvblueprint.azurecr.io/sdvblueprint/eclipse-agemo/pub-sub-service:0.1.0
+      commandOptions: ["--network", "host"]
+  # digital_twin_cloud_sync:
+  #   runtime: podman
+  #   agent: agent_A
+  #   restart: true
+  #   updateStrategy: AT_MOST_ONCE
+  #   accessRights:
+  #     allow: []
+  #     deny: []
+  #   tags:
+  #     - key: project
+  #       value: freyja
+  #   runtimeConfig: |
+  #     image: quay.io/centos-sig-automotive/eclipse-freyja:latest
+  #     commandOptions: ["--network", "host"]
+  #     commandArgs: ["mkdir -p /tmp/freyja/target/release/build/mock-digital-twin-cfea9f1437a26e32/out/ && cp /etc/freyja/config/mock_digital_twin_config.default.json /tmp/freyja/target/release/build/mock-digital-twin-cfea9f1437a26e32/out/ && freyja-digital-twin"]
   digital_twin_vehicle:
     runtime: podman
     agent: agent_A
@@ -77,11 +68,8 @@ workloads:
       - key: project
         value: ibeji
     runtimeConfig: |
-      image: quay.io/centos-sig-automotive/eclipse-ibeji:latest
-      command: ["/usr/local/bin/ibeji-invehicle-digital-twin"]
-      ports:
-      - containerPort: 5010
-        hostPort: 5010
+      image: sdvblueprint.azurecr.io/sdvblueprint/eclipse-ibeji/invehicle-digital-twin:0.1.0
+      commandOptions: ["--network", "host"]
   cloud_connector:
     runtime: podman
     agent: agent_A
@@ -92,6 +80,15 @@ workloads:
       deny: []
     runtimeConfig: |
       image: docker.io/library/nginx:latest
-      ports:
-      - containerPort: 50053
-        hostPort: 50053
+      commandOptions: ["--network", "host"]
+  # resource_monitor:
+  #   runtime: podman
+  #   agent: agent_A
+  #   restart: true
+  #   updateStrategy: AT_MOST_ONCE
+  #   accessRights:
+  #     allow: []
+  #     deny: []
+  #   runtimeConfig: |
+  #     image: ghcr.io/eclipse-ankaios/maestro_resource_monitor:latest
+  #     commandOptions: ["--network", "host", "--privileged", "--pid", "host", "--hostname", "host_of_agentA"]

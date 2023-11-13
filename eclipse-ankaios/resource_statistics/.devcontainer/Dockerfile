@@ -5,6 +5,7 @@ RUN apt-get update && apt-get -y install \
     musl \
     musl-dev \
     musl-tools\
+    gcc \
     curl \
     git \
     && rm -rf /var/lib/apt/lists/*

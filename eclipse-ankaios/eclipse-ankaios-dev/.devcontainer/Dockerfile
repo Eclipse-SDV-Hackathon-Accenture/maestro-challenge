@@ -10,7 +10,9 @@ RUN apt-get update && apt-get -y install \
     && chmod +x /usr/bin/yq
 
 # Trust all repositories in this container
-RUN git config --global --add safe.directory '*'
+RUN git config --global --add safe.directory '*' \
+    && echo "if [ -f /etc/bash_completion ] && ! shopt -oq posix; then\n . /etc/bash_completion \nfi" >> /root/.bashrc \
+    && echo 'export PATH=$PATH:/workspaces/app/scripts' >> /root/.bashrc
 
 # prod stage, please do not change it
 FROM ghcr.io/eclipse-ankaios/app-ankaios-dev:latest

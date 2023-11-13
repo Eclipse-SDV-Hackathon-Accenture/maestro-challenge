@@ -3,6 +3,7 @@ use std::net::SocketAddr;
 
 mod resource_statistic_job;
 mod routes;
+mod commands;
 
 use resource_statistic_job::init_resource_statistic_cache;
 
@@ -11,7 +12,7 @@ async fn main() -> anyhow::Result<()> {
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
 
     let socket_address =
-        std::env::var("RESOURCE_STATISTICS_API_SOCKET").unwrap_or("0.0.0.0:8080".to_string());
+        std::env::var("RESOURCE_STATISTICS_API_SOCKET").unwrap_or("0.0.0.0:25555".to_string());
     let socket_address: SocketAddr = socket_address.parse()?;
 
     let (item_cache, cache_sweep_handle, cache_sweep_cancel) = init_resource_statistic_cache();
