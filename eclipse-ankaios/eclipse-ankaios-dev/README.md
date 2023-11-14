@@ -5,12 +5,17 @@
 This repository provides a starter template for solving the Maestro challenge using the [Ankaios](https://github.com/eclipse-ankaios) workload orchestrator.
 It contains a development environment with pre-installed and -configured [Ankaios](https://github.com/eclipse-ankaios) devcontainer that makes it easy for you to start developing and building container applications.
 
+## Development environment
+
 The following is provided:
 
 - pre-installed Ankaios executables (`ank-server`, `ank-agent` and `ank`) and Podman container engine (contained in the Ankaios base devcontainer)
-- an Ankaios [startupState.yaml](./config/startupState.yaml) config with pre-configured workloads for the initial system of the Ankaios Maestro Challenge (without the marked in blue workloads which are part of the challenge)
+- an Ankaios [startupState.yaml](./config/startupState.yaml) config with pre-configured workloads for the initial system of the Ankaios Maestro Challenge (without the workloads marked in blue which are part of the challenge)
 - helper scripts for starting and cleaning up the Ankaios cluster (the script path is exported into the PATH environment variable, so that you can execute the scripts directly without navigating into the `scripts` folder.)
+- workload application for [resource usage statistics](#resource-usage-statistics) for challenges requiring resource statistics
 - an initial devcontainer which you can extend with the tools you require
+
+All services are running in the host network meaning those can be accessed with `localhost:<port>`. We recommend that you set the network mode to host for all your developed workloads as well.
 
 ## General information about Ankaios
 Feel free to get familiar with Ankaios' basics by checking the [Ankaios docs](https://eclipse-ankaios.github.io/ankaios/latest/). A good point to start is the [Getting Started](https://eclipse-ankaios.github.io/ankaios/latest/usage/quickstart/) section.
@@ -86,7 +91,7 @@ To customize the devcontainer add your specific dev dependencies and packages to
 
 Before starting active development we recommend you start once Ankaios with the current initial state config [startupState.yaml](./config/startupState.yaml).
 
-Note, if you have selected a challenge that requires resource usage statistics, please uncomment the config part for the `resource_monitor` workload in [startupState.yaml](./config/startupState.yaml). This workload runs in privileged mode in the same pid namespace as the devcontainer and provides you with the system's resource usage statistics like cpu and memory usage.
+**Note:** If you have selected a challenge that requires resource usage statistics like cpu or memory usage, do the steps at section [Resrouce statistics](#resource-usage-statistics) before continuing.
 
 Start Ankaios with all initial workloads:
 ```shell
@@ -156,7 +161,7 @@ cleanup_ankaios.sh
 
 Remember, if you want to start with a clean state, you can always execute the [cleanup_ankaios.sh](./scripts/cleanup_ankaios.sh) script which cleans up all Ankaios components and stops and deletes all workloads running on podman **including also workloads not managed by Ankaios** (the [startupState.yaml](./config/startupState.yaml) is left untouched). Otherwise you must do all that stuff manually.
 
-### Build the production image
+### Build the production image for demonstartion
 
 If you are done with your workload development, you must build the final production image.
 
@@ -185,6 +190,16 @@ docker run -it --privileged --rm -p 25551:25551 -p <extra_port>:<extra_port> <yo
 ```
 
 The production image will start all workloads defined in [startupState.yaml](./config/startupState.yaml) automatically for easy demonstration once you start the container with the command above.
+
+### Resource usage statistics
+
+If you have selected a challenge that requires resource usage statistics, please uncomment the config part for the `resource_monitor` workload in [startupState.yaml](./config/startupState.yaml). This workload runs in privileged mode in the same pid namespace as the devcontainer and provides you with the system's resource usage statistics like cpu and memory usage. The workload updates internally every 5 sec the current resource usage statistics and provides the statistics via REST API. 
+
+You can query the resource usage statistics with the following command after the workload has started:
+
+```shell
+curl localhost:25555
+```
 
 ### Useful tricks
 
