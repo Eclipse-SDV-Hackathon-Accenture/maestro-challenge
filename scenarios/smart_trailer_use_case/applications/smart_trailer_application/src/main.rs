@@ -21,7 +21,7 @@ use interfaces::module::managed_subscribe::v1::managed_subscribe_client::Managed
 use interfaces::module::managed_subscribe::v1::{
     Constraint, SubscriptionInfoRequest, SubscriptionInfoResponse,
 };
-use log::{debug, info, LevelFilter};
+use log::{debug, info, warn, LevelFilter};
 use paho_mqtt as mqtt;
 use tokio::signal;
 use tokio::task::JoinHandle;
@@ -179,15 +179,27 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .unwrap_or_else(|| DEFAULT_FREQUENCY_MS.to_string());
 
     // Retrieve the provider URI.
-    let provider_endpoint_info = discover_digital_twin_provider_using_ibeji(
-        &invehicle_digital_twin_uri,
-        trailer_v1::trailer::trailer_weight::ID,
-        digital_twin_protocol::GRPC,
-        &[digital_twin_operation::MANAGEDSUBSCRIBE.to_string()],
-    )
-    .await?;
+    let mut provider_endpoint_info = None;
+    
+    while provider_endpoint_info.is_none()
+    {
+        provider_endpoint_info = match discover_digital_twin_provider_using_ibeji(
+            &invehicle_digital_twin_uri,
+            trailer_v1::trailer::trailer_weight::ID,
+            digital_twin_protocol::GRPC,
+            &[digital_twin_operation::MANAGEDSUBSCRIBE.to_string()],
+        )
+        .await {
+            Ok(response) => Some(response),
+            Err(status) => {
+                warn!("Discover Digital Twin Provider Using Ibeji failed with '{status:?}'");
+                None
+            }
+        }
+    }
+    
 
-    let managed_subscribe_uri = provider_endpoint_info.uri;
+    let managed_subscribe_uri = provider_endpoint_info.unwrap().uri;
     info!("The Managed Subscribe URI for the TrailerWeight property's provider is {managed_subscribe_uri}");
 
     // Create constraint for the managed subscribe call.
