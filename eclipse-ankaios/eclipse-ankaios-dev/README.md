@@ -15,7 +15,7 @@ The following is provided:
 - workload application for [resource usage statistics](#resource-usage-statistics) for challenges requiring resource statistics
 - an initial devcontainer which you can extend with the tools you require
 
-All services are running in the host network meaning those can be accessed with `localhost:<port>`. We recommend that you set the network mode to host for all your developed workloads as well.
+All services are running in the host network meaning those can be accessed by `localhost:<port>`. We recommend that you set the network mode to host for all your developed workloads as well.
 
 ## General information about Ankaios
 Feel free to get familiar with Ankaios' basics by checking the [Ankaios docs](https://eclipse-ankaios.github.io/ankaios/latest/). A good point to start is the [Getting Started](https://eclipse-ankaios.github.io/ankaios/latest/usage/quickstart/) section.
@@ -199,6 +199,22 @@ You can query the resource usage statistics with the following command after the
 
 ```shell
 curl localhost:25555
+```
+
+### Ankaios logs
+
+There are log files for debugging purposes of Ankaios server and agent.
+
+The Ankaios server logs can be viewed by executing the following command:
+
+```shell
+tail -f /var/log/ankaios-server.log
+```
+
+The Ankaios agent logs can be viewed by executing the following command:
+
+```shell
+tail -f /var/log/ankaios-agent_A.log
 ```
 
 ### Useful tricks
