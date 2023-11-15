@@ -197,7 +197,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         {
             Ok(response) => Some(response),
             Err(status) => {
-                info!("A provider was not found in the digital twin service for id '{}' with: '{status:?}'", trailer_v1::trailer::trailer_weight::ID);
+                info!(
+                    "A provider was not found in the digital twin service for id '{}' with: '{:?}'",
+                    trailer_v1::trailer::trailer_weight::ID,
+                    status
+                );
                 None
             }
         };
