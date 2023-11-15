@@ -8,6 +8,6 @@ echo "OK."
 
 # Cleanup podman
 echo "Cleaning up podman..."
-podman stop -a
-podman rm -a
+podman stop -a >/dev/null 2>&1
+podman rm -a >/dev/null 2>&1
 echo "OK."
