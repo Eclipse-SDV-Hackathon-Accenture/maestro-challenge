@@ -21,11 +21,11 @@ use interfaces::module::managed_subscribe::v1::managed_subscribe_client::Managed
 use interfaces::module::managed_subscribe::v1::{
     Constraint, SubscriptionInfoRequest, SubscriptionInfoResponse,
 };
-use log::{debug, info, warn, LevelFilter};
+use log::{debug, info, LevelFilter};
 use paho_mqtt as mqtt;
 use tokio::signal;
 use tokio::task::JoinHandle;
-use tokio::time::Duration;
+use tokio::time::{sleep, Duration};
 use tonic::{Request, Status};
 use uuid::Uuid;
 
@@ -36,6 +36,11 @@ const MQTT_CLIENT_ID: &str = "smart-trailer-consumer";
 const CHARIOTT_SERVICE_DISCOVERY_URI: &str = "http://0.0.0.0:50000";
 
 const DEFAULT_FREQUENCY_MS: u64 = 10000; // 10 seconds
+
+// Constants used for retry logic
+const MAX_RETRIES: i32 = 10; // for demo purposes we will retry a maximum of 10 times
+// By default we will wait 5 seconds between retry attempts
+const DURATION_BETWEEN_ATTEMPTS: Duration = Duration::from_secs(5);
 
 /// Get trailer weight's subscription information from managed subscribe endpoint.
 ///
@@ -180,7 +185,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Retrieve the provider URI.
     let mut provider_endpoint_info = None;
-    
+    let mut retries: i32 = 0;
     while provider_endpoint_info.is_none()
     {
         provider_endpoint_info = match discover_digital_twin_provider_using_ibeji(
@@ -192,9 +197,17 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await {
             Ok(response) => Some(response),
             Err(status) => {
-                warn!("Discover Digital Twin Provider Using Ibeji failed with '{status:?}'");
+                info!("A provider was not found in the digital twin service for id '{}' with: '{status:?}'", trailer_v1::trailer::trailer_weight::ID);
                 None
             }
+        };
+
+        if retries < MAX_RETRIES {
+            info!("Retrying FindById to retrieve the properties provider endpoint in {DURATION_BETWEEN_ATTEMPTS:?}.");
+            sleep(DURATION_BETWEEN_ATTEMPTS).await;
+            retries += 1;
+        } else {
+            break;
         }
     }
     
