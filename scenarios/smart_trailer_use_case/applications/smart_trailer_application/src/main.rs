@@ -39,7 +39,7 @@ const DEFAULT_FREQUENCY_MS: u64 = 10000; // 10 seconds
 
 // Constants used for retry logic
 const MAX_RETRIES: i32 = 10; // for demo purposes we will retry a maximum of 10 times
-// By default we will wait 5 seconds between retry attempts
+                             // By default we will wait 5 seconds between retry attempts
 const DURATION_BETWEEN_ATTEMPTS: Duration = Duration::from_secs(5);
 
 /// Get trailer weight's subscription information from managed subscribe endpoint.
@@ -186,15 +186,15 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Retrieve the provider URI.
     let mut provider_endpoint_info = None;
     let mut retries: i32 = 0;
-    while provider_endpoint_info.is_none()
-    {
+    while provider_endpoint_info.is_none() {
         provider_endpoint_info = match discover_digital_twin_provider_using_ibeji(
             &invehicle_digital_twin_uri,
             trailer_v1::trailer::trailer_weight::ID,
             digital_twin_protocol::GRPC,
             &[digital_twin_operation::MANAGEDSUBSCRIBE.to_string()],
         )
-        .await {
+        .await
+        {
             Ok(response) => Some(response),
             Err(status) => {
                 info!("A provider was not found in the digital twin service for id '{}' with: '{status:?}'", trailer_v1::trailer::trailer_weight::ID);
@@ -210,7 +210,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             break;
         }
     }
-    
 
     let managed_subscribe_uri = provider_endpoint_info.unwrap().uri;
     info!("The Managed Subscribe URI for the TrailerWeight property's provider is {managed_subscribe_uri}");
