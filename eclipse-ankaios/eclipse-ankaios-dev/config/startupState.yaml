@@ -41,21 +41,6 @@ workloads:
     runtimeConfig: |
       image: sdvblueprint.azurecr.io/sdvblueprint/eclipse-agemo/pub-sub-service:0.1.0
       commandOptions: ["--network", "host"]
-  digital_twin_cloud_sync:
-    runtime: podman
-    agent: agent_A
-    restart: true
-    updateStrategy: AT_MOST_ONCE
-    accessRights:
-      allow: []
-      deny: []
-    tags:
-      - key: project
-        value: freyja
-    runtimeConfig: |
-      image: quay.io/centos-sig-automotive/eclipse-freyja:latest
-      commandOptions: ["--network", "host"]
-      commandArgs: ["mkdir -p /tmp/freyja/target/release/build/mock-digital-twin-cfea9f1437a26e32/out/ && cp /etc/freyja/config/mock_digital_twin_config.default.json /tmp/freyja/target/release/build/mock-digital-twin-cfea9f1437a26e32/out/ && freyja-digital-twin"]
   digital_twin_vehicle:
     runtime: podman
     agent: agent_A
@@ -69,6 +54,20 @@ workloads:
         value: ibeji
     runtimeConfig: |
       image: sdvblueprint.azurecr.io/sdvblueprint/eclipse-ibeji/invehicle-digital-twin:0.1.0
+      commandOptions: ["--network", "host"]
+  digital_twin_cloud_sync:
+    runtime: podman
+    agent: agent_A
+    restart: true
+    updateStrategy: AT_MOST_ONCE
+    accessRights:
+      allow: []
+      deny: []
+    tags:
+      - key: project
+        value: freyja
+    runtimeConfig: |
+      image: sdvblueprint.azurecr.io/sdvblueprint/eclipse-freyja/local-with-ibeji:0.1.0
       commandOptions: ["--network", "host"]
   cloud_connector:
     runtime: podman
