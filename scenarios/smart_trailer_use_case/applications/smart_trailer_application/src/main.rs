@@ -215,7 +215,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
 
-    let managed_subscribe_uri = provider_endpoint_info.unwrap().uri;
+    let managed_subscribe_uri = provider_endpoint_info.ok_or("Maximum amount of retries was reached while trying to retrieve the digital twin provider.")?.uri;
     info!("The Managed Subscribe URI for the TrailerWeight property's provider is {managed_subscribe_uri}");
 
     // Create constraint for the managed subscribe call.
