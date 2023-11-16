@@ -89,18 +89,23 @@ Before starting active development we recommend you start once Ankaios with the 
 
 **Note:** If you have selected a sample scenario requiring resource usage statistics like cpu or memory usage, uncomment the `resource_monitor` config part in the Ankaios startup config [startupState.yaml](./config/startupState.yaml). For more details, see [here](../scenarios/intelligent_orchestrator_use_case/ankaios_resource_statistics_app/README.md).
 
-1. Start Ankaios with all workloads inside the startup config:
+1. Log in into the Microsoft container registry
+```shell
+podman login sdvblueprint.azurecr.io
+```
+
+2. Start Ankaios with all workloads inside the startup config:
 ```shell
 run_maestro.sh
 ``` 
 
-2. Next, use the Ankaios CLI to verify that all initial workloads are up and running:
+3. Next, use the Ankaios CLI to verify that all initial workloads are up and running:
 
 ```shell
 ank get workloads
 ```
 
-3. Verify that all initial workloads inside the startup config have execution state "Running".
+4. Verify that all initial workloads inside the startup config have execution state "Running".
 
 The output looks similar to the following:
 ```shell
@@ -113,7 +118,7 @@ The output looks similar to the following:
  service_discovery          agent_A   podman    Running
 ```
 
-4. Stop Ankaios and clean up all workloads by running:
+5. Stop Ankaios and clean up all workloads by running:
 
 ```shell
 shutdown_maestro.sh
