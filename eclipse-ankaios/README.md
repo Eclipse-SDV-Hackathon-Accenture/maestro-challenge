@@ -1,6 +1,6 @@
 # Ankaios Maestro challenge development environment
 
-![Smart trailer blueprint](https://user-images.githubusercontent.com/9027586/276944985-4e37b961-9ff6-4f6f-a370-18734b54ca63.png)
+![Smart trailer blueprint](../docs/diagrams/ankaios.png)
 
 This repository provides a starter template for solving the Maestro challenges using the [Ankaios](https://github.com/eclipse-ankaios/ankaios) workload orchestrator.
 It contains a pre-configured devcontainer that makes it easy for you to start developing and building container applications managed by Ankaios.
@@ -37,7 +37,7 @@ The following is provided inside the devcontainer:
 - Exposed port:
     - 25551: for optionally using the Ankaios CLI outside of the devcontainer
 
-- [Ankaios Control Interface dependencies](#ankaios-control-interface-dependencies) 
+- [Ankaios Control Interface dependencies](#ankaios-control-interface-dependencies)
 
 
 All services are running in the host network meaning those can be accessed by `localhost:<port>`. We recommend that you set the network mode to host for all your developed workloads as well.
@@ -97,7 +97,7 @@ podman login sdvblueprint.azurecr.io
 2. Start Ankaios with all workloads inside the startup config:
 ```shell
 run_maestro.sh
-``` 
+```
 
 3. Next, use the Ankaios CLI to verify that all initial workloads are up and running:
 
@@ -142,7 +142,7 @@ After customizing the devcontainer, start the development of your workload apps.
 - Extend Ankaios startup config [startupState.yaml](./config/startupState.yaml) by adding config parts for your workloads
 
 Start and stop all workloads according to the section [Startup check before development](#startup-check-before-development).
-Use the Ankaios ClI to check the workload states. For more details display the help of Ankaios CLI by running: 
+Use the Ankaios ClI to check the workload states. For more details display the help of Ankaios CLI by running:
 ```shell
 ank --help
 ```

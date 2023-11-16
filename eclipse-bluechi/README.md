@@ -1,5 +1,7 @@
 # Eclipse Bluechi
 
+![Smart trailer blueprint](../docs/diagrams/bluechi.png)
+
 Upstream documentation: https://bluechi.readthedocs.io/en/latest/
 
 Bluechi is a Systemd controller that runs on top of Systemd to allow
@@ -17,7 +19,6 @@ Kubernetes YAML files to run container based workloads.
 * [bluechictl docs](https://github.com/eclipse-bluechi/bluechi/blob/main/doc/man/bluechictl.1.md)
 * [podman](https://docs.podman.io/en/latest/)
 * [podman and quadlet](https://www.redhat.com/sysadmin/quadlet-podman)
-
 
 ## Development Environment
 
@@ -78,7 +79,7 @@ You can now enter into the container and start playing with bluechi:
 
 ```sh
 podman exec -it autosd-eclipse /bin/bash
-``` 
+```
 
 ### Managing Workloads
 
@@ -98,7 +99,7 @@ An application needs two essential files:
 
 Changing or updating such files need a `systemctl daemon-reload`.
 
-You can see all generated Systemd unit files in `/run/systemd/generator`. 
+You can see all generated Systemd unit files in `/run/systemd/generator`.
 
 #### Service Lifecycle
 
