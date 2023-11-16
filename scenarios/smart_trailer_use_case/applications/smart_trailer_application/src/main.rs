@@ -21,11 +21,11 @@ use interfaces::module::managed_subscribe::v1::managed_subscribe_client::Managed
 use interfaces::module::managed_subscribe::v1::{
     Constraint, SubscriptionInfoRequest, SubscriptionInfoResponse,
 };
-use log::{debug, info, LevelFilter};
+use log::{debug, info, warn, LevelFilter};
 use paho_mqtt as mqtt;
 use tokio::signal;
 use tokio::task::JoinHandle;
-use tokio::time::Duration;
+use tokio::time::{sleep, Duration};
 use tonic::{Request, Status};
 use uuid::Uuid;
 
@@ -36,6 +36,11 @@ const MQTT_CLIENT_ID: &str = "smart-trailer-consumer";
 const CHARIOTT_SERVICE_DISCOVERY_URI: &str = "http://0.0.0.0:50000";
 
 const DEFAULT_FREQUENCY_MS: u64 = 10000; // 10 seconds
+
+// Constants used for retry logic
+const MAX_RETRIES: i32 = 10; // for demo purposes we will retry a maximum of 10 times
+                             // By default we will wait 5 seconds between retry attempts
+const DURATION_BETWEEN_ATTEMPTS: Duration = Duration::from_secs(5);
 
 /// Get trailer weight's subscription information from managed subscribe endpoint.
 ///
@@ -179,15 +184,38 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .unwrap_or_else(|| DEFAULT_FREQUENCY_MS.to_string());
 
     // Retrieve the provider URI.
-    let provider_endpoint_info = discover_digital_twin_provider_using_ibeji(
-        &invehicle_digital_twin_uri,
-        trailer_v1::trailer::trailer_weight::ID,
-        digital_twin_protocol::GRPC,
-        &[digital_twin_operation::MANAGEDSUBSCRIBE.to_string()],
-    )
-    .await?;
+    let mut provider_endpoint_info = None;
+    let mut retries: i32 = 0;
+    while provider_endpoint_info.is_none() {
+        provider_endpoint_info = match discover_digital_twin_provider_using_ibeji(
+            &invehicle_digital_twin_uri,
+            trailer_v1::trailer::trailer_weight::ID,
+            digital_twin_protocol::GRPC,
+            &[digital_twin_operation::MANAGEDSUBSCRIBE.to_string()],
+        )
+        .await
+        {
+            Ok(response) => Some(response),
+            Err(status) => {
+                info!(
+                    "A provider was not found in the digital twin service for id '{}' with: '{:?}'",
+                    trailer_v1::trailer::trailer_weight::ID,
+                    status
+                );
+                None
+            }
+        };
 
-    let managed_subscribe_uri = provider_endpoint_info.uri;
+        if provider_endpoint_info.is_none() && retries < MAX_RETRIES {
+            info!("Retrying FindById to retrieve the properties provider endpoint in {DURATION_BETWEEN_ATTEMPTS:?}.");
+            sleep(DURATION_BETWEEN_ATTEMPTS).await;
+            retries += 1;
+        } else {
+            break;
+        }
+    }
+
+    let managed_subscribe_uri = provider_endpoint_info.ok_or("Maximum amount of retries was reached while trying to retrieve the digital twin provider.")?.uri;
     info!("The Managed Subscribe URI for the TrailerWeight property's provider is {managed_subscribe_uri}");
 
     // Create constraint for the managed subscribe call.
