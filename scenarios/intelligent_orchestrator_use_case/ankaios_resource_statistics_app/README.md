@@ -57,7 +57,7 @@ docker build -t <your_registry_path>/maestro_resource_monitor:latest -f .devcont
 
 ## Run
 
-You can also run the workload for testing without Ankaios for testing, by running it with the following command and settings:
+You can also run the workload without Ankaios for testing, by running it with the following command and settings:
 
 ```shell
 docker run --rm -d --name resource_monitor --privileged --pid host --hostname resource_monitor -p 25555:25555 <your_registry_path>/maestro_resource_monitor:latest
