@@ -206,7 +206,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             }
         };
 
-        if retries < MAX_RETRIES {
+        if provider_endpoint_info.is_none() && retries < MAX_RETRIES {
             info!("Retrying FindById to retrieve the properties provider endpoint in {DURATION_BETWEEN_ATTEMPTS:?}.");
             sleep(DURATION_BETWEEN_ATTEMPTS).await;
             retries += 1;
