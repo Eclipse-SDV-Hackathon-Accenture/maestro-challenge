@@ -2,8 +2,9 @@
 # Maestro Challenge 🚗💻🎶
 - [Introduction](#introduction)
 - [About](#about)
-    - [In-Vehicle Software Stack Orchestrated by Ankaios](#in-vehicle-software-stack-orchestrated-by-ankaios)
-    - [In-Vehicle Software Stack Orchestrated by BlueChi](#in-vehicle-software-stack-orchestrated-by-bluechi)
+    - [In-Vehicle Software Stack Overview](#in-vehicle-software-stack-overview)
+        - [In-Vehicle Software Stack Orchestrated by Ankaios](#in-vehicle-software-stack-orchestrated-by-ankaios)
+        - [In-Vehicle Software Stack Orchestrated by BlueChi](#in-vehicle-software-stack-orchestrated-by-bluechi)
 - [Sample Scenarios](#sample-scenarios)
     - [Provided Sample Scenario](#provided-sample-scenario)
     - [Other Sample Scenarios](#other-sample-scenarios)
@@ -31,17 +32,20 @@ The tech stack in this challenge showcases complex in-vehicle services and workl
 
 Enjoy the process of bringing your vision to life!
 
-### In-Vehicle Software Stack Orchestrated by Ankaios
-![Ankaios](docs/diagrams/ankaios.png)
-
-### In-Vehicle Software Stack Orchestrated by BlueChi
-![BlueChi](docs/diagrams/bluechi.png)
+### In-Vehicle Software Stack Overview
 
 The in-vehicle stack comprises Eclipse Ibeji, Eclipse Agemo, Eclipse Freyja, and Eclipse Chariott. This stack enables a universal vehicle model to be used across different vehicles, dynamic management of vehicle signal topics for publishing and subscribing, synchronization of in-vehicle signals to a cloud-based digital twin, and the development of applications without the need for specific knowledge about the location of the resources they use.
 
 We provide two software orchestrators, Ankaios and BlueChi, to orchestrate the in-vehicle stack. Feel free to choose either for this hackathon challenge.
 
 Please explore the [Projects Involved](#projects-involved) section for a deeper dive into the projects that are part of this challenge.
+
+#### In-Vehicle Software Stack Orchestrated by Ankaios
+
+![Ankaios](docs/diagrams/ankaios.png)
+
+#### In-Vehicle Software Stack Orchestrated by BlueChi
+![BlueChi](docs/diagrams/bluechi.png)
 
 ## Sample Scenarios
 
