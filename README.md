@@ -98,7 +98,7 @@ TODO - Some example references that may need to be included:
 
 #### Eclipse Ankaios Orchestrator
 
-If you have decided to use Ankaios, you will find an easy to use development environment in the subfolder [eclipse-ankaios](./eclipse-ankaios/eclipse-ankaios-dev/README.md),
+If you have decided to use Ankaios, you will find an easy to use development environment in the subfolder [eclipse-ankaios](./eclipse-ankaios/README.md),
 which you can use for all maestro challenges.
 
 #### Eclipse BlueChi Orchestrator

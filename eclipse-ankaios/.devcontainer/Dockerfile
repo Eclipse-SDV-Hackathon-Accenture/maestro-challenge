@@ -16,7 +16,8 @@ RUN git config --global --add safe.directory '*' \
 
 # prod stage, please do not change it
 FROM ghcr.io/eclipse-ankaios/app-ankaios-dev:latest
-COPY scripts/start_ankaios.sh /run/ankaios/script/start_ankaios.sh
-RUN chmod +x /run/ankaios/script/start_ankaios.sh
+RUN curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o /usr/bin/yq \
+    && chmod +x /usr/bin/yq
+COPY scripts/run_maestro.sh /run/ankaios/script/run_maestro.sh
+RUN chmod +x /run/ankaios/script/run_maestro.sh
 COPY config /run/ankaios/config
-CMD ["/run/ankaios/script/start_ankaios.sh", "2>&1"]
