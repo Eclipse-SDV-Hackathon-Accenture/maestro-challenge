@@ -16,11 +16,11 @@
     - [In-Vehicle Software Orchestrators](#in-vehicle-software-orchestrators)
 - [Hack Coaches](#hack-coaches)
 
-Do you want to be the next maestro of the next generation of vehicle software? The time is now!
+**Do you want to be the next maestro of the next generation of vehicle software? The time is now!**
 
 Imagine yourself as the **maestro**. You are not just writing code. You are composing a masterpiece that will drive the future of transportation. Your work will ensure that every component, from the engine control unit to the infotainment system, works in perfect harmony. So, step up to the podium, take a deep breath, and let your creativity flow. The stage is set for you to become the maestro of in-vehicle software 🚗💻🎶.
 
-Come hack with us!
+**Come hack with us!**
 
 ![Maestro](docs/diagrams//orchestra_picture.jpg)
 >Photo by <a href="https://unsplash.com/@gwundrig?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Manuel Nägeli</a>.
