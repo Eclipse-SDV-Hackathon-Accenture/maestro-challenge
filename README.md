@@ -1,28 +1,29 @@
 
 # Maestro Challenge 🚗💻🎶
-- [Introduction](#introduction)
 - [About](#about)
-    - [In-Vehicle Software Stack Overview](#in-vehicle-software-stack-overview)
-        - [In-Vehicle Software Stack Orchestrated by Ankaios](#in-vehicle-software-stack-orchestrated-by-ankaios)
-        - [In-Vehicle Software Stack Orchestrated by BlueChi](#in-vehicle-software-stack-orchestrated-by-bluechi)
+- [In-Vehicle Software Stack Overview](#in-vehicle-software-stack-overview)
+    - [In-Vehicle Software Stack Orchestrated by Ankaios](#in-vehicle-software-stack-orchestrated-by-ankaios)
+    - [In-Vehicle Software Stack Orchestrated by BlueChi](#in-vehicle-software-stack-orchestrated-by-bluechi)
 - [Sample Scenarios](#sample-scenarios)
     - [Provided Sample Scenario](#provided-sample-scenario)
     - [Other Sample Scenarios](#other-sample-scenarios)
     - [Useful References for Creating and Enhancing Sample Scenarios](#useful-references-for-creating-and-enhancing-sample-scenarios)
+- [Development Environments](#development-environments)
+    - [Eclipse Ankaios Orchestrator](#eclipse-ankaios-orchestrator)
+    - [Eclipse BlueChi Orchestrator](#eclipse-bluechi-orchestrator)
 - [Projects Involved](#projects-involved)
     - [In-Vehicle Software Stack](#in-vehicle-software-stack)
     - [In-Vehicle Software Orchestrators](#in-vehicle-software-orchestrators)
 - [Hack Coaches](#hack-coaches)
-
-## Introduction
-![Maestro](docs/diagrams//orchestra_picture.jpg)
->Photo by <a href="https://unsplash.com/@gwundrig?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Manuel Nägeli</a>.
 
 Do you want to be the next maestro of the next generation of vehicle software? The time is now!
 
 Imagine yourself as the **maestro**. You are not just writing code. You are composing a masterpiece that will drive the future of transportation. Your work will ensure that every component, from the engine control unit to the infotainment system, works in perfect harmony. So, step up to the podium, take a deep breath, and let your creativity flow. The stage is set for you to become the maestro of in-vehicle software 🚗💻🎶.
 
 Come hack with us!
+
+![Maestro](docs/diagrams//orchestra_picture.jpg)
+>Photo by <a href="https://unsplash.com/@gwundrig?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Manuel Nägeli</a>.
 
 ## About
 
@@ -32,7 +33,7 @@ The tech stack in this challenge showcases complex in-vehicle services and workl
 
 Enjoy the process of bringing your vision to life!
 
-### In-Vehicle Software Stack Overview
+## In-Vehicle Software Stack Overview
 
 The in-vehicle stack comprises Eclipse Ibeji, Eclipse Agemo, Eclipse Freyja, and Eclipse Chariott. This stack enables a universal vehicle model to be used across different vehicles, dynamic management of vehicle signal topics for publishing and subscribing, synchronization of in-vehicle signals to a cloud-based digital twin, and the development of applications without the need for specific knowledge about the location of the resources they use.
 
@@ -40,11 +41,11 @@ We provide two software orchestrators, Ankaios and BlueChi, to orchestrate the i
 
 Please explore the [Projects Involved](#projects-involved) section for a deeper dive into the projects that are part of this challenge.
 
-#### In-Vehicle Software Stack Orchestrated by Ankaios
+### In-Vehicle Software Stack Orchestrated by Ankaios
 
 ![Ankaios](docs/diagrams/ankaios.png)
 
-#### In-Vehicle Software Stack Orchestrated by BlueChi
+### In-Vehicle Software Stack Orchestrated by BlueChi
 ![BlueChi](docs/diagrams/bluechi.png)
 
 ## Sample Scenarios
@@ -92,6 +93,18 @@ TODO - Some example references that may need to be included:
         Example: Ibeji's endpoint can be found through service discovery.
 - Freyja - Syncing signals to the cloud:
     - If a user wishes to integrate their scenario with Azure, which image would I need to pull to enable Freyja to sync to the cloud?
+
+### Development Environments
+
+#### Eclipse Ankaios Orchestrator
+
+If you have decided to use Ankaios, you will find an easy to use development environment in the subfolder [eclipse-ankaios](./eclipse-ankaios/eclipse-ankaios-dev/README.md),
+which you can use for all maestro challenges.
+
+#### Eclipse BlueChi Orchestrator
+
+If you have decided to use BlueChi, you will find an easy to use development environment in the subfolder [eclipse-bluechi](./eclipse-bluechi/README.md),
+which you can use for all maestro challenges.
 
 ## Need to know
 - You need basic knowledge about containerization technologies and tools (e.g. Docker, Podman), but if you have not dealt with it yet, don't worry, just check out a little tutorial (https://docs.docker.com/get-started/) to get a basic understanding of containers and you are prepared.
