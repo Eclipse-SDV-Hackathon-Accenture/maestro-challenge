@@ -12,7 +12,7 @@ license = "MIT"
 digital-twin-model = { path = "../../digital-twin-model" }
 digital_twin_providers_common = { path = "../common" }
 env_logger = { workspace = true }
-interfaces = { path = "../../../../in-vehicle-stack/proto_build"}
+interfaces = { path = "../../../../proto_build"}
 log = { workspace = true }
 paho-mqtt = { workspace = true }
 parking_lot = { workspace = true }

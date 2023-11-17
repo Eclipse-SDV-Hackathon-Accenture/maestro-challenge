@@ -5,8 +5,8 @@
 [workspace]
 
 members = [
-  # in-vehicle-stack
-  "in-vehicle-stack/proto_build",
+  # in-vehicle-stack interfaces
+  "proto_build",
 
   # smart_trailer_use_case
   "scenarios/smart_trailer_use_case/applications/smart_trailer_application",

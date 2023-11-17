@@ -7,6 +7,7 @@
         "target": "dev"
     },
    "mounts": [
+	"source=${localWorkspaceFolder}/../../in-vehicle-stack,target=/workspaces/app/in-vehicle-stack,type=bind"
    ],
    "runArgs": [
 	"--privileged"

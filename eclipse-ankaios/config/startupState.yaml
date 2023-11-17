@@ -12,63 +12,39 @@ workloads:
         value: chariott
     runtimeConfig: |
       image: sdvblueprint.azurecr.io/sdvblueprint/eclipse-chariott/service-discovery:0.1.1
-      commandOptions: ["--network", "host"]
+      commandOptions: ["--network", "host", "--name", "service_discovery"]
   mqtt_broker:
     runtime: podman
     agent: agent_A
-    restart: true
-    updateStrategy: AT_MOST_ONCE
-    accessRights:
-      allow: []
-      deny: []
-    tags:
-      - key: project
+    workloads:
         value: agemo
     runtimeConfig: |
       image: sdvblueprint.azurecr.io/sdvblueprint/eclipse-mosquitto/mqtt-broker:latest
-      commandOptions: ["--network", "host"]
+      commandOptions: ["--network", "host", "--name", "mqtt-broker"]
   dynamic_topic_management:
     runtime: podman
     agent: agent_A
-    restart: true
-    updateStrategy: AT_MOST_ONCE
-    accessRights:
-      allow: []
-      deny: []
-    tags:
-      - key: project
+    workloads:
         value: agemo
     runtimeConfig: |
       image: sdvblueprint.azurecr.io/sdvblueprint/eclipse-agemo/pub-sub-service:0.1.0
-      commandOptions: ["--network", "host"]
+      commandOptions: ["--network", "host", "--name", "pub-sub-service"]
   digital_twin_vehicle:
     runtime: podman
     agent: agent_A
-    restart: true
-    updateStrategy: AT_MOST_ONCE
-    accessRights:
-      allow: []
-      deny: []
-    tags:
-      - key: project
+    workloads:
         value: ibeji
     runtimeConfig: |
       image: sdvblueprint.azurecr.io/sdvblueprint/eclipse-ibeji/invehicle-digital-twin:0.1.0
-      commandOptions: ["--network", "host"]
+      commandOptions: ["--network", "host", "--name", "invehicle-digital-twin"]
   digital_twin_cloud_sync:
     runtime: podman
     agent: agent_A
-    restart: true
-    updateStrategy: AT_MOST_ONCE
-    accessRights:
-      allow: []
-      deny: []
-    tags:
-      - key: project
+    workloads:
         value: freyja
     runtimeConfig: |
       image: sdvblueprint.azurecr.io/sdvblueprint/eclipse-freyja/local-with-ibeji:0.1.0
-      commandOptions: ["--network", "host"]
+      commandOptions: ["--network", "host", "--name", "local-cloud-sync"]
   cloud_connector:
     runtime: podman
     agent: agent_A
