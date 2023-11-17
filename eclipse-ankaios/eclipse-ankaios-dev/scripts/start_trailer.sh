@@ -26,7 +26,7 @@ METHOD="FindById"
 # The request body: The IsTrailerConnected signal
 BODY='{"id":"dtmi:sdv:Trailer:IsTrailerConnected;1"}'
 
-PROTO_PATH="../../../in-vehicle-stack/interfaces/invehicle_digital_twin/v1"
+PROTO_PATH="../in-vehicle-stack/interfaces/invehicle_digital_twin/v1"
 PROTO="invehicle_digital_twin.proto"
 
 EXPECTED_PROTOCOL="grpc"
@@ -73,7 +73,7 @@ do
         get_server=$(echo "$URI" | sed 's/http:\/\///g')
 
         # Call get for the "trailer connected provider" to check if it's connected
-        GET_PROTO_PATH="../interfaces"
+        GET_PROTO_PATH="../in-vehicle-stack/scenarios/smart_trailer_use_case/interfaces"
         GET_PROTO="digital_twin_get_provider.proto"
         GET_SERVER=$get_server
         GET_SERVICE="digital_twin_get_provider.DigitalTwinGetProvider"
