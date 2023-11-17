@@ -1,5 +1,9 @@
 #!/bin/bash
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT license.
+# SPDX-License-Identifier: MIT
 
+set -e
 # This script requires jq and grpcurl to be installed
 # The commands for this can be added here
 
@@ -23,7 +27,6 @@ PROTO="invehicle_digital_twin.proto"
 EXPECTED_PROTOCOL="grpc"
 EXPECTED_OPERATION="get"
 
-
 # Call FindById in a loop until something is returned
 while true; do
   OUTPUT=$(grpcurl -import-path $PROTO_PATH -proto $PROTO -plaintext -d "$BODY" $SERVER $SERVICE/$METHOD 2>&1)
@@ -38,7 +41,6 @@ while true; do
     echo "Provider not found: $OUTPUT"
     echo "The trailer is not connected. Retrying..."
     sleep 5 
-
   fi
 done
 
@@ -84,7 +86,7 @@ do
           ank run workload smart_trailer_application --runtime podman --config "$CFG_APP" --agent agent_A
 
           echo "Called Ankaios to start the Trailer Properties Digital Twin Provider and Smart Trailer Application"
-          echo "Check Ankaios status with ank get workloads"
+          echo "Check Ankaios status with 'ank get workloads'"
           exit 0
         fi
       fi

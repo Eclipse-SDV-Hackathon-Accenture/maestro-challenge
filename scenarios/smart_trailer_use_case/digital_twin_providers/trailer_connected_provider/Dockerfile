@@ -17,7 +17,7 @@ WORKDIR /sdv
 COPY ./ .
 
 # Add Build dependencies.
-RUN apt update && apt upgrade -y && apt install -y \
+RUN apt update -y && apt upgrade -y && apt install -y \
     cmake \
     libssl-dev \
     pkg-config \
