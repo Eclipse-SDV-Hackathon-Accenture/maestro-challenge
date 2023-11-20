@@ -80,7 +80,7 @@ docker build -t custom-ankaios-dev:0.1 --target dev -f .devcontainer/Dockerfile 
 Start the devcontainer with the subfolder containing this README file mounted inside:
 
 ```shell
-docker run -it --privileged --name custom_ankaios_dev -v <absolute/path/to/>maestro-challenge/eclipse-ankaios:/workspaces/app -p 25551:25551 --workdir /workspaces/app custom-ankaios-dev:0.1 /bin/bash
+docker run -it --privileged --name custom_ankaios_dev -v <absolute/path/to>/maestro-challenge/eclipse-ankaios:/workspaces/app -p 25551:25551 --workdir /workspaces/app custom-ankaios-dev:0.1 /bin/bash
 ```
 
 ## Startup check before development
