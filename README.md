@@ -63,7 +63,7 @@ TODO: This section needs to be refined. The goal is to include key references to
 TODO - Some example references that may need to be included:
 #### Ibeji
 - [How do I create an in-vehicle digital twin model?](https://github.com/eclipse-ibeji/ibeji/blob/main/docs/tutorials/in_vehicle_model/README.md)
-- [How do I create a digital twin provider or add additional capabilities to an existing provider?](https://github.com/eclipse-ibeji/ibeji/blob/main/docs/tutorials/in_vehicle_model/README.md)
+- [How do I create a digital twin provider or add additional capabilities to an existing provider?](https://github.com/eclipse-ibeji/ibeji/blob/main/docs/tutorials/provider/README.md)
     * When you add new capabilities to a provider, such as a new in-vehicle signal, you will need to update the mapping client configuration or the mapping service that you are using with Freyja. See the [Freyja FAQ](#freyja) for more details.
     - [How do I build a container image for my digital twin provider?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/container/README.md#provider)
     - [If my digital twin provider is running in a container, how do I override its configuration file?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/container/README.md#run)
