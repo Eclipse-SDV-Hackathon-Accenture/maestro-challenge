@@ -1,5 +1,7 @@
 # Eclipse BlueChi
 
+![Smart trailer blueprint](../docs/diagrams/bluechi.png)
+
 Upstream documentation: <https://bluechi.readthedocs.io/en/latest/>
 
 BlueChi is a systemd controller that adds a thin layer to enable multi-node
