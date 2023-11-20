@@ -9,7 +9,7 @@ digital-twin-model = { path = "../../digital-twin-model" }
 digital_twin_providers_common = { path = "../../digital_twin_providers/common" }
 env_logger= { workspace = true }
 log = { workspace = true }
-interfaces = { path = "../../../../in-vehicle-stack/proto_build"}
+interfaces = { path = "../../../../proto_build"}
 paho-mqtt = { workspace = true }
 tokio = { workspace = true, features = ["macros", "rt-multi-thread", "signal"] }
 tonic = { workspace = true }

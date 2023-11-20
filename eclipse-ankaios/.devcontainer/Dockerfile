@@ -3,6 +3,7 @@ ARG TARGETARCH
 
 RUN apt-get update && apt-get -y install \
     git \
+    jq \
     # Add your development tools here ...
     # Cleanup
     && \
