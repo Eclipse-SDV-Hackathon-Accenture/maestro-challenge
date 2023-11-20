@@ -58,23 +58,27 @@ TODO: Provide some ideas to help the user build this Smart Trailer application. 
 
 This section offers guidance for creating a new sample scenario or improving the [Provided Sample Scenario](#provided-sample-scenario). While it does not provide a comprehensive list of resources, it aims to steer you in the right direction. If this section does not provide the guidance you need, please refer to the respective project’s documentation. See [Projects Involved](#projects-involved) for the project links.
 
-TODO: This section needs to be refined. The goal is to include key references to help users easily identify the doucmentation they need to enhance a scenario or create their scenario. If this section gets too long, we can place the contents in another document and reference it here.
+TODO: This section needs to be refined. The goal is to include key references to help users easily identify the documentation they need to enhance a scenario or create their scenario. If this section gets too long, we can place the contents in another document and reference it here.
 
 TODO - Some example references that may need to be included:
-- Ibeji:
-    - Reference the tutorial on how to write DTDL and create a vehicle model?
-        - DTDL is just a reference representation of a vehicle hardware, and DTDL is not explicility parsed by anything
-    - Reference the tutorial on creating DT provider
-        - This tutorial would cover adding new signals to a DT provider
-        - Include instructions on how to use managed subscribe, but through the Ibeji module. Users will not need to know that they are contacting Agemo.
-    - Reference the tutorial on consuming signals from Ibeji
-    - Freyja - Mappings config: Need to mention that "after adding a new signal to your DT provider, modify the mapping config to map the DT provider’s signal with the Cloud."
-- Chariott:
-    - How to use service discovery to register and discover applications
-    - How to find any of our services
-        Example: Ibeji's endpoint can be found through service discovery.
-- Freyja - Syncing signals to the cloud:
-    - If a user wishes to integrate their scenario with Azure, which image would I need to pull to enable Freyja to sync to the cloud?
+#### Ibeji
+- [How do I create an in-vehicle digital twin model?](https://github.com/eclipse-ibeji/ibeji/blob/main/docs/tutorials/in_vehicle_model/README.md)
+- [How do I create a digital twin provider or add additional capabilities to an existing provider?](https://github.com/eclipse-ibeji/ibeji/blob/main/docs/tutorials/in_vehicle_model/README.md)
+    * When you add new capabilities to a provider, such as a new in-vehicle signal, you will need to update the mapping client configuration or the mapping service that you are using with Freyja. See the [Freyja FAQ](#freyja) for more details.
+    - [How do I build a container image for my digital twin provider?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/container/README.md#provider)
+    - [If my digital twin provider is running in a container, how do I override its configuration file?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/container/README.md#run)
+    - [How do I use the Managed Subscribe module?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/managed_subscribe/README.md)
+- [How do I create a digital twin consumer?](https://github.com/eclipse-ibeji/ibeji/blob/main/docs/tutorials/consumer/README.md)
+    - [How do I build a container image for my digital twin consumer?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/container/README.md#consumer)
+    - [If my digital twin consumer is running in a container, how do I override its configuration file?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/container/README.md#run-1)
+#### Chariott
+- [How can I use the Service Discovery to register and discover other applications/services?](https://github.com/eclipse-chariott/chariott/blob/main/service_discovery/README.md)
+#### Freyja
+- [How do I configure new mappings for Freyja's in-memory mapping client?](https://github.com/eclipse-ibeji/freyja/blob/main/mapping_clients/in_memory_mock_mapping_client/README.md)
+- [How do I override the mapping configuration?](https://github.com/eclipse-ibeji/freyja/blob/main/docs/config-overrides.md)
+- [How do I sync signals to the Cloud?](https://github.com/eclipse-ibeji/ibeji-example-applications/blob/main/cloud_connectors/azure/digital_twins_connector/README.md)
+    - TODO - If a user wishes to integrate their scenario with Azure, which image would I need to pull to enable Freyja to sync to the cloud?
+- TODO - Add link to documentation outlining how to to override configuration for in-vehicle-stack containers'
 
 ## Getting Started
 
