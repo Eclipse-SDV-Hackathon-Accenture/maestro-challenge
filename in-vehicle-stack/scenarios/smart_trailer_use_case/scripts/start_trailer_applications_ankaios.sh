@@ -44,6 +44,7 @@ EXPECTED_OPERATION="get"
 
 # Call FindById in a loop until something is returned
 while true; do
+  STATUS=0
   OUTPUT=$(grpcurl -import-path $PROTO_PATH -proto $PROTO -plaintext -d "$BODY" $SERVER $SERVICE/$METHOD 2>&1) || STATUS=$?
 
   # Check if the output contains entityAccessInfo (the response from Ibeji when a provider is found)
