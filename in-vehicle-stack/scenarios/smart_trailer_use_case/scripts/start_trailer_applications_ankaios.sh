@@ -3,6 +3,8 @@
 # Licensed under the MIT license.
 # SPDX-License-Identifier: MIT
 
+set -e
+
 # This script requires jq and grpcurl to be installed
 # These are included in the ankaios devcontainer, but if you want to run it outside
 # you could add the commands to install them here
@@ -42,7 +44,7 @@ EXPECTED_OPERATION="get"
 
 # Call FindById in a loop until something is returned
 while true; do
-  OUTPUT=$(grpcurl -import-path $PROTO_PATH -proto $PROTO -plaintext -d "$BODY" $SERVER $SERVICE/$METHOD 2>&1)
+  OUTPUT=$(grpcurl -import-path $PROTO_PATH -proto $PROTO -plaintext -d "$BODY" $SERVER $SERVICE/$METHOD 2>&1) || STATUS=$?
 
   # Check if the output contains entityAccessInfo (the response from Ibeji when a provider is found)
   if echo "$OUTPUT" | grep -iq "EntityAccessInfo"
@@ -51,7 +53,7 @@ while true; do
     echo "$OUTPUT"
     break
   else
-    echo "Provider not found: $OUTPUT"
+    echo "Provider not found. Status Code '$STATUS' Error '$OUTPUT'"
     echo "The trailer is not connected. Retrying..."
     sleep 5 
   fi
