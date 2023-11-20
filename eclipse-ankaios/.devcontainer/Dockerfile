@@ -1,4 +1,5 @@
 FROM ghcr.io/eclipse-ankaios/app-ankaios-dev:latest as dev
+ARG TARGETARCH
 
 RUN apt-get update && apt-get -y install \
     git \
@@ -6,7 +7,7 @@ RUN apt-get update && apt-get -y install \
     # Cleanup
     && \
     rm -rf /var/lib/apt/lists/* \
-    && curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o /usr/bin/yq \
+    && curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${TARGETARCH} -o /usr/bin/yq \
     && chmod +x /usr/bin/yq
 
 # Trust all repositories in this container
@@ -16,7 +17,7 @@ RUN git config --global --add safe.directory '*' \
 
 # prod stage, please do not change it
 FROM ghcr.io/eclipse-ankaios/app-ankaios-dev:latest
-RUN curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o /usr/bin/yq \
+RUN curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${TARGETARCH} -o /usr/bin/yq \
     && chmod +x /usr/bin/yq
 COPY scripts/run_maestro.sh /run/ankaios/script/run_maestro.sh
 RUN chmod +x /run/ankaios/script/run_maestro.sh
