@@ -3,9 +3,22 @@
 # Licensed under the MIT license.
 # SPDX-License-Identifier: MIT
 
-set -e
 # This script requires jq and grpcurl to be installed
-# The commands for this can be added here
+# These are included in the ankaios devcontainer, but if you want to run it outside
+# you could add the commands to install them here
+# Check if grpcurl is installed
+if !command -v grpcurl &> /dev/null
+then
+  echo "grpcurl could not be found; please install it and run again"
+  exit 1
+fi
+
+# Check if jq is installed
+if !command -v jq &> /dev/null
+then
+  echo "jq could not be found; please install it and run again"
+  exit 1
+fi
 
 # Get the directory of where the script is located
 # All relative paths will be in relation to this
@@ -79,8 +92,8 @@ do
           echo "Trailer is connected! Starting workloads to manage it"
 
           # Start up the other workloads using podman
-          CFG_PROVIDER=$'image: localhost/trailer_properties_provider_ank:latest\ncommandOptions: ["--network", "host", "--name", "trailer_properties_provider"]'
-          CFG_APP=$'image: localhost/smart_trailer_application_ank:latest\ncommandOptions: ["--network", "host", "--name", "smart_trailer_application"]'
+          CFG_PROVIDER=$'image: sdvblueprint.azurecr.io/sdvblueprint/in-vehicle-stack/trailer_properties_provider:0.1.0\ncommandOptions: ["--network", "host", "--name", "trailer_properties_provider"]'
+          CFG_APP=$'image: sdvblueprint.azurecr.io/sdvblueprint/in-vehicle-stack/smart_trailer_application:0.1.0\ncommandOptions: ["--network", "host", "--name", "smart_trailer_application"]'
 
           ank run workload trailer_properties_provider --runtime podman --config "$CFG_PROVIDER" --agent agent_A
           ank run workload smart_trailer_application --runtime podman --config "$CFG_APP" --agent agent_A
