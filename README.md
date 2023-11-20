@@ -64,8 +64,7 @@ TODO - Some example references that may need to be included:
 #### Ibeji
 - [How do I create an in-vehicle digital twin model?](https://github.com/eclipse-ibeji/ibeji/blob/main/docs/tutorials/in_vehicle_model/README.md)
 - [How do I create a digital twin provider or add additional capabilities to an existing provider?](https://github.com/eclipse-ibeji/ibeji/blob/main/docs/tutorials/in_vehicle_model/README.md)
-    * When you add new capabilities to a provider, such as a new in-vehicle signal, you will need to update Freyja's mapping configuration file.
-        - Please refer to **How do I add new mappings to Freyja's mapping configuration** under [Freyja's FAQ](#freyja).
+    * When you add new capabilities to a provider, such as a new in-vehicle signal, you will need to update the mapping client configuration or the mapping service that you're using with Freyja. See the [Freyja FAQ](#freyja) for more details.
     - [How do I build a container image for my digital twin provider?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/container/README.md#provider)
     - [If my digital twin provider is running in a container, how do I override its configuration file?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/container/README.md#run)
     - [How do I use the Managed Subscribe module?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/managed_subscribe/README.md)
@@ -75,7 +74,7 @@ TODO - Some example references that may need to be included:
 #### Chariott
 - [How can I use the Service Discovery to register and discover other applications/services?](https://github.com/eclipse-chariott/chariott/blob/main/service_discovery/README.md)
 #### Freyja
-- [How do I add new mappings to Freyja's mapping configuration file?](https://github.com/eclipse-ibeji/freyja/blob/main/mapping_clients/in_memory_mock_mapping_client/README.md)
+- [How do I configure new mappings for Freyja's in-memory mapping client?](https://github.com/eclipse-ibeji/freyja/blob/main/mapping_clients/in_memory_mock_mapping_client/README.md)
 - [How do I override the mapping configuration?](https://github.com/eclipse-ibeji/freyja/blob/main/docs/config-overrides.md)
 - [How do I sync signals to the Cloud?](https://github.com/eclipse-ibeji/ibeji-example-applications/blob/main/cloud_connectors/azure/digital_twins_connector/README.md)
 - TODO - If a user wishes to integrate their scenario with Azure, which image would I need to pull to enable Freyja to sync to the cloud?
