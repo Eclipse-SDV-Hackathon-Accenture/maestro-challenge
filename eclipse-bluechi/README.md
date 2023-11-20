@@ -1,49 +1,47 @@
-# Eclipse Bluechi
+# Eclipse BlueChi
 
-Upstream documentation: https://bluechi.readthedocs.io/en/latest/
+Upstream documentation: <https://bluechi.readthedocs.io/en/latest/>
 
-Bluechi is a Systemd controller that runs on top of Systemd to allow
-multi-node workload management and dependency.
+BlueChi is a systemd controller that adds a thin layer to enable multi-node
+workload management and cross-node dependencies.
 
-It allows both container and non-container workloads and uses Podman
-as its container management tool.
-
-It also realies on a tool called "Quadlet" which enables the usage of
-Kubernetes YAML files to run container based workloads.
+It can handle various workloads such as containers, virtual machines or
+applications running on bare metal. To run containers under systemd in an
+optimal way it uses Podman's Quadlet implementation. This also enables the usage
+of Kubernetes resource definitions to define the workload.
 
 ## Links
 
-* [bluechi docs](https://bluechi.readthedocs.io/en/latest/)
-* [bluechictl docs](https://github.com/eclipse-bluechi/bluechi/blob/main/doc/man/bluechictl.1.md)
-* [podman](https://docs.podman.io/en/latest/)
-* [podman and quadlet](https://www.redhat.com/sysadmin/quadlet-podman)
-
+* [BlueChi documentation](https://bluechi.readthedocs.io/en/latest/)
+* [BlueChi CLI
+  documentation](<https://github.com/eclipse-bluechi/bluechi/blob/main/doc/man/bluechictl.1.md>)
+* [Podman](https://docs.podman.io/en/latest/)
+* [Podman and Quadlet](https://www.redhat.com/sysadmin/quadlet-podman)
 
 ## Development Environment
 
-The provided development environment provides the following components:
+The development environment provides the following components:
 
 * Eclipse Chariott
 * Eclipse Agemo
 * Eclipse Kuksa (databroker)
 * Eclipse Ibeji
 * Eclipse Freyja
-* Eclipse Bluechi
-* Systemd
+* Eclipse BlueChi
+* systemd
 * Podman
 * Quadlet
 
-All services are running in the host networking meaning that those
-can be accessed by using `localhost:$service_port`.
+All services are accessible via `localhost:$port`.
 
 ### Flavors
 
-#### Devcontainer
+#### devcontainer
 
-Upstream documentation: https://containers.dev/
+Upstream documentation: <https://containers.dev/>
 
-You can use devcotainers to start your containerized development environment by using the following
-`devcontainer.json` file:
+You can use devcotainers to start your containerized development environment by
+using the following `devcontainer.json` file:
 
 ```json
 {
@@ -53,16 +51,13 @@ You can use devcotainers to start your containerized development environment by 
 }
 ```
 
-Or you can just clone the devcontainer template repository: https://gitlab.com/CentOS/automotive/container-images/templates/devcontainer (you will need to change the image to `quay.io/centos-sig-automotive/autosd-eclipse:latest` if so).
+Or you can just clone the devcontainer template repository:
+<https://gitlab.com/CentOS/automotive/container-images/templates/devcontainer>
+and change the image to `quay.io/centos-sig-automotive/autosd-eclipse:latest`.
 
 #### Containers
 
-Commands in this section are using `podman` but it can be replaced by `docker`.
-
-Upstream documentation:
-
-* https://docs.podman.io/en/latest/
-* https://docs.docker.com/
+Upstream documentation: <https://docs.podman.io/en/latest/>
 
 Start the container by running:
 
@@ -74,52 +69,58 @@ podman run \
 quay.io/centos-sig-automotive/autosd-eclipse:latest
 ```
 
-You can now enter into the container and start playing with bluechi:
+Enter into the container and interact with BlueChi:
 
 ```sh
 podman exec -it autosd-eclipse /bin/bash
-``` 
+bluechictl list-units
+```
 
 ### Managing Workloads
 
-This section describes how to deploy and perform adminstratives tasks using systemd and bluechi.
+This section describes how to deploy and perform adminstratives tasks using
+systemd and BlueChi.
 
 #### Deploying Applications
 
-Bluechi relies on three components to handler containerized applications: Systemd, quadlet and podman.
+BlueChi relies on three components to handle containerized applications:
 
-Application definitions are stored in `/etc/containers/systemd`, you can see that
-all other services are defined in that folder.
+* systemd
+* Quadlet
+* Podman
 
-An application needs two essential files:
+Application definitions are stored in `/etc/containers/systemd`. An application
+needs two essential files:
 
-* `$service.kube`: used by systemd to point to a kubernetes yaml file with the actual app definiton.
-* `service.yaml`: A kubernetes YAML file (either `v1.Pod` or `apps/v1.Deployment`) that will run your sevices/application.
+* `service.kube`: Used by systemd to point to a Kubernetes resource definition
+  containing the workload definition.
+* `service.yaml`: A Kubernetes resource definition (either `v1.Pod` or
+  `apps/v1.Deployment`) that describes the workload.
 
-Changing or updating such files need a `systemctl daemon-reload`.
-
-You can see all generated Systemd unit files in `/run/systemd/generator`. 
+Changing or updating a file in `/etc/containers/systemd` requires a `systemctl
+daemon-reload` afterwards to generate the corresponding systemd unit files in
+`/run/systemd/generator`.
 
 #### Service Lifecycle
 
-Services can be managed by using `systemctl`, Systemd's admin cli.
+Services can be managed by using `systemctl`, systemd's administrative CLI.
 
 Starting, stopping, restarting services is as easy as:
 
-* systemctl stop $svc
-* systemc start $svc
-* systemctl restart $svc
+* `systemctl stop $svc`
+* `systemc start $svc`
+* `systemctl restart $svc`
 
-You will need to reload Systemd's daemon in case something changed in your service
-definition files (Kubernetes YAML/Systemd Unit files):
-
-* `systemctl daemon-reload`
+> Make sure to run `systemctl daemon-reload` in case something changed in either
+> the Quadlet files or systemd units.
 
 #### Monitoring and Logs
 
-You can use systemctl to read your service logs: `systemctl logs $service`.
+To read your service logs run `systemctl logs $service`. Alternatively Podman
+can be used to list container processes and their ID's or name by running
+`podman ps`. Then run `podman logs $container_id_or_name` to read logs from a
+container.
 
-Podman can also be used to list container processes by running `podman ps` and then `podman logs $container_id_or_name` can be
-used to read logs from a container.
-
-Bluechi's cli (`bluechictl`), can also be used to proxy all systemctl as well as its own node monitoring tools: https://github.com/eclipse-bluechi/bluechi/blob/main/doc/man/bluechictl.1.md.
+BlueChi's CLI (`bluechictl`), can also be used to retrieve information from
+managed nodes:
+<https://github.com/eclipse-bluechi/bluechi/blob/main/doc/man/bluechictl.1.md>.
