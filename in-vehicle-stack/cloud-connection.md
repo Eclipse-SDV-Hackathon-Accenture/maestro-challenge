@@ -75,7 +75,7 @@ Connector to establish connection. Run:
     account authenticated with your Azure Digital Twins instance:
 
     ```shell
-    To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code <FAKECODE> to authenticate.
+    To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code <DEVICE_CODE> to authenticate.
     ```
 
 2. Validate you have successfully logged in by re-running
