@@ -19,3 +19,6 @@ The `proto_build` directory provides the necessary files to compile the protobuf
 would like to develop sample applications using Rust, you can use `cargo build -p interfaces`. If
 you are not using Rust, use the [protobuf compiler](https://grpc.io/docs/protoc-installation/) with
 the language of your choice to generate clients for interacting with the services.
+
+Note: If you choose Ankaios as your orchestrator, please add your dependencies into the [Dockerfile](../.devcontainer/Dockerfile). For Rust,
+you can just uncomment the prepared lines in the Dockerfile.
