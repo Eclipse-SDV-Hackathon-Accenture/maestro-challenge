@@ -19,3 +19,13 @@ The `proto_build` directory provides the necessary files to compile the protobuf
 would like to develop sample applications using Rust, you can use `cargo build -p interfaces`. If
 you are not using Rust, use the [protobuf compiler](https://grpc.io/docs/protoc-installation/) with
 the language of your choice to generate clients for interacting with the services.
+
+### Cloud Connection
+
+Please refer to the [In-Vehicle Stack with Cloud Connectivity](cloud-connection.md) for
+instructions on how to setup the In-Vehicle Stack to connect with Azure.
+
+### Configuration overrides
+
+To override configuration for one of the in-vehicle stack services, please follow
+[How to Override Configuration for In-Vehicle Stack Containers](config_overrides.md/#how-to-override-configuration-for-in-vehicle-stack-containers).
