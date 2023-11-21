@@ -2,11 +2,6 @@ workloads:
   service_discovery:
     runtime: podman
     agent: agent_A
-    restart: true
-    updateStrategy: AT_MOST_ONCE
-    accessRights:
-      allow: []
-      deny: []
     tags:
       - key: project
         value: chariott
@@ -16,7 +11,8 @@ workloads:
   mqtt_broker:
     runtime: podman
     agent: agent_A
-    workloads:
+    tags:
+      - key: project
         value: agemo
     runtimeConfig: |
       image: sdvblueprint.azurecr.io/sdvblueprint/eclipse-mosquitto/mqtt-broker:latest
@@ -24,7 +20,8 @@ workloads:
   dynamic_topic_management:
     runtime: podman
     agent: agent_A
-    workloads:
+    tags:
+      - key: project
         value: agemo
     runtimeConfig: |
       image: sdvblueprint.azurecr.io/sdvblueprint/eclipse-agemo/pub-sub-service:0.1.0
@@ -32,7 +29,8 @@ workloads:
   digital_twin_vehicle:
     runtime: podman
     agent: agent_A
-    workloads:
+    tags:
+      - key: project
         value: ibeji
     runtimeConfig: |
       image: sdvblueprint.azurecr.io/sdvblueprint/eclipse-ibeji/invehicle-digital-twin:0.1.0
@@ -40,11 +38,12 @@ workloads:
   digital_twin_cloud_sync:
     runtime: podman
     agent: agent_A
-    workloads:
+    tags:
+      - key: project
         value: freyja
     runtimeConfig: |
       image: sdvblueprint.azurecr.io/sdvblueprint/eclipse-freyja/local-with-ibeji:0.1.0
-      commandOptions: ["--network", "host", "--name", "cloud-sync"]
+      commandOptions: ["--network", "host", "--name", "local-cloud-sync"]
   # cloud_connector:
   #   runtime: podman
   #   agent: agent_A
