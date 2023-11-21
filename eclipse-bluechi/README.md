@@ -42,7 +42,7 @@ All services are accessible via `localhost:$port`.
 Upstream documentation: <https://containers.dev/>
 
 You can use devcotainers to start your containerized development environment by
-using the following `devcontainer.json` file:
+using the following `devcontainer.json` file. Replace "{PATH-TO-MAESTRO}" with your path to the maestro repository:
 
 ```json
 {
@@ -77,11 +77,11 @@ podman exec -it autosd-eclipse /bin/bash
 bluechictl list-units
 ```
 
-### Bootstraping
+### Bootstrapping
 
-You need to bootstrap all eclipse services once you got your eclipse-bluechi container running.
+You need to bootstrap all Eclipse services once you got your eclipse-bluechi container running.
 
-You will need to login to Azure's reghistry to pull all required images:
+You will need to login to Azure's container registry to pull all required images:
 
 ```sh
 podman login \
@@ -163,3 +163,12 @@ This is valid for any systemd defined service, simply run `journalctl -xeu $serv
 
 You can also list all active containers by running `podman ps` and then `podman logs $container_name_or_id` to
 get logs from the container using podman.
+
+### Running the Smart Trailer Example with BlueChi's devcontainer
+Inside of the [devcontainer](#devcontainer):
+1. Follow the instructions in [Bootstrapping](#bootstrapping) to start up the in-vehicle stack.
+1. Run the script `start_trailer_applications_bluechi.sh` to monitor for the trailer to be connected. It can be found at `in-vehicle-stack/scenarios/smart_trailer_use_case/scripts/start_trailer_applications_bluechi.sh`.
+1. In another terminal window inside the devcontainer, start the `trailer-connected` service to simulate the trailer being connected.
+1. Verify the output in the terminal window of the `start_trailer_applications_bluechi.sh` script. You should see that two more services were started in response to the trailer being connected.
+1. Use [Monitoring and Logs](#monitoring-and-logs) to check that the `smart-trailer` service is now receiving the value of the trailer weight every 10 seconds.
+1. When you are ready to clean up, use the cleanup script mentioned in [Bootstrapping](#bootstrapping).
