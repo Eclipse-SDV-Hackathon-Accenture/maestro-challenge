@@ -5,7 +5,7 @@
 This repository provides a starter template for solving the Maestro challenges using the [Ankaios](https://github.com/eclipse-ankaios/ankaios) workload orchestrator.
 It contains a pre-configured devcontainer that makes it easy for you to start developing and building container applications managed by Ankaios.
 
-The container is designed to have an immediately running environment. Once triggered, all workloads are initially started, except the blue marked workloads in the picture above which are part of your challenge.
+The container is designed to have an immediately running environment. Once triggered, all workloads are initially started and sample data is exchanged between them.
 
 ## Links
 
@@ -77,15 +77,15 @@ docker build -t custom-ankaios-dev:0.1 --target dev -f .devcontainer/Dockerfile 
 
 **Note:** The command above builds for the target `dev` and ignores the `prod` stage.
 
-Start the devcontainer with the subfolder containing this README file mounted inside:
+Start the devcontainer with the required mount points:
 
 ```shell
-docker run -it --privileged --name custom_ankaios_dev -v <absolute/path/to>/maestro-challenge/eclipse-ankaios:/workspaces/app -p 25551:25551 --workdir /workspaces/app custom-ankaios-dev:0.1 /bin/bash
+docker run -it --privileged --name custom_ankaios_dev -v <absolute/path/to>/maestro-challenge/eclipse-ankaios:/workspaces/app -v <absolute/path/to>/maestro-challenge/in-vehicle-stack:/workspaces/app/in-vehicle-stack -p 25551:25551 --workdir /workspaces/app custom-ankaios-dev:0.1 /bin/bash
 ```
 
 ## Startup check before development
 
-Before starting active development we recommend you start once Ankaios with the current startup config [startupState.yaml](./config/startupState.yaml).
+Before starting active development we recommend you start once Ankaios with the current startup config [startupState.yaml](./config/startupState.yaml) and sample applications.
 
 **Note:** If you have selected a sample scenario requiring resource usage statistics like cpu or memory usage, uncomment the `resource_monitor` config part in the Ankaios startup config [startupState.yaml](./config/startupState.yaml). For more details, see [here](../scenarios/intelligent_orchestrator_use_case/ankaios_resource_statistics_app/README.md).
 
@@ -118,7 +118,17 @@ The output looks similar to the following:
  service_discovery          agent_A   podman    Running
 ```
 
-5. Stop Ankaios and clean up all workloads by running:
+5. Only for the Smart Trailer scenario, do the following extra steps:
+    - Run the script `start_trailer_applications_ankaios.sh`
+    - In another terminal window inside the devcontainer, add the following workload by using the Ankaios CLI to simulate the Smart Trailer connected signal:
+    ```shell
+    ank run workload trailer_connected_provider --runtime podman --config $'image: sdvblueprint.azurecr.io/sdvblueprint/in-vehicle-stack/trailer_connected_provider:0.1.0\ncommandOptions: ["--network", "host", "--name", "trailer_connected_provider"]' --agent agent_A
+    ```
+    - Verify the output of the terminal window of the `start_trailer_applications_ankaios.sh` script.
+    - Check the execution states of the newly added workloads by using the Ankaios CLI according to step 3.
+    - Run `podman logs -f smart_trailer_application` to check the sample data output of the Smart Trailer App. Feel free to check the logs of other workloads, too.
+
+6. Stop Ankaios and clean up all workloads by running:
 
 ```shell
 shutdown_maestro.sh
@@ -128,7 +138,7 @@ shutdown_maestro.sh
 
 You can customize the devcontainer depending on your preferred programming language, tools and frameworks.
 
-To customize the devcontainer add your specific dev dependencies to `.devcontainer/Dockerfile` (starting from line 5). Please leave the `prod` stage inside the Dockerfile unchanged as it is required to build the production image later.
+To customize the devcontainer add your specific dev dependencies to `.devcontainer/Dockerfile` (starting from line 7). Please leave the `prod` stage inside the Dockerfile unchanged as it is required to build the production image later.
 
 Rebuild the container image.
 
@@ -139,7 +149,8 @@ After customizing the devcontainer, start the development of your workload apps.
 - Write your code
 - Write a [Dockerfile](https://docs.docker.com/engine/reference/builder/) for each workload
 - Build a container image for each workload with [podman build](https://docs.podman.io/en/v4.6.1/markdown/podman-build.1.html)
-- Extend Ankaios startup config [startupState.yaml](./config/startupState.yaml) by adding config parts for your workloads
+- For the Smart Trailer scenario, replace the image URIs within the script [start_trailer_applications_ankaios.sh](../in-vehicle-stack/scenarios/smart_trailer_use_case/scripts/start_trailer_applications_ankaios.sh)
+- If required, extend the Ankaios startup config [startupState.yaml](./config/startupState.yaml) by adding config parts for your workloads
 
 Start and stop all workloads according to the section [Startup check before development](#startup-check-before-development).
 Use the Ankaios ClI to check the workload states. For more details display the help of Ankaios CLI by running:
@@ -200,10 +211,4 @@ Log in into the Microsoft container registry:
 podman login sdvblueprint.azurecr.io
 ```
 
-Start all maestro workloads by running:
-
-```shell
-run_maestro.sh
-```
-
-Present your developed workloads.
+Log in into the container registry, you have used for pushing your developed workloads, and start the workloads required for your selected scenario.
