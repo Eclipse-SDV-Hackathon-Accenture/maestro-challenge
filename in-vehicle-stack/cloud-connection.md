@@ -84,7 +84,7 @@ Connector to establish connection. Run:
     podman logs cloud-connector
     ```
 
-    At the bottom of the logs you should  see output that is similar to the output below:
+    At the bottom of the logs, you should see that the output is similar to the output below:
 
     ```shell
     [2023-11-20T23:27::18Z] info: Main[0]
