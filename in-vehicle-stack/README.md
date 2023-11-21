@@ -27,5 +27,5 @@ instructions on how to setup the In-Vehicle Stack to connect with Azure.
 
 ### Configuration overrides
 
-To override configuration for one of the in-vehicle stack services, please follow
+To override the configuration for one of the in-vehicle stack services, please follow
 [How to Override Configuration for In-Vehicle Stack Containers](config_overrides.md/#how-to-override-configuration-for-in-vehicle-stack-containers).

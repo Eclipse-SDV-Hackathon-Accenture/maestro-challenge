@@ -5,10 +5,8 @@ enable cloud connection with Azure Digital Twins using Eclipse Freyja.
 
 ### Create Azure Digital Twins Instance
 
-1. Please refer to the following documentation to setup an
-[Azure Digital Twins resource](https://github.com/eclipse-ibeji/ibeji-example-applications/blob/main/cloud_connectors/azure/digital_twins_connector/README.md#automated-azure-digital-twins-setup).
+1. Please refer to the following documentation to setup the Azure Digital Twins instance: [Automated Azure Digital Twins Setup for Smart Trailer Example](https://github.com/eclipse-ibeji/ibeji-example-applications/blob/main/cloud_connectors/azure/digital_twins_connector/README.md#automated-azure-digital-twins-setup-for-smart-trailer-example).
 This will create the Azure Digital Twins with the appropriate DTDL for the smart trailer use case.
-TODO: Update link to point to script for smart trailer.
 
 1. Once you have created the Azure Digital Twins instance, follow
 [Open instance in Azure Digital Twins Explorer](https://learn.microsoft.com/en-us/azure/digital-twins/quickstart-azure-digital-twins-explorer#open-instance-in-azure-digital-twins-explorer)
@@ -72,7 +70,9 @@ Connector to establish connection. Run:
     podman logs cloud-connector
     ```
 
-    This should print the following device code auth. Copy the code and open a browser and sign in to the account authenticated with your Azure Digital Twins instance:
+    The most recent log should be a device code auth request message. Copy the code from the
+    message and open a browser to the provided URL. Paste the copied code and sign in to the
+    account authenticated with your Azure Digital Twins instance:
 
     ```shell
     To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code <FAKECODE> to authenticate.
@@ -84,7 +84,7 @@ Connector to establish connection. Run:
     podman logs cloud-connector
     ```
 
-    At the bottom of the logs you should see:
+    At the bottom of the logs you should  see output that is similar to the output below:
 
     ```shell
     [2023-11-20T23:27::18Z] info: Main[0]
