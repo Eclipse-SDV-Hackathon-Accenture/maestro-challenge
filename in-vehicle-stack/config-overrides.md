@@ -69,7 +69,7 @@ entry for the project you are trying to override config for and add following to
     ```
 
 The In-Vehicle Stack service will now use your modified configuration. Note that any configuration
-changes will require a restart of the stack. You can restart the stack by following the steps for
+changes will require a restart of the in-vehicle stack. You can restart the in-vehicle stack by following the steps for
 [Ankaios](../eclipse-ankaios/README.md#startup-check-before-development).
 
 ### Override In-Vehicle Stack configuration in Eclipse BlueChi
