@@ -9,7 +9,8 @@ We have pre-built container images for the in-vehicle software stack comprised b
 You can access the pre-built container images here: 
 * sdvblueprint.azurecr.io
 
-username: 
+You will be prompted for username and password to pull the pre-built container images.
+* username: 
 
 > **Note** 
 please contact the Maestro Hack Coaches for the password.
@@ -18,7 +19,7 @@ please contact the Maestro Hack Coaches for the password.
 
 You can pull the images using [Docker](https://docs.docker.com/engine/reference/commandline/pull/) or [Podman](https://docs.podman.io/en/latest/markdown/podman-pull.1.html) as shown below:
 
-When you run the below command, you will be prompted for username and password.
+When you run the below command, you will be prompted for username and password. Please use the username provided above and contact the Maestro Challenge hack coaches for the password.
 
 ```
 podman pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-freyja/local-with-ibeji:0.1.0
