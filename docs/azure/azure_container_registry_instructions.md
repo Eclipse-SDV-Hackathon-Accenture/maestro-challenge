@@ -1,0 +1,33 @@
+# Azure Container Registry 
+
+Azure Container Registry is a managed registry service based on the open-source Docker Registry 2.0 allowing you to create and maintain your container images in Azure.
+
+We have pre-built container images for the in-vehicle software stack comprised by Eclipse Ibeji, Eclipse Agemo, Eclipse Freyja, and Eclipse Chariott so that you can focus on building your own scenarios.
+
+## Maestro Challenge Azure Container Registry
+
+You can access the pre-built container images here: 
+* sdvblueprint.azurecr.io
+
+username: 
+
+> **Note** 
+please contact the Maestro Hack Coaches for the password.
+
+## How to use 
+
+You can pull the images using [Docker](https://docs.docker.com/engine/reference/commandline/pull/) or [Podman](https://docs.podman.io/en/latest/markdown/podman-pull.1.html) as shown below:
+
+When you run the below command, you will be prompted for username and password.
+
+```
+podman pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-freyja/local-with-ibeji:0.1.0
+docker pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-freyja/local-with-ibeji:0.1.0
+````
+
+> **Note** 
+Ensure you use the full domain name of the container registry.
+
+## Aditional Information
+
+If you would like to know more about Azure Container Registry, extensive documentation and examples are available [Introduction to Container registries in Azure](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-intro) 
