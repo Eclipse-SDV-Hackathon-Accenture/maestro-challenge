@@ -80,7 +80,7 @@ TODO - Some example references that may need to be included:
         > You will not need to rebuild the container image if you are overriding your digital twin consumer's configuration file.
 #### Chariott
 - [How can I use the Service Discovery to register and discover other applications/services?](https://github.com/eclipse-chariott/chariott/blob/main/service_discovery/README.md)
-    > An application can utilize the Service Discovery to register with the system and enable other applications to discover it via the Service Discovery system.
+    > An application can utilize Chariott's Service Discovery to register with the system and enable other applications to discover it through the Service Discovery system.
 #### Freyja
 - [How do I configure new mappings for Freyja's in-memory mapping client?](https://github.com/eclipse-ibeji/freyja/blob/main/mapping_clients/in_memory_mock_mapping_client/README.md)
     > Adding a new in-vehicle signal requires you to configure a new mapping for that in-vehicle signal.
