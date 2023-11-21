@@ -26,7 +26,6 @@ The development environment provides the following components:
 
 * Eclipse Chariott
 * Eclipse Agemo
-* Eclipse Kuksa (databroker)
 * Eclipse Ibeji
 * Eclipse Freyja
 * Eclipse BlueChi
@@ -47,15 +46,15 @@ using the following `devcontainer.json` file:
 
 ```json
 {
+    "name": "autosd",
     "privileged": true,
-    "image": "quay.io/centos-sig-automotive/autosd-eclipse:latest",
-    "overrideCommand": false
+    "image": "sdvblueprint.azurecr.io/sdvblueprint/eclipse-bluechi/devenv:latest",
+    "overrideCommand": false,
+    "mounts": [
+        "source={PATH-TO-MAESTRO}/maestro-challenge/in-vehicle-stack,target=/workspaces/devcontainer/in-vehicle-stack,type=bind"
+       ]
 }
 ```
-
-Or you can just clone the devcontainer template repository:
-<https://gitlab.com/CentOS/automotive/container-images/templates/devcontainer>
-and change the image to `quay.io/centos-sig-automotive/autosd-eclipse:latest`.
 
 #### Containers
 
@@ -77,6 +76,37 @@ Enter into the container and interact with BlueChi:
 podman exec -it autosd-eclipse /bin/bash
 bluechictl list-units
 ```
+
+### Bootstraping
+
+You need to bootstrap all eclipse services once you got your eclipse-bluechi container running.
+
+You will need to login to Azure's reghistry to pull all required images:
+
+```sh
+podman login \
+--username  <username> \
+--password  <password> \
+sdvblueprint.azurecr.io
+```
+
+Then it is time to start all services which can be done by executing the bootstrap script:
+
+```sh
+$ bluechi-env-bootstrap
+```
+
+The above command will pull all the required images and start all services.
+
+There is also a script to stop all services:
+
+```
+bluechi-env-cleanup
+```
+
+Keep in mind that stopping services will purge all the containers that are related to such services as well.
+
+Both scripts are located in `/usr/local/bin/` in case you are interested in checking them out.
 
 ### Managing Workloads
 
@@ -113,16 +143,23 @@ Starting, stopping, restarting services is as easy as:
 * `systemc start $svc`
 * `systemctl restart $svc`
 
-> Make sure to run `systemctl daemon-reload` in case something changed in either
-> the Quadlet files or systemd units.
+> Make sure to run `systemctl daemon-reload` in case something changed in either Quadlet or systemd unit files.
 
 #### Monitoring and Logs
 
-To read your service logs run `systemctl logs $service`. Alternatively Podman
-can be used to list container processes and their ID's or name by running
-`podman ps`. Then run `podman logs $container_id_or_name` to read logs from a
-container.
-
-BlueChi's CLI (`bluechictl`), can also be used to retrieve information from
+BlueChi's CLI (`bluechictl`), can be used to retrieve information from
 managed nodes:
 <https://github.com/eclipse-bluechi/bluechi/blob/main/doc/man/bluechictl.1.md>.
+
+##### Using Systemctl
+
+Simply run `systemctl status $service` ($service being the name of your .kube file).
+
+##### Using journalctl
+
+This is valid for any systemd defined service, simply run `journalctl -xeu $service`
+
+##### Podman
+
+You can also list all active containers by running `podman ps` and then `podman logs $container_name_or_id` to
+get logs from the container using podman.
