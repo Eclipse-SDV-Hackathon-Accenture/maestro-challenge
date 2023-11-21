@@ -71,7 +71,7 @@ TODO - Some example references that may need to be included:
     - [If my digital twin provider is running in a container, how do I override its configuration file?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/container/README.md#run)
         > You will not need to rebuild the container image if you are overriding your digital twin provider's configuration file.
     - [How do I use the Managed Subscribe module?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/managed_subscribe/README.md)
-        > The benefit of using the Managed Subscribe module in your digital twin provider allows your digital twin consumers to specify the frequency at which they want to receive updates.
+        > Using the Managed Subscribe module and dynamic topics in your digital twin provider allows your digital twin consumers to specify the frequency at which they want to receive updates.
 - [How do I create a digital twin consumer?](https://github.com/eclipse-ibeji/ibeji/blob/main/docs/tutorials/consumer/README.md)
     > A digital twin consumer is a software entity that interfaces with the digital representation of the in-vehicle hardware components.
     - [How do I build a container image for my digital twin consumer?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/container/README.md#consumer)
@@ -80,7 +80,7 @@ TODO - Some example references that may need to be included:
         > You will not need to rebuild the container image if you are overriding your digital twin consumer's configuration file.
 #### Chariott
 - [How can I use the Service Discovery to register and discover other applications/services?](https://github.com/eclipse-chariott/chariott/blob/main/service_discovery/README.md)
-    > An application can utilize Chariott's Service Discovery to register with the system and enable other applications to discover it through the Service Discovery system.
+    > An application can utilize Chariott's Service Discovery to register with the system and enable other applications to discover it through the Service Discovery system. This can also be used to discover other components in the in-vehicle-stack like Ibeji.
 #### Freyja
 - [How do I configure new mappings for Freyja's in-memory mapping client?](https://github.com/eclipse-ibeji/freyja/blob/main/mapping_clients/in_memory_mock_mapping_client/README.md)
     > Adding a new in-vehicle signal requires you to configure a new mapping for that in-vehicle signal.
