@@ -80,6 +80,14 @@ TODO - Some example references that may need to be included:
     - TODO - If a user wishes to integrate their scenario with Azure, which image would I need to pull to enable Freyja to sync to the cloud?
 - TODO - Add link to documentation outlining how to to override configuration for in-vehicle-stack containers'
 
+#### Eclipse Ankaios
+
+- [Getting started](https://eclipse-ankaios.github.io/ankaios/latest/usage/installation/)
+- [User documentation](https://eclipse-ankaios.github.io/ankaios/latest/)
+- [Working with the startup configuration](https://eclipse-ankaios.github.io/ankaios/latest/reference/startup-configuration/)
+- [Architecture](https://eclipse-ankaios.github.io/ankaios/latest/architecture/)
+- [Suggestions for improvement & Feedback](https://github.com/eclipse-ankaios/ankaios/discussions)
+
 ## Getting Started
 
 Please note that it is not necessary to use both software orchestrators. You can choose either one to implement your scenario.
