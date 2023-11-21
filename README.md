@@ -82,10 +82,10 @@ TODO - Some example references that may need to be included:
 
 #### Eclipse Ankaios
 
-- [Getting started](https://eclipse-ankaios.github.io/ankaios/latest/usage/installation/)
-- [User documentation](https://eclipse-ankaios.github.io/ankaios/latest/)
-- [Working with the startup configuration](https://eclipse-ankaios.github.io/ankaios/latest/reference/startup-configuration/)
-- [Architecture](https://eclipse-ankaios.github.io/ankaios/latest/architecture/)
+- [Quickstart](https://eclipse-ankaios.github.io/ankaios/main/usage/quickstart/)
+- [User documentation](https://eclipse-ankaios.github.io/ankaios/main/)
+- [Working with the startup configuration](https://eclipse-ankaios.github.io/ankaios/main/reference/startup-configuration/)
+- [Architecture](https://eclipse-ankaios.github.io/ankaios/main/architecture/)
 - [Suggestions for improvement & Feedback](https://github.com/eclipse-ankaios/ankaios/discussions)
 
 ## Getting Started

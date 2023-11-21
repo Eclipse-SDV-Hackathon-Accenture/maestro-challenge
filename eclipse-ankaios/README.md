@@ -9,8 +9,8 @@ The container is designed to have an immediately running environment. Once trigg
 
 ## Links
 
-- [Ankaios docs](https://eclipse-ankaios.github.io/ankaios/latest/)
-- [Ankaios quickstart](https://eclipse-ankaios.github.io/ankaios/latest/usage/quickstart/)
+- [Ankaios docs](https://eclipse-ankaios.github.io/ankaios/main/)
+- [Ankaios quickstart](https://eclipse-ankaios.github.io/ankaios/main/usage/quickstart/)
 - [Podman](https://docs.podman.io/en/v4.6.1/)
 - [What are devcontainers?](https://containers.dev/)
 
@@ -44,13 +44,13 @@ All services are running in the host network meaning those can be accessed by `l
 
 ## Ankaios Control Interface dependencies
 
-The devcontainer includes also dependencies for developing applications using the [Ankaios Control Interface](https://eclipse-ankaios.github.io/ankaios/latest/reference/control-interface/):
+The devcontainer includes also dependencies for developing applications using the [Ankaios Control Interface](https://eclipse-ankaios.github.io/ankaios/main/reference/control-interface/):
 
 - protobuf compiler
 - grpcurl
 - Ankaios protobuf file (under `/usr/local/lib/ankaios/ankaios.proto`)
 
-Those dependencies are needed for use-cases in which your app needs to use the [Ankaios Control Interface](https://eclipse-ankaios.github.io/ankaios/latest/reference/control-interface/) to be able to communicate with the Ankaios cluster via the API. An example use-case would be to write a workload that shall request Ankaios to dynamically start another workload.
+Those dependencies are needed for use-cases in which your app needs to use the [Ankaios Control Interface](https://eclipse-ankaios.github.io/ankaios/main/reference/control-interface/) to be able to communicate with the Ankaios cluster via the API. An example use-case would be to write a workload that shall request Ankaios to dynamically start another workload.
 
 ## Run devcontainer with VSCode
 
