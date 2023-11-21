@@ -79,9 +79,9 @@ bluechictl list-units
 
 ### Bootstrapping
 
-You need to bootstrap all eclipse services once you got your eclipse-bluechi container running.
+You need to bootstrap all Eclipse services once you got your eclipse-bluechi container running.
 
-You will need to login to Azure's registry to pull all required images:
+You will need to login to Azure's container registry to pull all required images:
 
 ```sh
 podman login \
