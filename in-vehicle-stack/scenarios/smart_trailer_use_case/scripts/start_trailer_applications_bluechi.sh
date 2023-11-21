@@ -94,6 +94,8 @@ do
         then
           echo "Trailer is connected! Starting workloads to manage it"
 
+          # The service.kube and service.yml files for these two services are included in the BlueChi devcontainer
+          # See /etc/containers/systemd for these files
           # Start up the other workloads using systemctl
           systemctl start trailer-properties
           systemctl start smart-trailer
