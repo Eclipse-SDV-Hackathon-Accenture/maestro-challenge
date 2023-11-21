@@ -17,7 +17,7 @@ Please refer to the above links to determine what configuration files you would 
 
 #### Prerequisites
 
-- Follow steps to setup the [Ankaios Development Environment](../eclipse-ankaios/README.md#ankaios-maestro-challenge-development-environment)
+- Follow steps to setup the [Ankaios Development Environment](../../eclipse-ankaios/README.md#ankaios-maestro-challenge-development-environment)
 
 #### Steps
 
@@ -50,7 +50,7 @@ desired project configuration files:
 any text editor. 
 
 1. Next, we need to pass the configuration into the containers. To do this, we will need to modify
-[startupState.yaml](../eclipse-ankaios/config/startupState.yaml). This will be done by mounting the
+[startupState.yaml](../../eclipse-ankaios/config/startupState.yaml). This will be done by mounting the
 directory created in step 1 into the container using the `commandOptions` parameter list. Find the
 entry for the project you are trying to override config for and add following to the options:
 
@@ -70,13 +70,13 @@ entry for the project you are trying to override config for and add following to
 
 The In-Vehicle Stack service will now use your modified configuration. Note that any configuration
 changes will require a restart of the in-vehicle stack. You can restart the in-vehicle stack by following the steps for
-[Ankaios](../eclipse-ankaios/README.md#startup-check-before-development).
+[Ankaios](../../eclipse-ankaios/README.md#startup-check-before-development).
 
 ### Override In-Vehicle Stack configuration in Eclipse BlueChi
 
 #### Prerequisites
 
-- Follow steps to setup [Eclipse BlueChi](../eclipse-bluechi/README.md)
+- Follow steps to setup [Eclipse BlueChi](../../eclipse-bluechi/README.md)
 
 #### Steps
 

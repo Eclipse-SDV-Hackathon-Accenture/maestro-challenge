@@ -21,7 +21,7 @@ workload for the Azure cloud connector used by Freyja.
 #### Eclipse Ankaios
 
 1. Change the `digital_twin_cloud_sync` workload in
-[startupState.yaml](../eclipse-ankaios/config/startupState.yaml) to point to the `cloud-with-ibeji`
+[startupState.yaml](../../eclipse-ankaios/config/startupState.yaml) to point to the `cloud-with-ibeji`
 container image. The workload entry should be updated to:
 
     ```yaml
@@ -44,7 +44,7 @@ instance that you obtained in Step 2 of
 [Create Azure Digital Twins Instance](#create-azure-digital-twins-instance).
 
 1. Uncomment the `cloud_connector` workload in
-[startupState.yaml](../eclipse-ankaios/config/startupState.yaml). The workload entry should be:
+[startupState.yaml](../../eclipse-ankaios/config/startupState.yaml). The workload entry should be:
 
     ```yaml
     cloud_connector:
@@ -61,7 +61,7 @@ instance that you obtained in Step 2 of
     ```
 
 1. Start the In-Vehicle Stack following the steps for
-[Ankaios](../eclipse-ankaios/README.md#startup-check-before-development).
+[Ankaios](../../eclipse-ankaios/README.md#startup-check-before-development).
 
 1. Once you have started up the service, you will need to authenticate with Azure for the Cloud
 Connector to establish connection. Run:
@@ -73,6 +73,8 @@ Connector to establish connection. Run:
     The most recent log should be a device code auth request message. Copy the code from the
     message and open a browser to the provided URL. Paste the copied code and sign in to the
     account authenticated with your Azure Digital Twins instance:
+
+    Here's an example of the log message:
 
     ```shell
     To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code <DEVICE_CODE> to authenticate.
