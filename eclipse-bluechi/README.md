@@ -64,7 +64,7 @@ Upstream documentation: <https://docs.podman.io/en/latest/>
 
 1. Login to the container registry:
     ```shell
-    podman login sdvblueprint.azurecr.io
+    docker login sdvblueprint.azurecr.io
     ```
 
 1. Start the devcontainer by running:
@@ -72,7 +72,7 @@ Upstream documentation: <https://docs.podman.io/en/latest/>
     docker run -it \
     --privileged \
     --name autosd-eclipse \
-    -v /home/jordanchiu/maestro-challenge/in-vehicle-stack:/workspaces/app/in-vehicle-stack \
+    -v <absolute/path/to>/maestro-challenge/in-vehicle-stack:/workspaces/app/in-vehicle-stack \
     --workdir /workspaces/app \
     sdvblueprint.azurecr.io/sdvblueprint/eclipse-bluechi/devenv:latest \
     /bin/bash
