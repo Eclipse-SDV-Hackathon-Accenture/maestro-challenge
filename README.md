@@ -60,7 +60,7 @@ Take a look at the source code for the Digital Twin Model, Digital Twin Provider
 When developing new workloads to run in the orchestrator environments, it is recommended to:
 1. Write the code for your workload in the language of your choice.
 1. Build a container image for it.
-1. Push it to a container registry.
+1. Push it to a container registry. You can create an [Azure Container Registry](./docs/azure/azure_container_registry_instructions.md#aditional-information) with your [Azure Subscription](./docs/azure/azure_code_redeem_instructions.md)
 1. Follow the orchestrator-specific instructions for plugging them into the environments.
 
 There are a few suggested ways to extend this use case, but feel free to use your imagination to come up with your own as well! 
