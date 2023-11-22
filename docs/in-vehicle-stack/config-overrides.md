@@ -80,4 +80,70 @@ changes will require a restart of the in-vehicle stack. You can restart the in-v
 
 #### Steps
 
-TODO: Add steps for overridding configuration within Eclipse BlueChi
+1. In the BlueChi devcontainer, open a terminal and create a directory under `/etc` to store the
+desired project configuration files:
+
+    ```shell
+    mkdir /etc/<project_name>/config
+    ```
+
+    for example:
+
+    ```shell
+    mkdir /etc/freyja/config
+    ```
+
+1. Create the desired configuration files in the newly created directory:
+
+    ```shell
+    touch <config_file_name>.<ext>
+    ```
+
+    for example, to create a configuration file to override the mapping configuration for Freyja:
+
+    ```shell
+    touch mock_mapping_config.json
+    ```
+
+1. Populate the newly created configuration files with the configuration you wish to override using
+any text editor. 
+
+1. Next, we need to pass the configuration into the containers. To do this, we will need to modify
+the `/etc/containers/systemd/<service_name>.yml` file for your service (replace <service_name> with your service name). This will be done by mounting the
+directory created in step 1 into the container using `volumeMounts`. You can see an example in this configuration in the `/etc/containers/systemd/azure-cloud-connector.yml` file in the bluechi devcontainer.
+    - In your file, add a "volumes" section:
+
+      ```yaml
+        volumes:
+          - name: project-config
+            hostPath:
+              path: /etc/<project_name>/config
+              type: DirectoryOrCreate
+      ```
+
+      >Note: Replace `<project_name>` with the project you are overriding config for.
+
+      for example:
+
+        ```yaml
+          volumes:
+            - name: freyja-config
+              hostPath:
+                path: /etc/freyja/config
+                type: DirectoryOrCreate
+        ```
+
+    - Refer to this volume in the "containers" section, for example:
+      ```yaml
+        containers:
+          - name: app
+            image: sdvblueprint.azurecr.io/sdvblueprint/eclipse-freyja/azure-cloud-connector:0.1.0
+            imagePullPolicy: IfNotPresent
+            volumeMounts:
+            - mountPath: /mnt/config
+              name: freyja-config
+      ```
+
+The In-Vehicle Stack service will now use your modified configuration. Note that any configuration
+changes will require a restart of the in-vehicle stack. You can restart the in-vehicle stack by following the steps for
+[BlueChi](../../eclipse-bluechi/README.md#bootstrapping) cleanup and bootstrap again.

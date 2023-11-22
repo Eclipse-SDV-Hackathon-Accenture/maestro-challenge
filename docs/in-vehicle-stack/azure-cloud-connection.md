@@ -99,4 +99,84 @@ Connector to establish connection. Run:
 
 #### Eclipse BlueChi
 
-TODO: Write steps for setting up cloud connector with eclipse-bluechi.
+1. In the BlueChi devcontainer, modify the `/usr/local/bin/bluechi-env-bootstrap` to remove `freyja` (this image includes the in-memory mock version of Freyja) and use `cloud-with-ibeji` and `azure-cloud-connector` services instead:
+    - Add the following two lines:
+        ```shell
+        systemctl start cloud-with-ibeji
+        systemctl start azure-cloud-connector
+        ```
+    - Your complete file should now look like:
+      ```shell
+      #!/bin/bash
+
+      /usr/local/bin/podman-quadlet-image-sync
+
+      systemctl start chariott
+      systemctl start mosquitto
+      systemctl start ibeji
+      systemctl start agemo
+      systemctl start cloud-with-ibeji
+      systemctl start azure-cloud-connector
+      ```
+
+1. Follow the steps under
+[Override In-Vehicle Stack configuration in Eclipse BlueChi](./config-overrides.md#override-in-vehicle-stack-configuration-in-eclipse-bluechi)
+to create a config directory with the path `/etc/freyja/config` and then create the
+[adt_instance_config.json](https://github.com/eclipse-ibeji/ibeji-example-applications/blob/main/cloud_connectors/azure/digital_twins_connector/src/core/adt_instance_config.sample.json)
+file. Replace the `AzureDigitalTwinsInstanceUrl` field with the URL to your Azure Digital Twin
+instance that you obtained in Step 2 of
+[Create Azure Digital Twins Instance](#create-azure-digital-twins-instance).
+
+1. The `/etc/containers/systemd/azure-cloud-connector.yml` file has the volumeMount configuration specified:
+
+    ```yaml
+    containers:
+        - name: app
+          image: sdvblueprint.azurecr.io/sdvblueprint/eclipse-freyja/azure-cloud-connector:0.1.0
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+          - mountPath: /mnt/config
+            name: freyjaconfig
+      volumes:
+        - name: freyjaconfig
+          hostPath:
+            path: /etc/freyja/config
+            type: DirectoryOrCreate
+    ```
+
+1. Start the In-Vehicle Stack following the steps for
+[BlueChi](../../eclipse-bluechi/README.md#running-the-smart-trailer-example-with-bluechis-devcontainer).
+
+1. Once you have started up the service, you will need to authenticate with Azure for the Cloud
+Connector to establish connection. Run:
+
+    ```shell
+    systemctl status azure-cloud-connector
+    ```
+
+    The most recent log should be a device code auth request message. Copy the code from the
+    message and open a browser to the provided URL. Paste the copied code and sign in to the
+    account authenticated with your Azure Digital Twins instance:
+
+    Here's an example of the log message:
+
+    ```shell
+    To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code <DEVICE_CODE> to authenticate.
+    ```
+
+2. Validate you have successfully logged in by re-running
+
+    ```shell
+    systemctl status azure-cloud-connector
+    ```
+
+    At the bottom of the logs, you should see that the output is similar to the output below:
+
+    ```shell
+    [2023-11-20T23:27::18Z] info: Main[0]
+      Started the Azure Digital Twins Connector
+    ```
+
+    If you see the device code login text, wait 10 seconds and try the podman command again.
+
+7. The In-Vehicle Stack is now initialized and connected to the cloud!
