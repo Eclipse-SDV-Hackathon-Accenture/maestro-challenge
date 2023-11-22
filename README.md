@@ -7,8 +7,10 @@
     - [Useful References for Creating and Enhancing Sample Scenarios](#useful-references-for-creating-and-enhancing-sample-scenarios)
 - [Getting Started](#getting-started)
     - [Need to know](#need-to-know)
+    - [Prebuilt Container Images](#prebuilt-container-images)
     - [Eclipse Ankaios Orchestrator](#eclipse-ankaios-orchestrator)
     - [Eclipse BlueChi Orchestrator](#eclipse-bluechi-orchestrator)
+    - [Azure Subscription](#azure-subscription)
 - [In-Vehicle Software Stack Overview](#in-vehicle-software-stack-overview)
 - [Projects Involved](#projects-involved)
     - [In-Vehicle Software Stack](#in-vehicle-software-stack)
@@ -106,6 +108,10 @@ Please note that it is not necessary to use both software orchestrators. You can
 - You need basic knowledge about containerization technologies and tools (e.g. Docker, Podman), but if you have not dealt with it yet, don't worry, just check out a little tutorial (https://docs.docker.com/get-started/) to get a basic understanding of containers and you are prepared.
 - Basic skills to deal with distributed systems
 
+### Prebuilt Container Images
+
+Please see the instructions on the [Azure Container Registry documentation](./docs/azure/azure_container_registry_instructions.md) for pulling prebuilt container images for the in-vehicle software stack.
+
 ### Eclipse Ankaios Orchestrator
 
 If you have decided to use Ankaios, you will find an easy to use development environment in the subfolder [eclipse-ankaios](./eclipse-ankaios/README.md),
@@ -115,6 +121,10 @@ which you can use for all maestro challenges.
 
 If you have decided to use BlueChi, you will find an easy to use development environment in the subfolder [eclipse-bluechi](./eclipse-bluechi/README.md),
 which you can use for all maestro challenges.
+
+### Azure Subscription
+
+Please see the [SDV Hackathon Azure Pass Code Instructions](./docs/azure/azure_code_redeem_instructions.md) for redeeming an Azure pass code if you are interested in using resources on Azure.
 
 ## In-Vehicle Software Stack Overview
 
