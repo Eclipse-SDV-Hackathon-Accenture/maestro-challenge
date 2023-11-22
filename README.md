@@ -88,20 +88,30 @@ TODO: This section needs to be refined. The goal is to include key references to
 TODO - Some example references that may need to be included:
 #### Ibeji
 - [How do I create an in-vehicle digital twin model?](https://github.com/eclipse-ibeji/ibeji/blob/main/docs/tutorials/in_vehicle_model/README.md)
-- [How do I create a digital twin provider or add additional capabilities to an existing provider?](https://github.com/eclipse-ibeji/ibeji/blob/main/docs/tutorials/provider/README.md)
-    * When you add new capabilities to a provider, such as a new in-vehicle signal, you will need to update the mapping client configuration or the mapping service that you are using with Freyja. See the [Freyja FAQ](#freyja) for more details.
+    > This helps you construct or enhance an in-vehicle digital twin model, and enables you to reference your in-vehicle digital twin model in your code.
+- [How do I create a digital twin provider or add additional capabilities to an existing provider?](https://github.com/eclipse-ibeji/ibeji/blob/main/docs/tutorials/in_vehicle_model/README.md)
+    > A digital twin provider exposes a subset of the in-vehicle's hardware capabilities. This enables digital twin consumers to utilize that subset. Also you may find that you want to add additional capabilities, such as a new in-vehicle signal, to an existing digital twin provider. When you add new capabilities to a provider, such as a new in-vehicle signal, you will need to update the mapping client's configuration or the mapping service that you are using with Freyja. See the [Freyja FAQ](#freyja) for more details.
     - [How do I build a container image for my digital twin provider?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/container/README.md#provider)
+        > You will need to build a container image if you are updating the smart trailer digital twin provider's source code or creating your own digital twin provider.
     - [If my digital twin provider is running in a container, how do I override its configuration file?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/container/README.md#run)
+        > You will not need to rebuild the container image if you are overriding your digital twin provider's configuration file.
     - [How do I use the Managed Subscribe module?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/managed_subscribe/README.md)
+        > Using the Managed Subscribe module and dynamic topics in your digital twin provider allows your digital twin consumers to specify the frequency at which they want to receive updates.
 - [How do I create a digital twin consumer?](https://github.com/eclipse-ibeji/ibeji/blob/main/docs/tutorials/consumer/README.md)
+    > A digital twin consumer is a software entity that interfaces with the digital representation of the in-vehicle hardware components.
     - [How do I build a container image for my digital twin consumer?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/container/README.md#consumer)
+        > You will need to build a container image if you are updating the smart trailer digital twin consumer's source code or creating your own digital twin consumer.
     - [If my digital twin consumer is running in a container, how do I override its configuration file?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/container/README.md#run-1)
+        > You will not need to rebuild the container image if you are overriding your digital twin consumer's configuration file.
 #### Chariott
 - [How can I use the Service Discovery to register and discover other applications/services?](https://github.com/eclipse-chariott/chariott/blob/main/service_discovery/README.md)
+    > An application can utilize Chariott's Service Discovery to register with the system and enable other applications to discover it through the Service Discovery system. This can also be used to discover other components in the in-vehicle-stack like Ibeji.
 #### Freyja
 - [How do I configure new mappings for Freyja's in-memory mapping client?](https://github.com/eclipse-ibeji/freyja/blob/main/mapping_clients/in_memory_mock_mapping_client/README.md)
+    > Adding a new in-vehicle signal requires you to configure a new mapping for that in-vehicle signal.
 - [How do I override the mapping configuration?](https://github.com/eclipse-ibeji/freyja/blob/main/docs/config-overrides.md)
-- [How do I sync signals to the Cloud?](https://github.com/eclipse-ibeji/ibeji-example-applications/blob/main/cloud_connectors/azure/digital_twins_connector/README.md)
+- [How do I sync in-vehicle signals to the cloud?](https://github.com/eclipse-ibeji/ibeji-example-applications/blob/main/cloud_connectors/azure/digital_twins_connector/README.md)
+    > You may want to sync your in-vehicle signals to a cloud digital representation of your in-vehicle.
     - TODO - If a user wishes to integrate their scenario with Azure, which image would I need to pull to enable Freyja to sync to the cloud?
 - TODO - Add link to documentation outlining how to to override configuration for in-vehicle-stack containers'
 
