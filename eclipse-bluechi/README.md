@@ -22,11 +22,11 @@ of Kubernetes resource definitions to define the workload.
 
 ## Prerequisites
 
-* Docker [Installation instructions](https://docs.docker.com/get-docker/)
+* A container runtime such as [Docker](https://docs.docker.com/get-docker/) or [Podman](https://podman.io/docs/installation)
 
 ## Development Environment
 
-The two development environments mentioned in the next section provides the following components:
+There are two development environments mentioned in the next section that provide the following components:
 
 * Eclipse Chariott
 * Eclipse Agemo
@@ -48,7 +48,11 @@ It is strongly recommended that you use the devcontainer with VSCode.
 ### Prerequisite
 * Ensure that the [Remote Development extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) installed in VSCode
 
-* Upstream documentation: <https://containers.dev/>
+* Upstream documentation:
+  * <https://containers.dev/>
+  * https://github.com/devcontainers/cli
+
+The following steps below uses the VSCode devcontainer extension. If you prefer, you can use [VSCode's devcontainer's CLI](https://github.com/devcontainers/cli) instead.
 
 1. You can use the VSCode devcontainer extension to start your containerized development environment.
     ```shell
@@ -64,18 +68,18 @@ Upstream documentation: <https://docs.podman.io/en/latest/>
 
 1. Login to the container registry:
     ```shell
-    docker login sdvblueprint.azurecr.io
+    podman login sdvblueprint.azurecr.io
     ```
 
 1. Start the devcontainer by running:
     ```sh
-    docker run -it \
+    podman run \
+    --rm \
     --privileged \
     --name autosd-eclipse \
-    -v <absolute/path/to>/maestro-challenge/in-vehicle-stack:/workspaces/app/in-vehicle-stack \
+    --mount=type=bind,src=<absolute/path/to>/maestro-challenge/in-vehicle-stack,dst=/workspaces/app/in-vehicle-stack,ro=true \
     --workdir /workspaces/app \
-    sdvblueprint.azurecr.io/sdvblueprint/eclipse-bluechi/devenv:latest \
-    /bin/bash
+    sdvblueprint.azurecr.io/sdvblueprint/eclipse-bluechi/devenv:latest
     ```
 
     Ensure to replace `<absolute/path/to>` with your own value.
@@ -177,7 +181,7 @@ needs two essential files:
 Creating, changing or updating a file in `/etc/containers/systemd` requires you to run `systemctl daemon-reload` afterwards to generate the corresponding systemd unit files in
 `/run/systemd/generator`.
 
-If you edit the source code of a component then build and push an image of it to your container registry, you will need to edit the corresponding service.yaml file
+If you edit the source code of a component then build and push an image of it to your container registry, you will need to edit the corresponding {SERVICE_NAME}.yaml file
 
 ### Service Lifecycle
 
