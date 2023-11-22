@@ -80,9 +80,8 @@ Upstream documentation: <https://docs.podman.io/en/latest/>
 
     Ensure to replace `<absolute/path/to>` with your own value.
 
-1. Create an interactive session with the devcontainer environment and interact with BlueChi:
+1. You can now interact with BlueChi. Running the command below to ensure that the BlueChi CLI works:
     ```sh
-    podman exec -it autosd-eclipse /bin/bash
     bluechictl list-units
     ```
 
