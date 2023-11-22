@@ -96,7 +96,7 @@ podman login sdvblueprint.azurecr.io
 
 2. Start Ankaios with all workloads inside the startup config:
 ```shell
-./scripts/run_maestro.sh
+run_maestro.sh
 ```
 
 3. Next, use the Ankaios CLI to verify that all initial workloads are up and running:
@@ -121,7 +121,7 @@ The output looks similar to the following:
 5. Only for the **Smart Trailer scenario**, do the following extra steps:
     - Inside the devcontainer, run the script `start_trailer_applications_ankaios.sh`:
         ```shell
-        ./in-vehicle-stack/scenarios/smart_trailer_use_case/scripts/start_trailer_applications_ankaios.sh
+        start_trailer_applications_ankaios.sh
         ```
     - In another terminal window inside the devcontainer, add the following workload by using the Ankaios CLI to simulate the Smart Trailer connected signal:
         ```shell
@@ -142,7 +142,7 @@ The output looks similar to the following:
 6. Stop Ankaios and clean up all workloads by running:
 
 ```shell
-./scripts/shutdown_maestro.sh
+shutdown_maestro.sh
 ```
 
 ## Customizing Devcontainer
