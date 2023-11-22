@@ -1,0 +1,13 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/rust
+{
+    "name": "autosd",
+    "privileged": true,
+    "image": "sdvblueprint.azurecr.io/sdvblueprint/eclipse-bluechi/devenv:latest",
+    "overrideCommand": false,
+    "mounts": [
+        "source=${localWorkspaceFolder}/../in-vehicle-stack,target=/workspaces/app/in-vehicle-stack,type=bind"
+    ],
+   "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/app/,type=bind",
+   "workspaceFolder": "/workspaces/app/"
+}
