@@ -1,4 +1,4 @@
-FROM ghcr.io/eclipse-ankaios/app-ankaios-dev:latest as dev
+FROM ghcr.io/eclipse-ankaios/app-ankaios-dev-hackathon:0.1.0 as dev
 ENV PATH="/root/.cargo/bin:${PATH}"
 
 RUN apt-get update && apt-get -y install \
