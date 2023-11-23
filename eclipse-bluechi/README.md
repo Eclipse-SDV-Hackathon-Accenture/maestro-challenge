@@ -66,26 +66,27 @@ The following steps below uses the VSCode devcontainer extension. If you prefer,
 
 Upstream documentation: <https://docs.podman.io/en/latest/>
 
-1. Login to the container registry:
+1. Login to the Azure's container registry:
     ```shell
-    podman login sdvblueprint.azurecr.io
+    docker login sdvblueprint.azurecr.io
     ```
 
 1. Start the devcontainer by running:
     ```sh
-    podman run \
-    --rm \
+    docker run \
+    -d \
     --privileged \
     --name autosd-eclipse \
-    --mount=type=bind,src=<absolute/path/to>/maestro-challenge/in-vehicle-stack,dst=/workspaces/app/in-vehicle-stack,ro=true \
+    -v <absolute/path/to>/maestro-challenge/in-vehicle-stack:/workspaces/app/in-vehicle-stack \
     --workdir /workspaces/app \
     sdvblueprint.azurecr.io/sdvblueprint/eclipse-bluechi/devenv:latest
     ```
 
     Ensure to replace `<absolute/path/to>` with your own value.
 
-1. You can now interact with BlueChi. Running the command below to ensure that the BlueChi CLI works:
+1. Enter into the devcontainer and interact with BlueChi:
     ```sh
+    docker exec -it autosd-eclipse /bin/bash
     bluechictl list-units
     ```
 
@@ -93,36 +94,33 @@ Upstream documentation: <https://docs.podman.io/en/latest/>
 
 You need to bootstrap all the Eclipse services once you got your eclipse-bluechi devcontainer running.
 
-You will need to login to Azure's container registry to pull all required images:
+### Starting all the services
+1. Inside your devcontainer, you will need to login to Azure's container registry to pull all required images:
+    ```sh
+    docker login \
+    --username  <username> \
+    --password  <password> \
+    sdvblueprint.azurecr.io
+    ```
 
-```sh
-podman login \
---username  <username> \
---password  <password> \
-sdvblueprint.azurecr.io
-```
-
-Then it is time to start all services which can be done by executing the bootstrap script:
-
-```sh
-$ bluechi-env-bootstrap
-```
-
+2. Then it is time to start all services which can be done by executing the bootstrap script:
+    ```sh
+    $ bluechi-env-bootstrap
+    ```
 The above command will pull all the required images and start all services.
 
-There is also a script to stop all services:
-
-```sh
-$ bluechi-env-cleanup
-```
-
+### Cleanup
+1. There is also a script to stop all services:
+    ```sh
+    $ bluechi-env-cleanup
+    ```
 Keep in mind that stopping services will purge all the containers that are related to such services as well.
 
-Both scripts are located in `/usr/local/bin/` in case you are interested in checking them out.
+Both the `bluechi-env-bootstrap` and `bluechi-env-cleaup` scripts are located in `/usr/local/bin/` in case you are interested in checking them out.
 
 ## Managing Workloads
 
-This section describes how to deploy and perform adminstratives tasks using
+This section describes how to deploy and perform administrative's tasks using
 systemd and BlueChi.
 
 ### Deploying Applications
@@ -178,10 +176,10 @@ needs two essential files:
               imagePullPolicy: IfNotPresent
     ```
 
+If you edit the source code of a component then build and push an image of it to your container registry, you will need to edit the corresponding `{SERVICE_NAME}.yaml` file in the `/etc/containers/systemd` directory. The value of the `image` field should point to the image in your container registry.
+
 Creating, changing or updating a file in `/etc/containers/systemd` requires you to run `systemctl daemon-reload` afterwards to generate the corresponding systemd unit files in
 `/run/systemd/generator`.
-
-If you edit the source code of a component then build and push an image of it to your container registry, you will need to edit the corresponding {SERVICE_NAME}.yaml file
 
 ### Service Lifecycle
 
@@ -190,7 +188,7 @@ Services can be managed by using `systemctl`, systemd's administrative CLI.
 Starting, stopping, restarting services is as easy as:
 
 * `systemctl stop {SERVICE_NAME}`
-* `systemc start {SERVICE_NAME}`
+* `systemctl start {SERVICE_NAME}`
 * `systemctl restart {SERVICE_NAME}`
 
 > Make sure to run `systemctl daemon-reload` in case something changed in either Quadlet or systemd unit files.
