@@ -40,14 +40,39 @@ Here is a list of potential scenarios your team could develop. Feel free to inve
 
 ### Provided Sample Scenario
 
-Scenario description:
-- The system detects that a smart trailer is being connected to a car. A signal is raised to the orchestrator to start up the necessary providers and applications to manage the smart trailer. Some example applications could include displaying the signals or adjusting the body functions and powertrain accordingly to ensure a smooth trip.
+#### Smart Trailer Scenario Overview
+The system detects that a smart trailer is being connected to the vehicle. A signal is raised to the orchestrator to start up the necessary providers and applications to manage the smart trailer. These include a Digital Twin Provider, which exposes signals from the trailer to higher-level applications, and a Smart Trailer application, which consumes these signals. The provided smart trailer application prints the value of a property it subscribes to, the `TrailerWeight`.
 
 The first diagrams in the [Eclipse Ankaios](./eclipse-ankaios/README.md) and [Eclipse BlueChi](./eclipse-bluechi/README.md) depict this provided sample scenario.
 
-We provide the code for this scenario. Please refer to {TODO: INSERT_REFERENCE} for instructions on running this scenario. **Your task is to develop a Smart Trailer Application** using the vehicle signals emitted from our Smart Trailer Digital Twin provider.
+The in-vehicle-stack is started with Eclipse Chariott, Ibeji, Agemo, Freyja, and an Eclipse Mosquitto MQTT broker inside the orchestrator environment. 
 
-TODO: Provide some ideas to help the user build this Smart Trailer application. Also maybe provide some additional challenges, such as mentioning what you can do when the signals are synced to the cloud. For instance, create a web UI that displays the signals.
+#### Dynamic Orchestration
+This use case demonstrates a simple example of dynamic orchestration. A [script](./in-vehicle-stack/scenarios/smart_trailer_use_case/scripts/) (one implemented for each orchestrator) will be run to monitor Ibeji and detect when the trailer is connected. The script will continuously poll for the "Trailer Connected" Digital Twin Provider, and print "NotFound" until it is started. You can simulate the trailer being connected to the vehicle by starting the ["Trailer Connected" Digital Twin Provider](./in-vehicle-stack/scenarios/smart_trailer_use_case/digital_twin_providers/trailer_connected_provider/). This provider will register itself with Ibeji, the script will detect this change, and start up the ["Trailer Properties" Digital Twin Provider](./in-vehicle-stack/scenarios/smart_trailer_use_case/digital_twin_providers/trailer_properties_provider/) and the [Smart Trailer Application](./in-vehicle-stack/scenarios/smart_trailer_use_case/applications/smart_trailer_application/). This shows a simple example of reacting to an event in the vehicle by starting up other workloads.
+
+#### Trailer Applications
+The Trailer Properties Provider supports the ManagedSubscribe operation so that the Smart Trailer Application can specify that it wants to receive the `TrailerWeight` property's value every 10 seconds. Using the provided configuration, Freyja is configured to sync the `TrailerWeight` every 3 seconds to a mocked cloud endpoint (which will log the signal data on standard output). See the [Cloud Connectivity Doc](LINK) for instructions to synchronize signals to an Azure Digital Twins instance in the cloud. The [Digital Twin Model](./in-vehicle-stack/scenarios/smart_trailer_use_case/digital-twin-model/dtdl/trailer.json) defines the digital twin model for the trailer, which is used as a reference for the Digital Twin Providers and Applications.
+
+#### Run the use case
+Once you've chosen an orchestrator and gone through their environment setup steps, please refer to [Ankaios's Dev Environment README](./eclipse-ankaios/README.md#startup-check-before-development) or [BlueChi's Dev Environment README](./eclipse-bluechi/README.md#running-the-smart-trailer-example-with-bluechis-devcontainer) for instructions on running this scenario.
+
+#### Hack Challenge - Extend the use case
+Take a look at the source code for the Digital Twin Model, Digital Twin Providers, and Applications used in this example and add to them or use them as a reference to create your own! See the [references](#useful-references-for-creating-and-enhancing-sample-scenarios) to help guide you as well.
+
+When developing new workloads to run in the orchestrator environments, it is recommended to:
+1. Write the code for your workload in the language of your choice.
+1. Build a container image for it.
+1. Push it to a container registry. You can create an [Azure Container Registry](./docs/azure/azure_container_registry_instructions.md#aditional-information) with your [Azure Subscription](./docs/azure/azure_code_redeem_instructions.md)
+1. Follow the orchestrator-specific instructions for plugging your container image into the environments.
+
+There are a few suggested ways to extend this use case, but feel free to use your imagination to come up with your own as well! 
+
+- Extend the smart trailer application to adjust some body control or powertrain functions based on the weight of the trailer to ensure a smooth trip.
+
+- Create a web UI that displays the signals which are synced to the cloud.
+
+- Create your own application which leverages vehicle signals to implement a different use case, such as a data collector.
+
 
 ### Other Sample Scenarios
 - Leverage OpenAI to enhance the vehicle’s user experience. You could develop an application that uses OpenAI’s GPT model to power an in-vehicle virtual assistant.
@@ -78,7 +103,7 @@ TODO - Some example references that may need to be included:
     > A digital twin consumer is a software entity that interfaces with the digital representation of the in-vehicle hardware components.
     - [How do I build a container image for my digital twin consumer?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/container/README.md#consumer)
         > You will need to build a container image if you are updating the smart trailer digital twin consumer's source code or creating your own digital twin consumer.
-    - [If my digital twin consumer is running in a container, how do I override its configuration file?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/container/README.md#run-1)
+    - [If my digital twin consumer is running in a container, how do I override its configuration file?](./docs/in-vehicle-stack/config-overrides.md)
         > You will not need to rebuild the container image if you are overriding your digital twin consumer's configuration file.
 #### Chariott
 - [How can I use the Service Discovery to register and discover other applications/services?](https://github.com/eclipse-chariott/chariott/blob/main/service_discovery/README.md)
@@ -87,10 +112,11 @@ TODO - Some example references that may need to be included:
 - [How do I configure new mappings for Freyja's in-memory mapping client?](https://github.com/eclipse-ibeji/freyja/blob/main/mapping_clients/in_memory_mock_mapping_client/README.md)
     > Adding a new in-vehicle signal requires you to configure a new mapping for that in-vehicle signal.
 - [How do I override the mapping configuration?](https://github.com/eclipse-ibeji/freyja/blob/main/docs/config-overrides.md)
-- [How do I sync in-vehicle signals to the cloud?](https://github.com/eclipse-ibeji/ibeji-example-applications/blob/main/cloud_connectors/azure/digital_twins_connector/README.md)
+- [How do I sync in-vehicle signals to the cloud?](./docs/in-vehicle-stack/azure-cloud-connection.md)
     > You may want to sync your in-vehicle signals to a cloud digital representation of your in-vehicle.
-    - TODO - If a user wishes to integrate their scenario with Azure, which image would I need to pull to enable Freyja to sync to the cloud?
-- TODO - Add link to documentation outlining how to to override configuration for in-vehicle-stack containers'
+
+#### In-Vehicle Stack
+- [How do I override configuration for the in-vehicle stack?](./docs/in-vehicle-stack/config-overrides.md)
 
 #### Eclipse Ankaios
 

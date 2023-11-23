@@ -22,3 +22,14 @@ the language of your choice to generate clients for interacting with the service
 
 Note: If you choose Ankaios as your orchestrator, please add your dependencies into the [Dockerfile](../.devcontainer/Dockerfile). For Rust,
 you can just uncomment the prepared lines in the Dockerfile.
+
+### Cloud Connection
+
+Please refer to the
+[In-Vehicle Stack with Cloud Connectivity](../docs/in-vehicle-stack/azure-cloud-connection.md) for
+instructions on how to setup the In-Vehicle Stack to connect with Azure.
+
+### Configuration overrides
+
+To override the configuration for one of the in-vehicle stack services, please follow
+[How to Override Configuration for In-Vehicle Stack Containers](../docs/in-vehicle-stack/config_overrides.md/#how-to-override-configuration-for-in-vehicle-stack-containers).
