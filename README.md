@@ -101,7 +101,7 @@ TODO - Some example references that may need to be included:
     > A digital twin consumer is a software entity that interfaces with the digital representation of the in-vehicle hardware components.
     - [How do I build a container image for my digital twin consumer?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/container/README.md#consumer)
         > You will need to build a container image if you are updating the smart trailer digital twin consumer's source code or creating your own digital twin consumer.
-    - [If my digital twin consumer is running in a container, how do I override its configuration file?](https://github.com/eclipse-ibeji/ibeji/blob/main/samples/container/README.md#run-1)
+    - [If my digital twin consumer is running in a container, how do I override its configuration file?](./docs/in-vehicle-stack/config-overrides.md)
         > You will not need to rebuild the container image if you are overriding your digital twin consumer's configuration file.
 #### Chariott
 - [How can I use the Service Discovery to register and discover other applications/services?](https://github.com/eclipse-chariott/chariott/blob/main/service_discovery/README.md)
@@ -110,10 +110,11 @@ TODO - Some example references that may need to be included:
 - [How do I configure new mappings for Freyja's in-memory mapping client?](https://github.com/eclipse-ibeji/freyja/blob/main/mapping_clients/in_memory_mock_mapping_client/README.md)
     > Adding a new in-vehicle signal requires you to configure a new mapping for that in-vehicle signal.
 - [How do I override the mapping configuration?](https://github.com/eclipse-ibeji/freyja/blob/main/docs/config-overrides.md)
-- [How do I sync in-vehicle signals to the cloud?](https://github.com/eclipse-ibeji/ibeji-example-applications/blob/main/cloud_connectors/azure/digital_twins_connector/README.md)
+- [How do I sync in-vehicle signals to the cloud?](./docs/in-vehicle-stack/azure-cloud-connection.md)
     > You may want to sync your in-vehicle signals to a cloud digital representation of your in-vehicle.
-    - TODO - If a user wishes to integrate their scenario with Azure, which image would I need to pull to enable Freyja to sync to the cloud?
-- TODO - Add link to documentation outlining how to to override configuration for in-vehicle-stack containers'
+
+#### In-Vehicle Stack
+- [How do I override configuration for the in-vehicle stack?](./docs/in-vehicle-stack/config-overrides.md)
 
 #### Eclipse Ankaios
 
