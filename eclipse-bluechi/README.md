@@ -54,6 +54,10 @@ It is strongly recommended that you use the devcontainer with VSCode.
 
 The following steps below uses the VSCode devcontainer extension. If you prefer, you can use [VSCode's devcontainer's CLI](https://github.com/devcontainers/cli) instead.
 
+1. Login to the Azure's container registry to allow VSCode to pull the devcontainer image:
+    ```shell
+    docker login sdvblueprint.azurecr.io
+    ```
 1. You can use the VSCode devcontainer extension to start your containerized development environment.
     ```shell
     cd <absolute/path/to>/maestro-challenge/eclipse-bluechi
