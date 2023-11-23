@@ -25,13 +25,13 @@ Please refer to the above links to determine what configuration files you would 
 desired project configuration files:
 
     ```shell
-    mkdir /etc/<project_name>/config
+    mkdir -p /etc/<project_name>/config
     ```
 
     for example:
 
     ```shell
-    mkdir /etc/freyja/config
+    mkdir -p /etc/freyja/config
     ```
 
 1. Create the desired configuration files in the newly created directory:
@@ -84,13 +84,13 @@ changes will require a restart of the in-vehicle stack. You can restart the in-v
 desired project configuration files:
 
     ```shell
-    mkdir /etc/<project_name>/config
+    mkdir -p /etc/<project_name>/config
     ```
 
     for example:
 
     ```shell
-    mkdir /etc/freyja/config
+    mkdir -p /etc/freyja/config
     ```
 
 1. Create the desired configuration files in the newly created directory:
