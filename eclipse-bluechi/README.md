@@ -97,7 +97,7 @@ You need to bootstrap all the Eclipse services once you got your eclipse-bluechi
 ### Starting all the services
 1. Inside your devcontainer, you will need to login to Azure's container registry to pull all required images:
     ```sh
-    docker login \
+    podman login \
     --username  <username> \
     --password  <password> \
     sdvblueprint.azurecr.io
