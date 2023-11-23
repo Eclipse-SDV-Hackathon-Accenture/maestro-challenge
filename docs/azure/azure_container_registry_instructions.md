@@ -10,7 +10,7 @@ You can access the pre-built container images here:
 * sdvblueprint.azurecr.io
 
 You will be prompted for username and password to pull the pre-built container images.
-* username: 
+* username: 5a3386a7-640d-4ec7-af9d-4009fd381a3b
 
 > **Note** 
 please contact the Maestro Hack Coaches for the password.
