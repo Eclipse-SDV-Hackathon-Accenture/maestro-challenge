@@ -10,7 +10,7 @@ This will create the Azure Digital Twins with the appropriate DTDL for the smart
 
 1. Once you have created the Azure Digital Twins instance, follow
 [Open instance in Azure Digital Twins Explorer](https://learn.microsoft.com/en-us/azure/digital-twins/quickstart-azure-digital-twins-explorer#open-instance-in-azure-digital-twins-explorer)
-to get the url for your instance. Save for later.
+to get the url for your instance. Copy this url for later.
 
 ### Change In-Vehicle Stack to use Cloud-Connected Components
 
