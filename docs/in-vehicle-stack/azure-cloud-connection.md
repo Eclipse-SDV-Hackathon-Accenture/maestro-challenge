@@ -14,7 +14,7 @@ to get the url for your instance. Copy this url for later.
 
 ### Change In-Vehicle Stack to use Cloud-Connected Components
 
-The following changes will vary depending which Orchestrator you are using. Broadly, we need to
+The following changes will vary depending on which Orchestrator you are using. Broadly, we need to
 change the Freyja container image from the in-memory version to the cloud version and add a
 workload for the Azure cloud connector used by Freyja.
 
