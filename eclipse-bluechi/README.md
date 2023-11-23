@@ -64,7 +64,7 @@ The following steps below uses the VSCode devcontainer extension. If you prefer,
 
 ## Run the devcontainer without VSCode
 
-Upstream documentation: <https://docs.podman.io/en/latest/>
+Upstream documentation: <https://www.docker.com/get-started/>
 
 1. Login to the Azure's container registry:
     ```shell
@@ -176,7 +176,7 @@ needs two essential files:
               imagePullPolicy: IfNotPresent
     ```
 
-If you edit the source code of a component then build and push an image of it to your container registry, you will need to edit the corresponding `{SERVICE_NAME}.yaml` file in the `/etc/containers/systemd` directory. The value of the `image` field should point to the image in your container registry.
+If you edit the source code of a component then build and push an image of it to your container registry, you will need to edit the corresponding `{SERVICE_NAME}.yaml` file in the `/etc/containers/systemd` directory. The value of the `image` field in the `{SERVICE_NAME}.yaml` file should point to the image in your container registry.
 
 Creating, changing or updating a file in `/etc/containers/systemd` requires you to run `systemctl daemon-reload` afterwards to generate the corresponding systemd unit files in
 `/run/systemd/generator`.
@@ -214,7 +214,7 @@ get logs from the container using podman. Replace `{CONTAINER_NAME_OR_ID}` with 
 
 ## Running the Smart Trailer Example with BlueChi's devcontainer
 Inside of the [devcontainer](#two-development-environments):
-1. Follow the instructions in [Bootstrapping](#bootstrapping) to start up the in-vehicle stack.
+1. Follow the instructions in [Starting All the Services](#starting-all-the-services) to start up the in-vehicle stack.
 1. Run the script `start_trailer_applications_bluechi.sh` to monitor for the trailer to be connected. It can be found at `in-vehicle-stack/scenarios/smart_trailer_use_case/scripts/start_trailer_applications_bluechi.sh`.
 1. In another terminal window inside the devcontainer, start the `trailer-connected` service to simulate the trailer being connected:
     ```shell
@@ -222,4 +222,4 @@ Inside of the [devcontainer](#two-development-environments):
     ```
 1. Verify the output in the terminal window of the `start_trailer_applications_bluechi.sh` script. You should see that two more services were started in response to the trailer being connected.
 1. Use [Monitoring and Logs](#monitoring-and-logs) to check that the `smart-trailer` service is now receiving the value of the trailer weight every 10 seconds.
-1. When you are ready to clean up, use the cleanup script mentioned in [Bootstrapping](#bootstrapping).
+1. When you are ready to clean up, use the cleanup script mentioned in [Cleanup](#cleanup).
