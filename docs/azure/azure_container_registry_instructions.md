@@ -22,26 +22,26 @@ You can pull the images using [Docker](https://docs.docker.com/engine/reference/
 When you run the below command, you will be prompted for username and password. Please use the username provided above and contact the Maestro Challenge hack coaches for the password.
 
 > **Podman**
-    ```
-    podman pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-agemo/pub-sub-service:0.1.0
-    podman pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-chariott/service-discovery:0.1.1
-    podman pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-ibeji/invehicle-digital-twin:0.1.0
-    podman pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-mosquitto/mqtt-broker
-    podman pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-freyja/local-with-ibeji:0.1.0
-    podman pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-freyja/cloud-with-ibeji:0.1.0
-    podman pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-freyja/azure-cloud-connector:0.1.0
-    ```
+```
+podman pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-agemo/pub-sub-service:0.1.0
+podman pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-chariott/service-discovery:0.1.1
+podman pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-ibeji/invehicle-digital-twin:0.1.0
+podman pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-mosquitto/mqtt-broker
+podman pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-freyja/local-with-ibeji:0.1.0
+podman pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-freyja/cloud-with-ibeji:0.1.0
+podman pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-freyja/azure-cloud-connector:0.1.0
+```
 
 > **Docker**
-    ```
-    docker pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-agemo/pub-sub-service:0.1.0
-    docker pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-chariott/service-discovery:0.1.1
-    docker pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-ibeji/invehicle-digital-twin:0.1.0
-    docker pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-mosquitto/mqtt-broker
-    docker pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-freyja/local-with-ibeji:0.1.0
-    docker pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-freyja/cloud-with-ibeji:0.1.0
-    docker pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-freyja/azure-cloud-connector:0.1.0
-    ````
+```
+docker pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-agemo/pub-sub-service:0.1.0
+docker pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-chariott/service-discovery:0.1.1
+docker pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-ibeji/invehicle-digital-twin:0.1.0
+docker pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-mosquitto/mqtt-broker
+docker pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-freyja/local-with-ibeji:0.1.0
+docker pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-freyja/cloud-with-ibeji:0.1.0
+docker pull sdvblueprint.azurecr.io/sdvblueprint/eclipse-freyja/azure-cloud-connector:0.1.0
+```
 
 > **Note** 
 Ensure you use the full domain name of the container registry.
