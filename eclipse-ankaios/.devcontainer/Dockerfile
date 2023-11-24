@@ -1,4 +1,4 @@
-FROM ghcr.io/eclipse-ankaios/app-ankaios-dev-hackathon:0.1.0 as dev
+FROM ghcr.io/eclipse-ankaios/app-ankaios-dev:0.2.0-rc1 as dev
 ARG TARGETARCH
 
 RUN apt-get update && apt-get -y install \
@@ -19,7 +19,7 @@ RUN git config --global --add safe.directory '*' \
     && echo 'export PATH=$PATH:/workspaces/app/scripts:/workspaces/app/in-vehicle-stack/scenarios/smart_trailer_use_case/scripts' >> /root/.bashrc
 
 # prod stage, please do not change it
-FROM ghcr.io/eclipse-ankaios/app-ankaios-dev-hackathon:0.1.0
+FROM ghcr.io/eclipse-ankaios/app-ankaios-dev:0.2.0-rc1
 RUN curl -sL https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${TARGETARCH} -o /usr/bin/yq \
     && chmod +x /usr/bin/yq
 COPY scripts/run_maestro.sh /run/ankaios/script/run_maestro.sh
