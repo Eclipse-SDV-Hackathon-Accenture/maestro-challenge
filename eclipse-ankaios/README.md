@@ -75,8 +75,6 @@ Navigate to the subfolder containing this README file and run the following comm
 docker build -t custom-ankaios-dev:0.1 --target dev -f .devcontainer/Dockerfile .
 ```
 
-**Note:** The command above builds for the target `dev` and ignores the `prod` stage.
-
 Start the devcontainer with the required mount points:
 
 ```shell
@@ -149,7 +147,7 @@ shutdown_maestro.sh
 
 You can customize the devcontainer depending on your preferred programming language, tools and frameworks.
 
-To customize the devcontainer add your specific dev dependencies to `.devcontainer/Dockerfile` (starting from line 7). Please leave the `prod` stage inside the Dockerfile unchanged as it is required to build the production image later.
+To customize the devcontainer add your specific dev dependencies to `.devcontainer/Dockerfile` (starting from line 7).
 
 Rebuild the container image.
 
@@ -191,35 +189,3 @@ The Ankaios agent logs can be viewed by executing the following command:
 ```shell
 tail -f /var/log/ankaios-agent_A.log
 ```
-
-## Build the production image for demonstration
-
-If you have finished development, publish your work by building a final production image.
-
-```shell
-docker build -t <your-registry-path>/maestro-ankaios-prod:latest -f .devcontainer/Dockerfile .
-```
-
-**Note:** You don't need to specify `prod` as target here, this is done automatically.
-
-Push the image into the container registry (log in before if authentication is needed):
-
-```shell
-docker push <your-registry-path>/maestro-ankaios-prod:latest
-```
-
-Make sure that the image is made public available, otherwise authentication is needed to run the image outside of the devcontainer.
-
-Run the image and add the desired ports of your applications to access them from your host system. You can also publish multiple ports:
-
-```shell
-docker run -it --privileged --rm -p 25551:25551 -p <extra_port>:<extra_port> <your-registry-path>/maestro-ankaios-prod:latest /bin/bash
-```
-
-Log in into the Microsoft container registry:
-
-```shell
-podman login sdvblueprint.azurecr.io
-```
-
-Log in into the container registry, you have used for pushing your developed workloads, and start the workloads required for your selected scenario.
