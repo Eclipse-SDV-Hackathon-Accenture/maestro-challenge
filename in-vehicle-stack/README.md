@@ -20,16 +20,18 @@ would like to develop sample applications using Rust, you can use `cargo build -
 you are not using Rust, use the [protobuf compiler](https://grpc.io/docs/protoc-installation/) with
 the language of your choice to generate clients for interacting with the services.
 
-Note: If you choose Ankaios as your orchestrator, please add your dependencies into the [Dockerfile](../.devcontainer/Dockerfile). For Rust,
-you can just uncomment the prepared lines in the Dockerfile.
+Note: If you choose Ankaios as your orchestrator, please add your dependencies into the [Dockerfile](../eclipse-ankaios/.devcontainer/Dockerfile). For Rust, you can just uncomment the prepared lines in the Dockerfile.
 
 ### Cloud Connection
 
-Please refer to the
-[In-Vehicle Stack with Cloud Connectivity](../docs/in-vehicle-stack/azure-cloud-connection.md) for
+Please refer to the [In-Vehicle Stack with Cloud Connectivity](../docs/in-vehicle-stack/azure-cloud-connection.md) for
 instructions on how to setup the In-Vehicle Stack to connect with Azure.
+
+### Extending the Use Case
+
+Please see [Hack Challenge - Extend the use case](../README.md#hack-challenge---extend-the-use-case) for ideas on how to extend the smart trailer scenario.
 
 ### Configuration overrides
 
 To override the configuration for one of the in-vehicle stack services, please follow
-[How to Override Configuration for In-Vehicle Stack Containers](../docs/in-vehicle-stack/config_overrides.md/#how-to-override-configuration-for-in-vehicle-stack-containers).
+[How to Override Configuration for In-Vehicle Stack Containers](../docs/in-vehicle-stack/config-overrides.md#how-to-override-configuration-for-in-vehicle-stack-containers).
