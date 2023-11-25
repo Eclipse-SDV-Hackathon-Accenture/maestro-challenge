@@ -99,9 +99,9 @@ If you are using the [In-Vehicle Stack](./in-vehicle-stack/README.md), these ref
     > If you are using Eclipse Ankaios, please see [Workload Development](./eclipse-ankaios/README.md#workload-development) section. If you are using Eclipse BlueChi, please see the [Managing Workloads](./eclipse-bluechi/README.md#managing-workloads) section.
 - After I created a new component or edited an existing component, why should I push its image to a container registry?
     > Pushing an image to the container registry is the recommended approach because it enables the orchestrators to easily reference that image, pull it from the container registry and run it as a container.
-- After I decided which orchestrator to use, why should I use run the devcontainer using VSCode?
+- After I decided which orchestrator to use, why should I use run its devcontainer using VSCode?
     > Running the devcontainer environment through VSCode offers an interactive approach for development. However, this is just a suggestion. You also have the option to use a devcontainer without VSCode. The devcontainer environment guarantees that you have the necessary tools to interact with each orchestrator and the in-vehicle software stack. While you can choose to develop on your local machine, you would need to install the required tools yourself. Please see [Install additional software](https://code.visualstudio.com/docs/devcontainers/create-dev-container#_install-additional-software) if you wish to install additional software into your VSCode devcontainer.
-- After I edit the configuration file of a service, what should I do next?
+- After I edited the configuration file of a service, what should I do next?
     > You will need to restart the smart trailer scenario. If you are using Eclipse Ankaios, please see [Workload Development](./eclipse-ankaios/README.md#workload-development) section. If you are using Eclipse BlueChi, please see the [Managing Workloads](./eclipse-bluechi/README.md#managing-workloads) section.
 
 ### General
