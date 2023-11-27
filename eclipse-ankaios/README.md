@@ -108,7 +108,6 @@ ank get workloads
 The output looks similar to the following:
 ```shell
  WORKLOAD NAME              AGENT     RUNTIME   EXECUTION STATE
- cloud_connector            agent_A   podman    Running
  digital_twin_cloud_sync    agent_A   podman    Running
  digital_twin_vehicle       agent_A   podman    Running
  dynamic_topic_management   agent_A   podman    Running
