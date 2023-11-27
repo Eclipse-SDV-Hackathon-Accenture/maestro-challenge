@@ -85,7 +85,7 @@ docker run -it --privileged --name custom_ankaios_dev -v <absolute/path/to>/maes
 
 Before starting active development we recommend you start once Ankaios with the current startup config [startupState.yaml](./config/startupState.yaml) and sample applications.
 
-**Note:** If you have selected a sample scenario requiring resource usage statistics like cpu or memory usage, uncomment the `resource_monitor` config part in the Ankaios startup config [startupState.yaml](./config/startupState.yaml). For more details, see [here](../scenarios/intelligent_orchestrator_use_case/ankaios_resource_statistics_app/README.md).
+**Note:** If you have selected a sample scenario requiring resource usage statistics like cpu or memory usage, uncomment the `resource_monitor` config part in the Ankaios startup config [startupState.yaml](./config/startupState.yaml). If you are using MacOS, please remove the `--pid host` and `--cgroups enabled` parameters from the config part. For more details, see [here](../scenarios/intelligent_orchestrator_use_case/ankaios_resource_statistics_app/README.md).
 
 1. Log in into the Microsoft container registry
 ```shell
