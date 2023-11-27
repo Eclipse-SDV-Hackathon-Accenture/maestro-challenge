@@ -6,8 +6,8 @@ RUN apt-get update && apt-get -y install \
     jq \
     # Add your development tools here ...
     # If you like to use Rust please uncomment the two following lines...
-    build-essential \
-    && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y \
+    # build-essential \
+    # && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y \
     # Cleanup
     && rm -rf /var/lib/apt/lists/* \
     && curl -sL https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${TARGETARCH} -o /usr/bin/yq \
