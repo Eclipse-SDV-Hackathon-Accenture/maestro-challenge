@@ -64,5 +64,5 @@ workloads:
   #     allow: []
   #     deny: []
   #   runtimeConfig: |
-  #     image: ghcr.io/eclipse-ankaios/maestro_resource_monitor:latest
+  #     image: ghcr.io/eclipse-ankaios/maestro_resource_monitor:0.1.0
   #     commandOptions: ["--network", "host", "--privileged", "--pid", "host", "--cgroups", "enabled", "--name", "resource_monitor"]
