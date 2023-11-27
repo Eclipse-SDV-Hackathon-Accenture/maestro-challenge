@@ -65,4 +65,4 @@ workloads:
   #     deny: []
   #   runtimeConfig: |
   #     image: ghcr.io/eclipse-ankaios/maestro_resource_monitor:latest
-  #     commandOptions: ["--network", "host", "--privileged", "--pid", "host", "--hostname", "host_of_agentA"]
+  #     commandOptions: ["--network", "host", "--privileged", "--pid", "host", "--cgroups", "enabled", "--name", "resource_monitor"]
