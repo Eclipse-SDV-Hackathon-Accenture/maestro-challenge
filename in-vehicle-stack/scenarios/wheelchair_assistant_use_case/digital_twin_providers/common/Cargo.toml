@@ -1,5 +1,5 @@
 [package]
-name = "digital_twin_providers_common"
+name = "wheelchair_digital_twin_providers_common"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"

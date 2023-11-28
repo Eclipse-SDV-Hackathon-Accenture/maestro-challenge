@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 [package]
-name = "digital-twin-model"
+name = "wheelchair_digital_twin_model"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
