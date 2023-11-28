@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 // SPDX-License-Identifier: MIT
 
-pub mod trailer_v1;
+pub mod car_v1;
 
 use serde_derive::{Deserialize, Serialize};
 
