@@ -1,5 +1,13 @@
 # Ankaios Maestro challenge development environment
 
+Don't feel like reading instructions? No problem, watch the video explaining the development environment and use the instructions as a reference.
+
+[![Eclipse Ankaios Development Environment Video](assets/ankaios-hackathon-youtube-image.png)](https://youtu.be/XQVlIctChkI)
+
+
+**Architectural Overview**
+
+
 ![Smart trailer blueprint](../docs/diagrams/ankaios.png)
 
 This repository provides a starter template for solving the Maestro challenges using the [Ankaios](https://github.com/eclipse-ankaios/ankaios) workload orchestrator.
