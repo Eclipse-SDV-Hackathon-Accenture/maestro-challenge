@@ -6,6 +6,13 @@
 // vehicle model in "../dtdl/car.json"
 // In the future this code could be generated from a DTDL spec.
 
+enum WheelchairAssistantState {
+    INIT,
+    OPEN,
+    HOLD,
+    DRIVE
+}
+
 pub mod car {
     pub mod is_car_door_open {
         pub const ID: &str = "dtmi:sdv:Car:IsDoorOpen;1";
@@ -48,4 +55,11 @@ pub mod car {
         pub const DESCRIPTION: &str = "Distance of wheelchair to car in cm";
         pub type TYPE = i32;
     }
+
+    pub mod car_wheelchair_assistant_state {
+        pub const ID: &str = "dtmi:sdv:Car:WheelchairAssistantState;1";
+        pub const NAME: &str = "WheelchairAssistantState";
+        pub const DESCRIPTION: &str = "Wheelchair assistant state. One of INIT, OPEN, HOLD, DRIVE";
+        pub type TYPE = WheelchairAssistantState;
+      }
 }

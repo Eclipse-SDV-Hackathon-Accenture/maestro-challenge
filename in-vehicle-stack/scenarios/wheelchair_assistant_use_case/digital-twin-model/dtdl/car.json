@@ -48,6 +48,13 @@
         "name": "WheelchairDistance",
         "description": "Distance of wheelchair to car in cm",
         "schema": "integer"
+      },
+      {
+        "@type": "Property",
+        "@id": "dtmi:sdv:Car:WheelchairAssistantState;1",
+        "name": "WheelchairAssistantState",
+        "description": "Wheelchair assistant state. One of INIT, OPEN, HOLD, DRIVE",
+        "schema": "enum"
       }
     ]
   }
