@@ -44,6 +44,8 @@ All services are accessible via `localhost:$port`.
 
 It is strongly recommended that you use the devcontainer with VSCode.
 
+NOTE: You can build the development environment image yourself in case you are having trouble running it from this repository: https://github.com/odra/eclipse-bluechi-hackathon-image
+
 ## Run the devcontainer with VSCode
 
 ### Prerequisite
