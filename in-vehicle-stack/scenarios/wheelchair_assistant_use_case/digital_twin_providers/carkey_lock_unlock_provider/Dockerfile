@@ -11,7 +11,7 @@
 
 ARG RUST_VERSION=1.72.1
 FROM docker.io/library/rust:${RUST_VERSION}-slim-bullseye AS build
-ARG APP_NAME=trailer_connected_provider
+ARG APP_NAME=carkey_lock_unlock_provider
 WORKDIR /sdv
 
 COPY ./ .

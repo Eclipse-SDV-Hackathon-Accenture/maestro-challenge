@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 // SPDX-License-Identifier: MIT
 
-use digital_twin_model::trailer_v1;
+use digital_twin_model::car_v1;
 
 use digital_twin_providers_common::constants::chariott::{
     INVEHICLE_DIGITAL_TWIN_SERVICE_COMMUNICATION_KIND,
@@ -15,20 +15,20 @@ use env_logger::{Builder, Target};
 use interfaces::invehicle_digital_twin::v1::invehicle_digital_twin_client::InvehicleDigitalTwinClient;
 use interfaces::invehicle_digital_twin::v1::{EndpointInfo, EntityAccessInfo, RegisterRequest};
 use log::{debug, info, LevelFilter};
-use smart_trailer_interfaces::digital_twin_get_provider::v1::digital_twin_get_provider_server::DigitalTwinGetProviderServer;
+use wheelchair_assistant_interfaces::digital_twin_get_provider::v1::digital_twin_get_provider_server::DigitalTwinGetProviderServer;
 use std::net::SocketAddr;
 use tokio::signal;
 use tonic::transport::Server;
 use tonic::Status;
-use trailer_connected_provider_impl::TrailerConnectedProviderImpl;
+use carkey_lock_unlock_provider_impl::CarkeyLockUnlockProviderImpl;
 
-mod trailer_connected_provider_impl;
+mod carkey_lock_unlock_provider_impl;
 
 // TODO: These could be added in configuration
 const CHARIOTT_SERVICE_DISCOVERY_URI: &str = "http://0.0.0.0:50000";
 const PROVIDER_AUTHORITY: &str = "0.0.0.0:4020";
 
-/// Register the "is trailer connected" property's endpoint.
+/// Register the "is_car_unlocked" property's endpoint.
 ///
 /// # Arguments
 /// * `invehicle_digital_twin_uri` - The In-Vehicle Digital Twin URI.
@@ -37,17 +37,17 @@ async fn register_entity(
     invehicle_digital_twin_uri: &str,
     provider_uri: &str,
 ) -> Result<(), Status> {
-    let is_trailer_connected_endpoint_info = EndpointInfo {
+    let is_car_unlocked_endpoint_info = EndpointInfo {
         protocol: digital_twin_protocol::GRPC.to_string(),
         operations: vec![digital_twin_operation::GET.to_string()],
         uri: provider_uri.to_string(),
-        context: trailer_v1::trailer::is_trailer_connected::ID.to_string(),
+        context: car_v1::car::is_car_unlocked::ID.to_string(),
     };
     let entity_access_info = EntityAccessInfo {
-        name: trailer_v1::trailer::is_trailer_connected::NAME.to_string(),
-        id: trailer_v1::trailer::is_trailer_connected::ID.to_string(),
-        description: trailer_v1::trailer::is_trailer_connected::DESCRIPTION.to_string(),
-        endpoint_info_list: vec![is_trailer_connected_endpoint_info],
+        name: car_v1::trailer::is_car_unlocked::NAME.to_string(),
+        id: car_v1::trailer::is_car_unlocked::ID.to_string(),
+        description: car_v1::trailer::is_car_unlocked::DESCRIPTION.to_string(),
+        endpoint_info_list: vec![is_car_unlocked_endpoint_info],
     };
 
     let mut client = InvehicleDigitalTwinClient::connect(invehicle_digital_twin_uri.to_string())
@@ -69,14 +69,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .target(Target::Stdout)
         .init();
 
-    info!("The Provider has started.");
+    info!("The Provider CarKeyLockUnlock has started.");
 
     let provider_uri = format!("http://{PROVIDER_AUTHORITY}");
     debug!("The Provider URI is {}", &provider_uri);
 
     // Setup the HTTP server.
     let addr: SocketAddr = PROVIDER_AUTHORITY.parse()?;
-    let provider_impl = TrailerConnectedProviderImpl::default();
+    let provider_impl = CarkeyLockUnlockProviderImpl::default();
     let server_future = Server::builder()
         .add_service(DigitalTwinGetProviderServer::new(provider_impl))
         .serve(addr);
