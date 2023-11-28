@@ -4,9 +4,7 @@ Don't feel like reading instructions? No problem, watch the video explaining the
 
 [![Eclipse Ankaios Development Environment Video](assets/ankaios-hackathon-youtube-image.png)](https://youtu.be/XQVlIctChkI)
 
-
 **Architectural Overview**
-
 
 ![Smart trailer blueprint](../docs/diagrams/ankaios.png)
 
@@ -31,22 +29,15 @@ The container is designed to have an immediately running environment. Once trigg
 The following is provided inside the devcontainer:
 
 - Ankaios executables (`ank-server`, `ank-agent` and `ank`)
-
 - Podman 4.6.2
-
 - Pre-configured Ankaios startup config [startupState.yaml](./config/startupState.yaml)
-
 - Automation scripts for starting and stopping all workloads of the challenge:
-    - run_maestro.sh
-    - shutdown_maestro.sh
-
+    - `run_maestro.sh`
+    - `shutdown_maestro.sh`
 - REST API providing [resource usage statistics](#resource-usage-statistics) for the sample scenario about intelligent orchestrator
-
 - Exposed port:
-    - 25551: for optionally using the Ankaios CLI outside of the devcontainer
-
+    - `25551`: for optionally using the Ankaios CLI outside of the devcontainer
 - [Ankaios Control Interface dependencies](#ankaios-control-interface-dependencies)
-
 
 All services are running in the host network meaning those can be accessed by `localhost:<port>`. We recommend that you set the network mode to host for all your developed workloads as well.
 
@@ -63,6 +54,7 @@ Those dependencies are needed for use-cases in which your app needs to use the [
 ## Run devcontainer with VSCode
 
 ### Prerequisites
+
 - [Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) extension installed in VSCode
 
 Open the subfolder containing this README file in VSCode:
