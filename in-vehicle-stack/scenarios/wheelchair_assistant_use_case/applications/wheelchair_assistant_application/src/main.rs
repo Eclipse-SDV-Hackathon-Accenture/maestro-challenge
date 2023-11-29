@@ -128,9 +128,8 @@ async fn receive_car_adjust_updates(
         for msg in receiver.iter() {
             if let Some(msg) = msg {
                 // Here we log the message received. This could be expanded to parsing the message,
-                // Obtaining the weight and making decisions based on the weight
+                // Obtaining the wheelchair assistant state and making decisions based on the weight
                 // For example, adjusting body functions or powertrain of the towing vehicle.
-                // PSEUDO IMPLEMENTATION ######################################################################
                 let new_state = msg["car_wheelchair_assistant_state"];
                 info!("{}", new_state);
                 info!("{}", msg);
@@ -144,7 +143,6 @@ async fn receive_car_adjust_updates(
                     info!("No need to rearrange");
                 }
 
-                // ############################################################################################
             } else if !client.is_connected() {
                 if client.reconnect().is_ok() {
                     _subscribe_response = client
