@@ -44,7 +44,7 @@ const DURATION_BETWEEN_ATTEMPTS: Duration = Duration::from_secs(5);
 
 let mut state_distance: bool = false;
 
-/// Get trailer weight's subscription information from managed subscribe endpoint.
+/// Get wheelchair distance subscription information from managed subscribe endpoint.
 ///
 /// # Arguments
 /// * `managed_subscribe_uri` - The managed subscribe URI.
@@ -68,7 +68,7 @@ async fn get_wheelchair_distance_subscription_info(
     Ok(response.into_inner())
 }
 
-/// Receive Trailer Weight updates.
+/// Receive wheelchair distance updates.
 ///
 /// # Arguments
 /// * `broker_uri` - The broker URI.
@@ -197,9 +197,6 @@ async fn provider_register_wheelchair_distance(
 }
 
 /// Start the wheelchair distance data stream.
-///
-/// # Arguments
-/// `min_interval_ms` - minimum frequency for data stream.
 fn provider_start_wheelchair_distance_data_stream() {
     debug!("Starting the Provider's wheelchair distance data stream.");
     
@@ -230,7 +227,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .target(Target::Stdout)
         .init();
 
-    info!("The Smart Trailer Application has started.");
+    info!("The Wheelchair Distance Application has started.");
 
     const PROVIDER_AUTHORITY: &str = "0.0.0.0:4030";
     let provider_uri = format!("http://{PROVIDER_AUTHORITY}"); 
