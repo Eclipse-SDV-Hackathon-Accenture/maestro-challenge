@@ -22,6 +22,8 @@ then
   exit 1
 fi
 
+NL=$'\n'
+
 # Get the directory of where the script is located
 # All relative paths will be in relation to this
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
@@ -38,6 +40,9 @@ BODY='{"id":"dtmi:sdv:Trailer:IsTrailerConnected;1"}'
 
 PROTO_PATH="${SCRIPT_DIR}/../../../interfaces/invehicle_digital_twin/v1"
 PROTO="invehicle_digital_twin.proto"
+
+# Registry
+IMAGE_REGISTRY=sdvblueprint.azurecr.io/sdvblueprint/in-vehicle-stack/
 
 EXPECTED_PROTOCOL="grpc"
 EXPECTED_OPERATION="get"
@@ -62,6 +67,12 @@ done
 
 # Parse the output as a JSON object using jq and extract the endpoints
 ENDPOINTS=$(echo $OUTPUT | jq -c '.entityAccessInfo.endpointInfoList[]')
+
+# Helper to build a container name to run
+function get_container () {
+  echo -n "image: ${IMAGE_REGISTRY}$1:$2${NL}commandOptions: [\"--network\", \"host\", \"--name\", \"$1\"]"
+}
+
 
 # Loop through each endpoint
 for ENDPOINT in $ENDPOINTS
@@ -94,9 +105,9 @@ do
         then
           echo "Trailer is connected! Starting workloads to manage it"
 
-          # Start up the other workloads using podman
-          CFG_PROVIDER=$'image: sdvblueprint.azurecr.io/sdvblueprint/in-vehicle-stack/trailer_properties_provider:0.1.0\ncommandOptions: ["--network", "host", "--name", "trailer_properties_provider"]'
-          CFG_APP=$'image: sdvblueprint.azurecr.io/sdvblueprint/in-vehicle-stack/smart_trailer_application:0.1.0\ncommandOptions: ["--network", "host", "--name", "smart_trailer_application"]'
+          # Start up the other workloads using podman"
+          CFG_PROVIDER=$(get_container "trailer_properties_provider" "0.1.0")
+          CFG_APP=$(get_container "smart_trailer_application" "0.1.0")
 
           ank run workload trailer_properties_provider --runtime podman --config "$CFG_PROVIDER" --agent agent_A
           ank run workload smart_trailer_application --runtime podman --config "$CFG_APP" --agent agent_A

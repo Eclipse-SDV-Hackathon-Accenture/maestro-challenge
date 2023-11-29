@@ -1,0 +1,51 @@
+Author: Arndt
+"Self orchestration"
+presented Wed 29.11.2023 10:00 to the team - Feedback: Why? Too complex! We will first try to get our stuff to run...
+
+All Workloads will be always loaded. 
+Based on demand, faster (lower latency) and more precise (int, float, real) and feature rich (clear sight, rain, snow, fog) more feature-rich apps are being dynamically loaded on demaand. 
+The damands can come from the single workload and/or the orchestrator.
+
+[Arndt]: To be reviewed...
+
+Advantages:
+The problem is solved at the root and only the orchestration is centralized 
+The app knows best what is required 
+The ps command of the car always returns the same number of apps/processes 
+All signals are always taken care of by the correct software 
+This is similar to the release train approach, where there is always space for ALL components 
+The developers can incrementally improve their code 
+The pain and complexity of integration is reduced and hence the quality benefits 
+Knocking up a prototype is very fast and can be automated. 
+The small app (WL1stub) can serve for rest-bus simulation. The "rest-bus"-code can be taken from e.g. vector tools, or could even be automatically generated based on the supported messages. 
+
+Sample names for workloads
+WL1stub
+WL1rest-bus
+WL1slow
+WL1normal
+WL1fast
+WL1fast-precise 
+Etc
+
+All 3, 4 or more versions of WLs are always being created semi-automatically. 
+The only initial manual work would be to insert artificial workloads into each version. 
+
+In that way it will be possible to do load-testing of the system And it also adheres to the standard procedure in automotive software development, where all resources are always statically allocated even if not used. 
+
+This can be done for memory usage too. For program code as well as for variables (data in the app)
+Code: maybe it may be necessary to switch compiler optimization off, as unnecessary code may be eliminated. 
+Variables: just create an array of memory at startup of the app. 
+
+Important is also to consider the load time, unload time and initialization time, i.e. time „out of service“. 
+
+This optimization task could be done by AI during development AND AI could also help to select and write the best algorithm for the runtime scheduler. 
+
+Specific reasons for low to high resolution workloads in specific "domains" - ADAS, DME, Infotainment, Navigation, Body, ...
+
+ADAS: 
+Camara-resolution, camera-frames per second 
+ADAS code behaviour and orchestration could be based on geo location, speed of the car, etc. 
+
+
+

@@ -44,24 +44,29 @@ All services are accessible via `localhost:$port`.
 
 It is strongly recommended that you use the devcontainer with VSCode.
 
-NOTE: You can build the development environment image yourself in case you are having trouble running it from this repository: https://github.com/odra/eclipse-bluechi-hackathon-image
+NOTE: You can build the development environment image yourself in case you are having trouble running it from this repository: <ttps://github.com/odra/eclipse-bluechi-hackathon-image>
 
 ## Run the devcontainer with VSCode
 
 ### Prerequisite
+
 * Ensure that the [Remote Development extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) installed in VSCode
 
 * Upstream documentation:
+
   * <https://containers.dev/>
-  * https://github.com/devcontainers/cli
+  * <https://github.com/devcontainers/cli>
 
 The following steps below uses the VSCode devcontainer extension. If you prefer, you can use [VSCode's devcontainer's CLI](https://github.com/devcontainers/cli) instead.
 
 1. Login to the Azure's container registry to allow VSCode to pull the devcontainer image:
+
     ```shell
     docker login sdvblueprint.azurecr.io
     ```
+
 1. You can use the VSCode devcontainer extension to start your containerized development environment.
+
     ```shell
     cd <absolute/path/to>/maestro-challenge/eclipse-bluechi
     code .
@@ -74,11 +79,13 @@ The following steps below uses the VSCode devcontainer extension. If you prefer,
 Upstream documentation: <https://www.docker.com/get-started/>
 
 1. Login to the Azure's container registry:
+
     ```shell
     docker login sdvblueprint.azurecr.io
     ```
 
 1. Start the devcontainer by running:
+
     ```sh
     docker run \
     -d \
@@ -92,6 +99,7 @@ Upstream documentation: <https://www.docker.com/get-started/>
     Ensure to replace `<absolute/path/to>` with your own value.
 
 1. Enter into the devcontainer and interact with BlueChi:
+
     ```sh
     docker exec -it autosd-eclipse /bin/bash
     bluechictl list-units
@@ -102,7 +110,9 @@ Upstream documentation: <https://www.docker.com/get-started/>
 You need to bootstrap all the Eclipse services once you got your eclipse-bluechi devcontainer running.
 
 ### Starting all the services
+
 1. Inside your devcontainer, you will need to login to Azure's container registry to pull all required images:
+
     ```sh
     podman login \
     --username  <username> \
@@ -111,16 +121,21 @@ You need to bootstrap all the Eclipse services once you got your eclipse-bluechi
     ```
 
 2. Then it is time to start all services which can be done by executing the bootstrap script:
+
     ```sh
-    $ bluechi-env-bootstrap
+    bluechi-env-bootstrap
     ```
+
 The above command will pull all the required images and start all services.
 
 ### Cleanup
+
 1. There is also a script to stop all services:
+
     ```sh
-    $ bluechi-env-cleanup
+    bluechi-env-cleanup
     ```
+
 Keep in mind that stopping services will purge all the containers that are related to such services as well.
 
 Both the `bluechi-env-bootstrap` and `bluechi-env-cleaup` scripts are located in `/usr/local/bin/` in case you are interested in checking them out.
@@ -145,6 +160,7 @@ needs two essential files:
   containing the workload definition.
 
   Example of `freyja.kube`:
+
     ```kube
     # https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
     [Kube]
@@ -154,10 +170,12 @@ needs two essential files:
     # [Install]
     # WantedBy=default.target
     ```
+
 * `{SERVICE_NAME}.yaml`: A Kubernetes resource definition (either `v1.Pod` or
   `apps/v1.Deployment`) that describes the workload.
 
   Example of `freyja.yml`:
+
     ```yaml
     ---
     apiVersion: apps/v1
@@ -220,13 +238,17 @@ You can also list all active containers by running `podman ps` and then `podman 
 get logs from the container using podman. Replace `{CONTAINER_NAME_OR_ID}` with the container's name or ID.
 
 ## Running the Smart Trailer Example with BlueChi's devcontainer
+
 Inside of the [devcontainer](#two-development-environments):
+
 1. Follow the instructions in [Starting All the Services](#starting-all-the-services) to start up the in-vehicle stack.
 1. Run the script `start_trailer_applications_bluechi.sh` to monitor for the trailer to be connected. It can be found at `in-vehicle-stack/scenarios/smart_trailer_use_case/scripts/start_trailer_applications_bluechi.sh`.
 1. In another terminal window inside the devcontainer, start the `trailer-connected` service to simulate the trailer being connected:
+
     ```shell
     systemctl start trailer-connected
     ```
+
 1. Verify the output in the terminal window of the `start_trailer_applications_bluechi.sh` script. You should see that two more services were started in response to the trailer being connected.
 1. Use [Monitoring and Logs](#monitoring-and-logs) to check that the `smart-trailer` service is now receiving the value of the trailer weight every 10 seconds.
 1. When you are ready to clean up, use the cleanup script mentioned in [Cleanup](#cleanup).
