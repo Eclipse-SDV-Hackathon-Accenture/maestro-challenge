@@ -60,19 +60,13 @@ The Trailer Properties Provider supports the ManagedSubscribe operation so that 
 Once you've chosen an orchestrator and gone through their environment setup steps, please refer to [Ankaios's Dev Environment README](./eclipse-ankaios/README.md#startup-check-before-development) or [BlueChi's Dev Environment README](./eclipse-bluechi/README.md#running-the-smart-trailer-example-with-bluechis-devcontainer) for instructions on running this scenario.
 
 #### Wheelchair Assistant Scenario Overview
+In this scenario we try to provide a handicapped person an easier access to a vehicle and thus more mobility. Our system detects that a handicapped person with a wheelchair is approaching a vehicle and aims to provide complete support by personalizing to the individual needs of the user. The system demonstrates a full driving scenario from arriving at the car to reaching the desired destination with maximum support from automation software.
 
-This system demonstrates a full driving scenario, starting from arriving at the car, getting in ,driving, getting out and leaving the car with maximum support from automation software.
-The system detects that a person with special abilities arrives at the car and then provides complete support to them by personalizing to their individual needs.
-
- - When a person approaches the car, the car lowers itself, opens the front and the back doors. The seat and the steering wheel get adjusted in order for the person to get in.
- - A mechanical setting (ramp or a crane) can be used for getting the wheelchair inside the car.
- - Once the person gets in, the seat and the steering gets adjusted back for driving, while closing the backdoor.
- - On reaching destination, the car is lowered. As the backdoor opens,the wheelchair is retrieved.
- - The seats and steering get adjusted for the person to get out of the car. Once they"re out, everything gets readjusted to normal position.
+A signal is raised to the orchestrator to start up the necessary providers and applications to manage the wheelchair as well as to make adjustments inside the car. These include a Digital Twin Provider, which exposes signals from the wheelchair to higher-level applications, and a Wheelchair Assistant application, which makes use of and reacts to these signals. In order to start our orchestra, the tools we use are: Eclipse Chariott, Ibeji, Agemo, Freyja, and an Eclipse Mosquitto MQTT broker.
 
 ##### Ankaios as Orchestrator
 
-Ankaois is developed specifically for automotive use cases. It's independant of communication frameworks like SOME/IP, DDS or REST API.
+Ankaios is developed specifically for automotive use cases. It's independant of communication frameworks like SOME/IP, DDS or REST API.
 It also does not depend on systemd or any specific systems and can be started with any init system.
 With this it's possible to dynamically startup an application that is only required in a particular situation. Since Ankaios supports ASPICE processes, it can be used widely by leading car manufacturers.
 For these reasons Ankaios fits in perfectly for the wheelchair scenario.
@@ -83,9 +77,14 @@ This use case demonstrates a more complex example of dynamic orchestration.
 A [script](./in-vehicle-stack/scenarios/smart_trailer_use_case/scripts/) (one implemented for each orchestrator) will be run to monitor Ibeji and detect when the trailer is connected. The script will continuously poll for the "Trailer Connected" Digital Twin Provider, and print "NotFound" until it is started. You can simulate the trailer being connected to the vehicle by starting the ["Trailer Connected" Digital Twin Provider](./in-vehicle-stack/scenarios/smart_trailer_use_case/digital_twin_providers/trailer_connected_provider/). This provider will register itself with Ibeji, the script will detect this change, and start up the ["Trailer Properties" Digital Twin Provider](./in-vehicle-stack/scenarios/smart_trailer_use_case/digital_twin_providers/trailer_properties_provider/) and the [Smart Trailer Application](./in-vehicle-stack/scenarios/smart_trailer_use_case/applications/smart_trailer_application/). This shows a simple example of reacting to an event in the vehicle by starting up other workloads.
 
 
-##### The Wheelchair Applications
-Wheelchair Assistant Application:
+##### The Wheelchair Assistant Applications
 
+This application takes care of the software implementation corresponding to the person arriving at the car, getting in ,driving, getting out and leaving the car.
+ - When a person approaches the car, the car lowers itself, opens the front and the back doors. The seat and the steering wheel get adjusted in order for the person to get in.
+ - A mechanical setting (ramp or a crane) can be used for getting the wheelchair inside the car.
+ - Once the person gets in, the seat and the steering gets adjusted back for driving, while closing the backdoor.
+ - On reaching destination, the car is lowered. As the backdoor opens,the wheelchair is retrieved.
+ - The seats and steering get adjusted for the person to get out of the car. Once they"re out, everything gets readjusted to normal position.
 
 ##### Run the use case
 TBD
