@@ -22,8 +22,6 @@ RUN apt update -y && apt upgrade -y && apt install -y \
 
 WORKDIR /sdv
 
-COPY ./ .
-
 # Check that APP_NAME argument is valid.
 RUN sanitized=$(echo "${APP_NAME}" | tr -dc '^[a-zA-Z_0-9-]+$'); \
 [ "$sanitized" = "${APP_NAME}" ] || { \
@@ -31,8 +29,10 @@ RUN sanitized=$(echo "${APP_NAME}" | tr -dc '^[a-zA-Z_0-9-]+$'); \
     exit 1; \
 }
 
+COPY ./ .
+
 # Build the application
-RUN --mount=type=cache,sharing=private,target=./target/release/ cargo build --release --bin "${APP_NAME}" && \
+RUN --mount=type=cache,target=./target/release/ cargo build --release --bin "${APP_NAME}" && \
     cp ./target/release/"${APP_NAME}" /sdv/service
 
 ################################################################################
