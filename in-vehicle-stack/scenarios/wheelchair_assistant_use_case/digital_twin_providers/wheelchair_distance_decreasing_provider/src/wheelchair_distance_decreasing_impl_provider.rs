@@ -26,9 +26,9 @@ const MQTT_CLIENT_ID: &str = "wheelchair-distance-decreasing-publisher";
 const FREQUENCY_MS: &str = "frequency_ms";
 
 #[derive(Debug, Serialize, Deserialize)]
-struct TrailerWeightProperty {
-    #[serde(rename = "WheelchairDistanceDecreasing")]
-    trailer_weight: car_v1::car::wheelchair_distance_decreasing::TYPE,
+struct WheelchairDistanceProperty {
+    #[serde(rename = "WheelchairDistance")]
+    wheelchair_distance: car_v1::car::wheelchair_distance::TYPE,
     #[serde(rename = "$metadata")]
     metadata: Metadata,
 }
@@ -56,17 +56,17 @@ pub struct WheelchairDistanceDecreasingProviderImpl {
     entity_map: Arc<RwLock<HashMap<String, Vec<TopicInfo>>>>,
 }
 
-/// Create the JSON for the trailer weight property.
+/// Create the JSON for the wheelchair distance property.
 ///
 /// # Arguments
-/// * `trailer_weight` - The trailer weight value.
-fn create_property_json(trailer_weight: i32) -> String {
+/// * `wheelchair_distance` - The wheelchair distance value.
+fn create_property_json(wheelchair_distance: i32) -> String {
     let metadata = Metadata {
-        model: car_v1::car::wheelchair_distance_decreasing::ID.to_string(),
+        model: car_v1::car::wheelchair_distance::ID.to_string(),
     };
 
-    let property: WheelchairDistanceDecreasingProperty = WheelchairDistanceDecreasingProperty {
-        wheelchair_distance_decreasing,
+    let property: WheelchairDistanceProperty = WheelchairDistanceProperty {
+        wheelchair_distance,
         metadata,
     };
 
@@ -121,7 +121,7 @@ impl WheelchairDistanceDecreasingProviderImpl {
 
         // Insert entry for entity id's associated with provider.
         entity_map.insert(
-            car_v1::car::wheelchair_distance_decreasing::ID.to_string(),
+            car_v1::car::wheelchair_distance::ID.to_string(),
             Vec::new(),
         );
 
@@ -192,7 +192,7 @@ impl WheelchairDistanceDecreasingProviderImpl {
                 // Publish message to broker.
                 info!(
                     "Publish to {topic} for {} with value {data}",
-                    car_v1::car::wheelchair_distance_decreasing::NAME
+                    car_v1::car::wheelchair_distance::NAME
                 );
 
                 if let Err(err) = publish_message(&broker_uri, &topic, &content) {
