@@ -11,7 +11,7 @@
 
 ARG RUST_VERSION=1.72.1
 FROM docker.io/library/rust:${RUST_VERSION}-slim-bullseye AS build
-ARG APP_NAME=smart_trailer_application
+ARG APP_NAME=wheelchair_distance_application
 WORKDIR /sdv
 
 COPY ./ .
