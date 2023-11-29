@@ -12,8 +12,8 @@ use wheelchair_digital_twin_providers_common::constants::chariott::{
     INVEHICLE_DIGITAL_TWIN_SERVICE_COMMUNICATION_REFERENCE, INVEHICLE_DIGITAL_TWIN_SERVICE_NAME,
     INVEHICLE_DIGITAL_TWIN_SERVICE_NAMESPACE, INVEHICLE_DIGITAL_TWIN_SERVICE_VERSION,
 };
-use digital_twin_providers_common::constants::{digital_twin_operation, digital_twin_protocol};
-use digital_twin_providers_common::utils::discover_service_using_chariott;
+use wheelchair_digital_twin_providers_common::constants::{digital_twin_operation, digital_twin_protocol};
+use wheelchair_digital_twin_providers_common::utils::discover_service_using_chariott;
 use env_logger::{Builder, Target};
 use interfaces::invehicle_digital_twin::v1::invehicle_digital_twin_client::InvehicleDigitalTwinClient;
 use interfaces::invehicle_digital_twin::v1::{EndpointInfo, EntityAccessInfo, RegisterRequest};
