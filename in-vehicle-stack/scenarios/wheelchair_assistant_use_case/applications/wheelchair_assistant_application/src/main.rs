@@ -4,7 +4,7 @@
 
 use std::env;
 
-use digital_twin_model::trailer_v1;
+use digital_twin_model::car_v1;
 use digital_twin_providers_common::constants::chariott::{
     INVEHICLE_DIGITAL_TWIN_SERVICE_COMMUNICATION_KIND,
     INVEHICLE_DIGITAL_TWIN_SERVICE_COMMUNICATION_REFERENCE, INVEHICLE_DIGITAL_TWIN_SERVICE_NAME,
@@ -30,7 +30,7 @@ use tonic::{Request, Status};
 use uuid::Uuid;
 
 const FREQUENCY_MS_FLAG: &str = "freq_ms=";
-const MQTT_CLIENT_ID: &str = "smart-trailer-consumer";
+const MQTT_CLIENT_ID: &str = "wheelchair-assistant-consumer";
 
 // TODO: These could be added in configuration
 const CHARIOTT_SERVICE_DISCOVERY_URI: &str = "http://0.0.0.0:50000";
@@ -42,14 +42,18 @@ const MAX_RETRIES: i32 = 10; // for demo purposes we will retry a maximum of 10 
                              // By default we will wait 5 seconds between retry attempts
 const DURATION_BETWEEN_ATTEMPTS: Duration = Duration::from_secs(5);
 
-/// Get trailer weight's subscription information from managed subscribe endpoint.
+let mut door_open: bool = false;
+let mut steering_wheel_up: bool = false;
+let mut driver_seat_back: bool = false;
+
+/// Get car adjustment subscription information from managed subscribe endpoint.
 ///
 /// # Arguments
 /// * `managed_subscribe_uri` - The managed subscribe URI.
 /// * `constraints` - Constraints for the managed topic.
-async fn get_trailer_weight_subscription_info(
+async fn get_car_adjust_subscription_info(
     managed_subscribe_uri: &str,
-    constraints: Vec<Constraint>,
+    constraints: Vec<Constraint>
 ) -> Result<SubscriptionInfoResponse, Status> {
     // Create gRPC client.
     let mut client = ManagedSubscribeClient::connect(managed_subscribe_uri.to_string())
@@ -57,7 +61,7 @@ async fn get_trailer_weight_subscription_info(
         .map_err(|err| Status::from_error(err.into()))?;
 
     let request = Request::new(SubscriptionInfoRequest {
-        entity_id: trailer_v1::trailer::trailer_weight::ID.to_string(),
+        entity_id: car_v1::car::car_wheelchair_assistant_state::ID.to_string(),              
         constraints,
     });
 
@@ -66,12 +70,12 @@ async fn get_trailer_weight_subscription_info(
     Ok(response.into_inner())
 }
 
-/// Receive Trailer Weight updates.
+/// Receive car adjustment updates.
 ///
 /// # Arguments
 /// * `broker_uri` - The broker URI.
 /// * `topic` - The topic.
-async fn receive_trailer_weight_updates(
+async fn receive_car_adjust_updates(
     broker_uri: &str,
     topic: &str,
 ) -> Result<JoinHandle<()>, String> {
@@ -126,7 +130,21 @@ async fn receive_trailer_weight_updates(
                 // Here we log the message received. This could be expanded to parsing the message,
                 // Obtaining the weight and making decisions based on the weight
                 // For example, adjusting body functions or powertrain of the towing vehicle.
+                // PSEUDO IMPLEMENTATION ######################################################################
+                let new_state = msg["car_wheelchair_assistant_state"];
+                info!("{}", new_state);
                 info!("{}", msg);
+
+                if new_state == "HOLD" {
+                    info!("Adjusting the car!");
+                    door_open = true;
+                    steering_wheel_up = true;
+                    driver_seat_back = true;
+                } else {
+                    info!("No need to rearrange");
+                }
+
+                // ############################################################################################
             } else if !client.is_connected() {
                 if client.reconnect().is_ok() {
                     _subscribe_response = client
@@ -150,6 +168,177 @@ async fn receive_trailer_weight_updates(
     Ok(sub_handle)
 }
 
+/// Register the car seat adjustment property's endpoint.
+///
+/// # Arguments
+/// * `invehicle_digital_twin_uri` - The In-Vehicle Digital Twin URI.
+/// * `provider_uri` - The provider's URI.
+async fn provider_register_seat_adjustment(
+    invehicle_digital_twin_uri: &str,
+    provider_uri: &str,
+) -> Result<(), Status> {
+    let endpoint_info = EndpointInfo {
+        protocol: digital_twin_protocol::GRPC.to_string(),
+        operations: vec![digital_twin_operation::MANAGEDSUBSCRIBE.to_string()],
+        uri: provider_uri.to_string(),
+        context: "GetSubscriptionInfo".to_string(),
+    };
+
+    let entity_access_info = EntityAccessInfo {
+        name: car_v1::car::is_car_seat_in_assist_position::NAME.to_string(),           
+        id: car_v1::car::is_car_seat_in_assist_position::ID.to_string(),                 
+        description: car_v1::car::is_car_seat_in_assist_position::DESCRIPTION.to_string(),       
+        endpoint_info_list: vec![endpoint_info],
+    };
+
+    let mut client = InvehicleDigitalTwinClient::connect(invehicle_digital_twin_uri.to_string())
+        .await
+        .map_err(|e| Status::internal(e.to_string()))?;
+    let request = tonic::Request::new(RegisterRequest {
+        entity_access_info_list: vec![entity_access_info],
+    });
+    let _response = client.register(request).await?;
+
+    Ok(())
+}
+
+/// Register the car door adjustment property's endpoint.
+///
+/// # Arguments
+/// * `invehicle_digital_twin_uri` - The In-Vehicle Digital Twin URI.
+/// * `provider_uri` - The provider's URI.
+async fn provider_register_door_adjustment(
+    invehicle_digital_twin_uri: &str,
+    provider_uri: &str,
+) -> Result<(), Status> {
+    let endpoint_info = EndpointInfo {
+        protocol: digital_twin_protocol::GRPC.to_string(),
+        operations: vec![digital_twin_operation::MANAGEDSUBSCRIBE.to_string()],
+        uri: provider_uri.to_string(),
+        context: "GetSubscriptionInfo".to_string(),
+    };
+
+    let entity_access_info = EntityAccessInfo {
+        name: car_v1::car::is_car_door_open::NAME.to_string(),           
+        id: car_v1::car::is_car_door_open::ID.to_string(),                 
+        description: car_v1::car::is_car_door_open::DESCRIPTION.to_string(),       
+        endpoint_info_list: vec![endpoint_info],
+    };
+
+    let mut client = InvehicleDigitalTwinClient::connect(invehicle_digital_twin_uri.to_string())
+        .await
+        .map_err(|e| Status::internal(e.to_string()))?;
+    let request = tonic::Request::new(RegisterRequest {
+        entity_access_info_list: vec![entity_access_info],
+    });
+    let _response = client.register(request).await?;
+
+    Ok(())
+}
+
+/// Register the car steering wheel adjustment property's endpoint.
+///
+/// # Arguments
+/// * `invehicle_digital_twin_uri` - The In-Vehicle Digital Twin URI.
+/// * `provider_uri` - The provider's URI.
+async fn provider_register_steering_wheel_adjustment(
+    invehicle_digital_twin_uri: &str,
+    provider_uri: &str,
+) -> Result<(), Status> {
+    let endpoint_info = EndpointInfo {
+        protocol: digital_twin_protocol::GRPC.to_string(),
+        operations: vec![digital_twin_operation::MANAGEDSUBSCRIBE.to_string()],
+        uri: provider_uri.to_string(),
+        context: "GetSubscriptionInfo".to_string(),
+    };
+
+    let entity_access_info = EntityAccessInfo {
+        name: car_v1::car::is_car_steeringwheel_in_assist_position::NAME.to_string(),           
+        id: car_v1::car::is_car_steeringwheel_in_assist_position::ID.to_string(),                 
+        description: car_v1::car::is_car_steeringwheel_in_assist_position::DESCRIPTION.to_string(),       
+        endpoint_info_list: vec![endpoint_info],
+    };
+
+    let mut client = InvehicleDigitalTwinClient::connect(invehicle_digital_twin_uri.to_string())
+        .await
+        .map_err(|e| Status::internal(e.to_string()))?;
+    let request = tonic::Request::new(RegisterRequest {
+        entity_access_info_list: vec![entity_access_info],
+    });
+    let _response = client.register(request).await?;
+
+    Ok(())
+}
+
+/// Start the seat adjustment data stream.
+fn provider_start_seat_adjustment_data_stream() {
+    debug!("Starting the Provider's seat adjustment data stream.");
+    
+    let (sender, reciever) = watch::channel(driver_seat_back);         
+    tokio::spawn(async move {
+
+        loop {
+            debug!(
+                "Recording new value for {} of {state_distance}",
+                car_v1::car::is_car_seat_in_assist_position::ID     
+            );
+
+            if let Err(err) = sender.send(driver_seat_back) {
+                warn!("Failed to get new value due to '{err:?}'");
+                break;
+            }
+
+            debug!("Completed the publish request");
+        }
+    });
+}
+
+/// Start the door adjustment data stream.
+fn provider_start_door_adjustment_data_stream() {
+    debug!("Starting the Provider's door adjustment data stream.");
+    
+    let (sender, reciever) = watch::channel(door_open);         
+    tokio::spawn(async move {
+
+        loop {
+            debug!(
+                "Recording new value for {} of {state_distance}",
+                car_v1::car::is_car_door_open::ID     
+            );
+
+            if let Err(err) = sender.send(door_open) {
+                warn!("Failed to get new value due to '{err:?}'");
+                break;
+            }
+
+            debug!("Completed the publish request");
+        }
+    });
+}
+
+/// Start the steering wheel adjustment data stream.
+fn provider_start_steering_wheel_adjustment_data_stream() {
+    debug!("Starting the Provider's steering wheel adjustment data stream.");
+    
+    let (sender, reciever) = watch::channel(steering_wheel_up);         
+    tokio::spawn(async move {
+
+        loop {
+            debug!(
+                "Recording new value for {} of {state_distance}",
+                car_v1::car::is_car_steeringwheel_in_assist_position::ID     
+            );
+
+            if let Err(err) = sender.send(steering_wheel_up) {
+                warn!("Failed to get new value due to '{err:?}'");
+                break;
+            }
+
+            debug!("Completed the publish request");
+        }
+    });
+}
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Setup logging.
@@ -158,8 +347,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .target(Target::Stdout)
         .init();
 
-    info!("The Smart Trailer Application has started.");
+    info!("The Wheelchair Assistant Application has started.");
 
+    const PROVIDER_AUTHORITY_SEAT: &str = "0.0.0.0:4070";
+    const PROVIDER_AUTHORITY_DOOR: &str = "0.0.0.0:4080";
+    const PROVIDER_AUTHORITY_STEER: &str = "0.0.0.0:4090";
+    let provider_uri; 
     // Get the In-vehicle Digital Twin Uri from the service discovery system
     // This could be enhanced to add retries for robustness
     let invehicle_digital_twin_uri = discover_service_using_chariott(
@@ -189,7 +382,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     while provider_endpoint_info.is_none() {
         provider_endpoint_info = match discover_digital_twin_provider_using_ibeji(
             &invehicle_digital_twin_uri,
-            trailer_v1::trailer::trailer_weight::ID,
+            car_v1::car::car_wheelchair_assistant_state::ID,
             digital_twin_protocol::GRPC,
             &[digital_twin_operation::MANAGEDSUBSCRIBE.to_string()],
         )
@@ -199,7 +392,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             Err(status) => {
                 info!(
                     "A provider was not found in the digital twin service for id '{}' with: '{:?}'",
-                    trailer_v1::trailer::trailer_weight::ID,
+                    car_v1::car::car_wheelchair_assistant_state::ID,
                     status
                 );
                 None
@@ -216,7 +409,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     let managed_subscribe_uri = provider_endpoint_info.ok_or("Maximum amount of retries was reached while trying to retrieve the digital twin provider.")?.uri;
-    info!("The Managed Subscribe URI for the TrailerWeight property's provider is {managed_subscribe_uri}");
+    info!("The Managed Subscribe URI for the IsCarUnlocked property's provider is {managed_subscribe_uri}");
 
     // Create constraint for the managed subscribe call.
     let frequency_constraint = Constraint {
@@ -226,20 +419,40 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Get the subscription information for a managed topic with constraints.
     let subscription_info =
-        get_trailer_weight_subscription_info(&managed_subscribe_uri, vec![frequency_constraint])
+        get_car_adjust_subscription_info(&managed_subscribe_uri, vec![frequency_constraint])
             .await?;
 
     // Deconstruct subscription information.
     let broker_uri = get_uri(&subscription_info.uri)?;
     let topic = subscription_info.context;
-    info!("The broker URI for the TrailerWeight property's provider is {broker_uri}");
+    info!("The broker URI for the car_wheelchair_assistant_state property's provider is {broker_uri}");
 
     // Subscribe to topic.
-    let sub_handle = receive_trailer_weight_updates(&broker_uri, &topic)
+    let sub_handle = receive_car_adjust_updates(&broker_uri, &topic)
         .await
         .map_err(|err| Status::internal(format!("{err:?}")))?;
+    
 
+    provider_start_seat_adjustment_data_stream();
     signal::ctrl_c().await?;
+
+    provider_uri = format!("http://{PROVIDER_AUTHORITY_SEAT}");
+    provider_register_seat_adjustment(&invehicle_digital_twin_uri, &provider_uri).await?;
+    debug!("The Provider Seat has registered with Ibeji.");
+
+    provider_start_door_adjustment_data_stream();
+    signal::ctrl_c().await?;
+
+    provider_uri = format!("http://{PROVIDER_AUTHORITY_DOOR}");
+    provider_register_door_adjustment(&invehicle_digital_twin_uri, &provider_uri).await?;
+    debug!("The Provider Door has registered with Ibeji.");
+
+    provider_start_steering_wheel_adjustment_data_stream();
+    signal::ctrl_c().await?;
+
+    provider_uri = format!("http://{PROVIDER_AUTHORITY_STEER}");
+    provider_register_steering_wheel_adjustment(&invehicle_digital_twin_uri, &provider_uri).await?;
+    debug!("The Provider SteeringWheel has registered with Ibeji.");
 
     info!("The Consumer has completed. Shutting down...");
 
