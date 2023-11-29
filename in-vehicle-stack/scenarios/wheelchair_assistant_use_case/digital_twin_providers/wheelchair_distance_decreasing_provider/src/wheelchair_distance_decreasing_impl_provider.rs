@@ -28,7 +28,7 @@ const FREQUENCY_MS: &str = "frequency_ms";
 #[derive(Debug, Serialize, Deserialize)]
 struct WheelchairDistanceProperty {
     #[serde(rename = "WheelchairDistance")]
-    wheelchair_distance: car_v1::car::wheelchair_distance::TYPE,
+    wheelchair_distance: car_v1::car::car_wheelchair_distance::TYPE,
     #[serde(rename = "$metadata")]
     metadata: Metadata,
 }
@@ -62,7 +62,7 @@ pub struct WheelchairDistanceDecreasingProviderImpl {
 /// * `wheelchair_distance` - The wheelchair distance value.
 fn create_property_json(wheelchair_distance: i32) -> String {
     let metadata = Metadata {
-        model: car_v1::car::wheelchair_distance::ID.to_string(),
+        model: car_v1::car::car_wheelchair_distance::ID.to_string(),
     };
 
     let property: WheelchairDistanceProperty = WheelchairDistanceProperty {
@@ -121,7 +121,7 @@ impl WheelchairDistanceDecreasingProviderImpl {
 
         // Insert entry for entity id's associated with provider.
         entity_map.insert(
-            car_v1::car::wheelchair_distance::ID.to_string(),
+            car_v1::car::car_wheelchair_distance::ID.to_string(),
             Vec::new(),
         );
 
@@ -192,7 +192,7 @@ impl WheelchairDistanceDecreasingProviderImpl {
                 // Publish message to broker.
                 info!(
                     "Publish to {topic} for {} with value {data}",
-                    car_v1::car::wheelchair_distance::NAME
+                    car_v1::car::car_wheelchair_distance::NAME
                 );
 
                 if let Err(err) = publish_message(&broker_uri, &topic, &content) {
