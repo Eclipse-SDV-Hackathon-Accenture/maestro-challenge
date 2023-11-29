@@ -70,6 +70,8 @@ When developing new workloads to run in the orchestrator environments, it is rec
     - If you are using Eclipse Ankaios, please see [Workload Development](./eclipse-ankaios/README.md#workload-development) section.
     - If you are using Eclipse BlueChi, please see the [Managing Workloads](./eclipse-bluechi/README.md#managing-workloads) section.
 
+If you need a basic template or idea about how to create an own containerized application for this challenge, checkout the [sample_trailer_connected_provider](in-vehicle-stack/sample_trailer_connected_provider/README.md) and treat is as a basic template for creating an own containerized application. You can extend the template with real logic and create your own application by modifying it.
+
 Here are a few suggested ways to extend this use case, but feel free to use your imagination to come up with your own as well!
 
 - Extend the smart trailer application to adjust some body control or powertrain functions based on the weight of the trailer to ensure a smooth trip.
