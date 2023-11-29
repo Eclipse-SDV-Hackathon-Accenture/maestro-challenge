@@ -56,10 +56,17 @@ pub mod car {
         pub type TYPE = i32;
     }
 
+    pub mod car_wheelchair_distance_state {
+        pub const ID: &str = "dtmi:sdv:Car:WheelchairDistanceState;1";
+        pub const NAME: &str = "WheelchairDistanceState";
+        pub const DESCRIPTION: &str = "Distance of wheelchair to car near = true and far = false";
+        pub type TYPE = bool;
+    }
+
     pub mod car_wheelchair_assistant_state {
         pub const ID: &str = "dtmi:sdv:Car:WheelchairAssistantState;1";
         pub const NAME: &str = "WheelchairAssistantState";
         pub const DESCRIPTION: &str = "Wheelchair assistant state. One of INIT, OPEN, HOLD, DRIVE";
         pub type TYPE = WheelchairAssistantState;
-      }
+    }
 }
