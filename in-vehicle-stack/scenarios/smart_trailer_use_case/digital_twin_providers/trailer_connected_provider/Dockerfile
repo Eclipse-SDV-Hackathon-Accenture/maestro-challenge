@@ -12,9 +12,6 @@
 ARG RUST_VERSION=1.72.1
 FROM docker.io/library/rust:${RUST_VERSION}-slim-bullseye AS build
 ARG APP_NAME=trailer_connected_provider
-WORKDIR /sdv
-
-COPY ./ .
 
 # Add Build dependencies.
 RUN apt update -y && apt upgrade -y && apt install -y \
@@ -22,6 +19,10 @@ RUN apt update -y && apt upgrade -y && apt install -y \
     libssl-dev \
     pkg-config \
     protobuf-compiler
+
+WORKDIR /sdv
+
+COPY ./ .
 
 # Check that APP_NAME argument is valid.
 RUN sanitized=$(echo "${APP_NAME}" | tr -dc '^[a-zA-Z_0-9-]+$'); \
@@ -31,10 +32,8 @@ RUN sanitized=$(echo "${APP_NAME}" | tr -dc '^[a-zA-Z_0-9-]+$'); \
 }
 
 # Build the application
-RUN cargo build --release --bin "${APP_NAME}"
-
-# Copy the built application to working directory.
-RUN cp ./target/release/"${APP_NAME}" /sdv/service
+RUN --mount=type=cache,sharing=private,target=./target/release/ cargo build --release --bin "${APP_NAME}" && \
+    cp ./target/release/"${APP_NAME}" /sdv/service
 
 ################################################################################
 # Create a new stage for running the application that contains the minimal
