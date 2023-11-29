@@ -74,8 +74,10 @@ For these reasons Ankaios fits in perfectly for the wheelchair scenario.
 ##### Dynamic Orchestration
 This use case demonstrates a more complex example of dynamic orchestration.
 
-A [script](./in-vehicle-stack/scenarios/smart_trailer_use_case/scripts/) (one implemented for each orchestrator) will be run to monitor Ibeji and detect when the trailer is connected. The script will continuously poll for the "Trailer Connected" Digital Twin Provider, and print "NotFound" until it is started. You can simulate the trailer being connected to the vehicle by starting the ["Trailer Connected" Digital Twin Provider](./in-vehicle-stack/scenarios/smart_trailer_use_case/digital_twin_providers/trailer_connected_provider/). This provider will register itself with Ibeji, the script will detect this change, and start up the ["Trailer Properties" Digital Twin Provider](./in-vehicle-stack/scenarios/smart_trailer_use_case/digital_twin_providers/trailer_properties_provider/) and the [Smart Trailer Application](./in-vehicle-stack/scenarios/smart_trailer_use_case/applications/smart_trailer_application/). This shows a simple example of reacting to an event in the vehicle by starting up other workloads.
+At the beginning the car is parked and in the init state when the person arrives at the parking lot. While approaching, the person unlocks the car and it switches to the open state in which the door is unlocked. In order to simulate this, Digital Twin Provider "carkey_unlock_provider" sends the signal to set the cars state to open. Another Digital Twin Provider "wheelchair_distance_decreasing_provider" simulates the approaching process. Meanwhile a [script](./in-vehicle-stack/scenarios/wheelchair_assistant_use_case/scripts/) will be run to monitor Ibeji and detect when the handicapped person is approaching the vehicle. The script will continuously monitor the wheelchair distance from the vehicle and based on the distance read, automatic configuration of the car starts to make the entry experience as effortless as possible. This automatic configuration is implemented by the [Wheelchair Assistant Application](./in-vehicle-stack/scenarios/wheelchair_assistant_use_case/applications/wheelchair_assistant_application/). Through this application, the front and back doors open up, the steering wheel adjusts to a higher position and the driver seat is adjusted to the back and lowered. Once this is done, the car is in Hold state and ready to be turned on which is simulated by the "car_on_provider". Once the driver enters and turns on the ignition, the doors close and steering wheel and seat go back to their default state. Once the person arrives at the desired destination, the described process takes place in the reverse way to make sure they leave the car comfortably. This process is achieved by the "car_off_provider", "wheelchair_distance_increasing_provider" and the "car_lock_provider".
 
+Every action and state change through transition is uploaded to the cloud through Freyja cloud syncronization and can be visualized by Azure.
+All our services are registered by Chariott.
 
 ##### The Wheelchair Assistant Applications
 
@@ -87,7 +89,7 @@ This application takes care of the software implementation corresponding to the 
  - The seats and steering get adjusted for the person to get out of the car. Once they"re out, everything gets readjusted to normal position.
 
 ##### Run the use case
-TBD
+
 
 #### Hack Challenge - Extend the use case
 Take a look at the source code for the Digital Twin Model, Digital Twin Providers, and Applications used in this example and add to them or use them as a reference to create your own! See the [references](#useful-references-for-creating-and-enhancing-sample-scenarios) to help guide you as well.
