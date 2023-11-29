@@ -3,8 +3,9 @@
 // SPDX-License-Identifier: MIT
 
 use std::env;
+use std::str;
 
-use wheelchair_digital_twin_model::car_v1;
+use wheelchair_digital_twin_model::{car_v1, Metadata};
 use wheelchair_digital_twin_providers_common::constants::chariott::{
     INVEHICLE_DIGITAL_TWIN_SERVICE_COMMUNICATION_KIND,
     INVEHICLE_DIGITAL_TWIN_SERVICE_COMMUNICATION_REFERENCE, INVEHICLE_DIGITAL_TWIN_SERVICE_NAME,
@@ -16,6 +17,7 @@ use wheelchair_digital_twin_providers_common::constants::{
 use wheelchair_digital_twin_providers_common::utils::{
     discover_digital_twin_provider_using_ibeji, discover_service_using_chariott, get_uri,
 };
+
 use env_logger::{Builder, Target};
 use interfaces::module::managed_subscribe::v1::managed_subscribe_client::ManagedSubscribeClient;
 use interfaces::module::managed_subscribe::v1::{
@@ -31,8 +33,8 @@ use tokio::time::{sleep, Duration};
 use tonic::{Request, Status};
 use tokio::sync::watch;
 use uuid::Uuid;
-use serde::{Deserialize};
-use wheelchair_distance_decreasing_provider::WheelchairDistanceProperty;
+use serde_derive::{Deserialize, Serialize};
+use std::sync::atomic::{AtomicBool, Ordering};
 
 const FREQUENCY_MS_FLAG: &str = "freq_ms=";
 const MQTT_CLIENT_ID: &str = "wheelchair-distance-consumer";
@@ -47,8 +49,17 @@ const MAX_RETRIES: i32 = 10; // for demo purposes we will retry a maximum of 10 
                              // By default we will wait 5 seconds between retry attempts
 const DURATION_BETWEEN_ATTEMPTS: Duration = Duration::from_secs(5);
 
-use std::sync::atomic::AtomicBool;
+
 static STATE_DISTANCE: AtomicBool = AtomicBool::new(false);
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(tag="type")]
+struct WheelchairDistanceProperty {
+    #[serde(rename = "WheelchairDistance")]
+    wheelchair_distance: car_v1::car::car_wheelchair_distance::TYPE,
+    #[serde(rename = "$metadata")]
+    metadata: Metadata,
+}
 
 /// Get wheelchair distance subscription information from managed subscribe endpoint.
 ///
@@ -136,8 +147,9 @@ async fn receive_car_wheelchair_distance_updates(
                 // For example, adjusting body functions or powertrain of the towing vehicle.
 
                 // TODO: move interfaces into global package
-                let msg_des: wheelchair_distance_decreasing_provider::WheelchairDistanceProperty = serde_json::from_str(&msg).unwrap();
-                let distance = msg_des.WheelchairDistance;
+                let payload_str = msg.payload_str();
+                let msg_des: WheelchairDistanceProperty = serde_json::from_str(&payload_str).unwrap();
+                let distance = msg_des.wheelchair_distance;
                 info!("{}", distance);
                 info!("{}", msg);
 
@@ -209,7 +221,7 @@ async fn provider_register_wheelchair_distance(
 fn provider_start_wheelchair_distance_data_stream() {
     debug!("Starting the Provider's wheelchair distance data stream.");
     
-    let (sender, reciever) = watch::channel(STATE_DISTANCE.load(Ordering::Relaxed));
+    let (sender, _receiver) = watch::channel(STATE_DISTANCE.load(Ordering::Relaxed));
     tokio::spawn(async move {
 
         loop {

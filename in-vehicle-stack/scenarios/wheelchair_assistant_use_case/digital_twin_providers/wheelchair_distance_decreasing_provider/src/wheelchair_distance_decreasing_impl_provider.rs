@@ -26,6 +26,7 @@ const MQTT_CLIENT_ID: &str = "wheelchair-distance-decreasing-publisher";
 const FREQUENCY_MS: &str = "frequency_ms";
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(tag="type")]
 struct WheelchairDistanceProperty {
     #[serde(rename = "WheelchairDistance")]
     wheelchair_distance: car_v1::car::car_wheelchair_distance::TYPE,
