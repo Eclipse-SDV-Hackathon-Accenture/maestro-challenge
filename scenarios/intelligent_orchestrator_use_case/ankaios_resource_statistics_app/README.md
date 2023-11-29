@@ -5,7 +5,7 @@ For challenges requiring resource usage statistics a workload application is pro
 This image is public available: 
 
 ```shell
-docker pull ghcr.io/eclipse-ankaios/maestro_resource_monitor:latest
+docker pull ghcr.io/eclipse-ankaios/maestro_resource_monitor:0.1.0
 ```
 
 The image url is already pre-configured in the [initial startup state](../../../eclipse-ankaios/config/startupState.yaml) of Ankaios.
@@ -16,7 +16,7 @@ So, if you select a challenge requiring the statistics please uncomment the conf
 To fetch the resource usage statistics execute the following command:
 
 ```shell
-curl -s localhost:25555
+curl -sL localhost:25555
 ```
 
 ## Extend with custom resource usage values
@@ -44,13 +44,10 @@ publish it to a container registry of your choice. Afterwards you must replace t
 Replace `<your_registry_path>` in the following command with a registry you have access to and build the resource monitor workload:
 
 ```shell
-docker build -t <your_registry_path>/maestro_resource_monitor:latest -f .devcontainer/Dockerfile .
-```
-
-Push the image to your desired registry:
-
-```shell
-docker build -t <your_registry_path>/maestro_resource_monitor:latest -f .devcontainer/Dockerfile .
+docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+docker buildx create --name mybuilder --driver docker-container --bootstrap
+docker buildx use mybuilder
+docker buildx build -t <your_registry_path>/maestro_resource_monitor:<version_tag> --platform linux/amd64,linux/arm64 .
 ```
 
 **Note:** Make sure that the image is public available (without authentication) or log in into the registry before starting the workload with Ankaios.
@@ -60,5 +57,5 @@ docker build -t <your_registry_path>/maestro_resource_monitor:latest -f .devcont
 You can also run the workload without Ankaios for testing, by running it with the following command and settings:
 
 ```shell
-docker run --rm -d --name resource_monitor --privileged --pid host --hostname resource_monitor -p 25555:25555 <your_registry_path>/maestro_resource_monitor:latest
+docker run --rm -d --name resource_monitor --privileged --network host --pid host --name resource_monitor -p 25555:25555 <your_registry_path>/maestro_resource_monitor:<version_tag>
 ```

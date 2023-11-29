@@ -23,6 +23,7 @@ of Kubernetes resource definitions to define the workload.
 ## Prerequisites
 
 * A container runtime such as [Docker](https://docs.docker.com/get-docker/) or [Podman](https://podman.io/docs/installation)
+  * Note: non linux machines need to run docker/podman machine.
 
 ## Development Environment
 
@@ -42,6 +43,8 @@ All services are accessible via `localhost:$port`.
 ## Two Development Environments
 
 It is strongly recommended that you use the devcontainer with VSCode.
+
+NOTE: You can build the development environment image yourself in case you are having trouble running it from this repository: https://github.com/odra/eclipse-bluechi-hackathon-image
 
 ## Run the devcontainer with VSCode
 

@@ -1,5 +1,13 @@
 # Ankaios Maestro challenge development environment
 
+Don't feel like reading instructions? No problem, watch the video explaining the development environment and use the instructions as a reference.
+
+[![Eclipse Ankaios Development Environment Video](assets/ankaios-hackathon-youtube-image.png)](https://youtu.be/XQVlIctChkI)
+
+
+**Architectural Overview**
+
+
 ![Smart trailer blueprint](../docs/diagrams/ankaios.png)
 
 This repository provides a starter template for solving the Maestro challenges using the [Ankaios](https://github.com/eclipse-ankaios/ankaios) workload orchestrator.
@@ -85,7 +93,7 @@ docker run -it --privileged --name custom_ankaios_dev -v <absolute/path/to>/maes
 
 Before starting active development we recommend you start once Ankaios with the current startup config [startupState.yaml](./config/startupState.yaml) and sample applications.
 
-**Note:** If you have selected a sample scenario requiring resource usage statistics like cpu or memory usage, uncomment the `resource_monitor` config part in the Ankaios startup config [startupState.yaml](./config/startupState.yaml). For more details, see [here](../scenarios/intelligent_orchestrator_use_case/ankaios_resource_statistics_app/README.md).
+**Note:** If you have selected a sample scenario requiring resource usage statistics like cpu or memory usage, uncomment the `resource_monitor` config part in the Ankaios startup config [startupState.yaml](./config/startupState.yaml). If you are using MacOS, please remove the `--pid host` and `--cgroups enabled` parameters from the config part. For more details, see [here](../scenarios/intelligent_orchestrator_use_case/ankaios_resource_statistics_app/README.md).
 
 1. Log in into the Microsoft container registry
 ```shell
@@ -108,7 +116,6 @@ ank get workloads
 The output looks similar to the following:
 ```shell
  WORKLOAD NAME              AGENT     RUNTIME   EXECUTION STATE
- cloud_connector            agent_A   podman    Running
  digital_twin_cloud_sync    agent_A   podman    Running
  digital_twin_vehicle       agent_A   podman    Running
  dynamic_topic_management   agent_A   podman    Running
