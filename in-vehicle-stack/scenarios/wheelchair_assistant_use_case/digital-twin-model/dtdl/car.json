@@ -1,0 +1,68 @@
+[
+  {
+    "@context": [
+      "dtmi:dtdl:context;3"
+    ],
+    "@type": "Interface",
+    "@id": "dtmi:sdv:Car;1",
+    "description": "The car used by a wheelchair driver",
+    "contents": [
+      {
+        "@type": "Property",
+        "@id": "dtmi:sdv:Car:IsDoorOpen;1",
+        "name": "IsDoorOpen",
+        "description": "Is door open?",
+        "schema": "boolean"
+      },
+      {
+        "@type": "Property",
+        "@id": "dtmi:sdv:Car:IsSteeringwheelInAssistPosition;1",
+        "name": "IsSteeringwheelInAssistPosition",
+        "description": "Is steering wheel in assist position?",
+        "schema": "boolean"
+      },
+      {
+        "@type": "Property",
+        "@id": "dtmi:sdv:Car:IsCarRunning;1",
+        "name": "IsCarRunning",
+        "description": "Is car running?",
+        "schema": "boolean"
+      },
+      {
+        "@type": "Property",
+        "@id": "dtmi:sdv:Car:IsSeatInAssistPosition;1",
+        "name": "IsSeatInAssistPosition",
+        "description": "Is seat in assist position?",
+        "schema": "boolean"
+      },
+      {
+        "@type": "Property",
+        "@id": "dtmi:sdv:Car:IsCarUnlocked;1",
+        "name": "IsCarUnlocked",
+        "description": "Is car unlocked?",
+        "schema": "boolean"
+      },
+      {
+        "@type": "Property",
+        "@id": "dtmi:sdv:Car:WheelchairDistance;1",
+        "name": "WheelchairDistance",
+        "description": "Distance of wheelchair to car in cm",
+        "schema": "integer"
+      },
+      {
+        "@type": "Property",
+        "@id": "dtmi:sdv:Car:WheelchairDistanceState;1",
+        "name": "WheelchairDistanceState",
+        "description": "Distance of wheelchair to car near = true and far = false",
+        "schema": "boolean"
+      },
+      {
+        "@type": "Property",
+        "@id": "dtmi:sdv:Car:WheelchairAssistantState;1",
+        "name": "WheelchairAssistantState",
+        "description": "Wheelchair assistant state. One of INIT, OPEN, HOLD, DRIVE",
+        "schema": "enum"
+      }
+    ]
+  }
+]
