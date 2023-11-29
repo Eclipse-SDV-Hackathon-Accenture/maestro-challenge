@@ -64,16 +64,10 @@ pub mod car {
     }
 
     pub mod car_wheelchair_assistant_state {
-        pub enum WheelchairAssistantState {
-            INIT,
-            OPEN,
-            HOLD,
-            DRIVE,
-        }
         pub const ID: &str = "dtmi:sdv:Car:WheelchairAssistantState;1";
         pub const NAME: &str = "WheelchairAssistantState";
-        pub const DESCRIPTION: &str = "Wheelchair assistant state. One of INIT, OPEN, HOLD, DRIVE";
+        pub const DESCRIPTION: &str = "Wheelchair assistant state. One of INIT=1, OPEN=2, HOLD=3, DRIVE=4";
 
-        pub type TYPE = WheelchairAssistantState;
+        pub type TYPE = i32;
     }
 }

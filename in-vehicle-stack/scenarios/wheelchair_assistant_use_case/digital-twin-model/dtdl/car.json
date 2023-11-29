@@ -61,7 +61,7 @@
         "@id": "dtmi:sdv:Car:WheelchairAssistantState;1",
         "name": "WheelchairAssistantState",
         "description": "Wheelchair assistant state. One of INIT, OPEN, HOLD, DRIVE",
-        "schema": "enum"
+        "schema": "integer"
       }
     ]
   }
