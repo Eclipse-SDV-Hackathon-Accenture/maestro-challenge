@@ -52,7 +52,7 @@ pub mod car {
     pub mod car_wheelchair_distance {
         pub const ID: &str = "dtmi:sdv:Car:WheelchairDistance;1";
         pub const NAME: &str = "WheelchairDistance";
-        pub const DESCRIPTION: &str = "Distance of wheelchair to car in cm";
+        pub const DESCRIPTION: &str = "Distance of wheelchair to car in metres";
         pub type TYPE = i32;
     }
 
