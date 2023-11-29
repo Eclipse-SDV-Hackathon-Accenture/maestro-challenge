@@ -4,16 +4,16 @@
 
 use std::env;
 
-use digital_twin_model::car_v1;
-use digital_twin_providers_common::constants::chariott::{
+use wheelchair_digital_twin_model::car_v1;
+use wheelchair_digital_twin_providers_common::constants::chariott::{
     INVEHICLE_DIGITAL_TWIN_SERVICE_COMMUNICATION_KIND,
     INVEHICLE_DIGITAL_TWIN_SERVICE_COMMUNICATION_REFERENCE, INVEHICLE_DIGITAL_TWIN_SERVICE_NAME,
     INVEHICLE_DIGITAL_TWIN_SERVICE_NAMESPACE, INVEHICLE_DIGITAL_TWIN_SERVICE_VERSION,
 };
-use digital_twin_providers_common::constants::{
+use wheelchair_digital_twin_providers_common::constants::{
     constraint_type, digital_twin_operation, digital_twin_protocol,
 };
-use digital_twin_providers_common::utils::{
+use wheelchair_digital_twin_providers_common::utils::{
     discover_digital_twin_provider_using_ibeji, discover_service_using_chariott, get_uri,
 };
 use env_logger::{Builder, Target};
@@ -21,13 +21,18 @@ use interfaces::module::managed_subscribe::v1::managed_subscribe_client::Managed
 use interfaces::module::managed_subscribe::v1::{
     Constraint, SubscriptionInfoRequest, SubscriptionInfoResponse,
 };
-use log::{debug, info, LevelFilter};
+use interfaces::invehicle_digital_twin::v1::invehicle_digital_twin_client::InvehicleDigitalTwinClient;
+use interfaces::invehicle_digital_twin::v1::{EndpointInfo, EntityAccessInfo, RegisterRequest};
+use log::{debug, info, warn, LevelFilter};
 use paho_mqtt as mqtt;
 use tokio::signal;
 use tokio::task::JoinHandle;
 use tokio::time::{sleep, Duration};
 use tonic::{Request, Status};
+use tokio::sync::watch;
 use uuid::Uuid;
+use serde::{Deserialize};
+use wheelchair_distance_decreasing_provider::WheelchairDistanceProperty;
 
 const FREQUENCY_MS_FLAG: &str = "freq_ms=";
 const MQTT_CLIENT_ID: &str = "wheelchair-distance-consumer";
@@ -42,14 +47,15 @@ const MAX_RETRIES: i32 = 10; // for demo purposes we will retry a maximum of 10 
                              // By default we will wait 5 seconds between retry attempts
 const DURATION_BETWEEN_ATTEMPTS: Duration = Duration::from_secs(5);
 
-let mut state_distance: bool = false;
+use std::sync::atomic::AtomicBool;
+static STATE_DISTANCE: AtomicBool = AtomicBool::new(false);
 
 /// Get wheelchair distance subscription information from managed subscribe endpoint.
 ///
 /// # Arguments
 /// * `managed_subscribe_uri` - The managed subscribe URI.
 /// * `constraints` - Constraints for the managed topic.
-async fn get_wheelchair_distance_subscription_info(
+async fn get_car_wheelchair_distance_subscription_info(
     managed_subscribe_uri: &str,
     constraints: Vec<Constraint>
 ) -> Result<SubscriptionInfoResponse, Status> {
@@ -128,16 +134,19 @@ async fn receive_car_wheelchair_distance_updates(
                 // Here we log the message received. This could be expanded to parsing the message,
                 // Obtaining the weight and making decisions based on the weight
                 // For example, adjusting body functions or powertrain of the towing vehicle.
-                let distance = msg["WheelchairDistance"];
+
+                // TODO: move interfaces into global package
+                let msg_des: wheelchair_distance_decreasing_provider::WheelchairDistanceProperty = serde_json::from_str(&msg).unwrap();
+                let distance = msg_des.WheelchairDistance;
                 info!("{}", distance);
                 info!("{}", msg);
 
                 if distance <= 200 {
                     info!("Near!");
-                    state_distance = true;
+                    STATE_DISTANCE.store(true, Ordering::Relaxed);
                 } else {
                     info!("Far!");
-                    state_distance = false;
+                    STATE_DISTANCE.store(false, Ordering::Relaxed);
                 }
             } else if !client.is_connected() {
                 if client.reconnect().is_ok() {
@@ -200,16 +209,23 @@ async fn provider_register_wheelchair_distance(
 fn provider_start_wheelchair_distance_data_stream() {
     debug!("Starting the Provider's wheelchair distance data stream.");
     
-    let (sender, reciever) = watch::channel(state_distance);
+    let (sender, reciever) = watch::channel(STATE_DISTANCE.load(Ordering::Relaxed));
     tokio::spawn(async move {
 
         loop {
-            debug!(
-                "Recording new value for {} of {state_distance}",
-                car_v1::car::car_wheelchair_distance_state::ID
-            );
+            if STATE_DISTANCE.load(Ordering::Relaxed) == true {
+                debug!(
+                    "Recording new value for {} of true",
+                    car_v1::car::car_wheelchair_distance_state::ID
+                );
+            } else {
+                debug!(
+                    "Recording new value for {} of false",
+                    car_v1::car::car_wheelchair_distance_state::ID
+                );
+            }
 
-            if let Err(err) = sender.send(state_distance) {
+            if let Err(err) = sender.send(STATE_DISTANCE.load(Ordering::Relaxed)) {
                 warn!("Failed to get new value due to '{err:?}'");
                 break;
             }
@@ -260,7 +276,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     while provider_endpoint_info.is_none() {
         provider_endpoint_info = match discover_digital_twin_provider_using_ibeji(
             &invehicle_digital_twin_uri,
-            car_v1::car::IsCarUnlocked::ID,
+            car_v1::car::is_car_unlocked::ID,
             digital_twin_protocol::GRPC,
             &[digital_twin_operation::MANAGEDSUBSCRIBE.to_string()],
         )
@@ -270,7 +286,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             Err(status) => {
                 info!(
                     "A provider was not found in the digital twin service for id '{}' with: '{:?}'",
-                    car_v1::car::IsCarUnlocked::ID,
+                    car_v1::car::is_car_unlocked::ID,
                     status
                 );
                 None

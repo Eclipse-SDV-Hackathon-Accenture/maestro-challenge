@@ -24,6 +24,7 @@ members = [
   "scenarios/wheelchair_assistant_use_case/digital_twin_providers/carkey_unlock_provider",
   "scenarios/wheelchair_assistant_use_case/digital_twin_providers/wheelchair_distance_decreasing_provider",
   "scenarios/wheelchair_assistant_use_case/digital_twin_providers/wheelchair_distance_increasing_provider",
+  "scenarios/wheelchair_assistant_use_case/applications/wheelchair_distance_application",
 ]
 
 [workspace.dependencies]
