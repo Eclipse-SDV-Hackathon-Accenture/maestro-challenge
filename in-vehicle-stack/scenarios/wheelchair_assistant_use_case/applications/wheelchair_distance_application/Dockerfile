@@ -11,7 +11,7 @@
 
 ARG RUST_VERSION=1.72.1
 FROM docker.io/library/rust:${RUST_VERSION}-slim-bullseye AS build
-ARG APP_NAME=trailer_properties_provider
+ARG APP_NAME=wheelchair_distance_application
 WORKDIR /sdv
 
 COPY ./ .
@@ -66,9 +66,6 @@ WORKDIR /sdv
 
 # Copy the executable from the "build" stage.
 COPY --from=build /sdv/service /sdv/
-
-# Expose the port that the application listens on.
-EXPOSE 4030
 
 # What the container should run when it is started.
 CMD ["/sdv/service"]

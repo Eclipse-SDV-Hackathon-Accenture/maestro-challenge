@@ -11,7 +11,7 @@ use interfaces::module::managed_subscribe::v1::{
     CallbackPayload, TopicManagementRequest, TopicManagementResponse,
 };
 
-use digital_twin_model::{trailer_v1, Metadata};
+use digital_twin_model::{car_v1, Metadata};
 use digital_twin_providers_common::utils;
 use log::{debug, info, warn};
 use paho_mqtt as mqtt;
@@ -22,13 +22,14 @@ use tokio::sync::{mpsc, watch};
 use tokio::time::{sleep, Duration};
 use tonic::{Request, Response, Status};
 
-const MQTT_CLIENT_ID: &str = "trailer-properties-publisher";
+const MQTT_CLIENT_ID: &str = "wheelchair-distance-decreasing-publisher";
 const FREQUENCY_MS: &str = "frequency_ms";
 
 #[derive(Debug, Serialize, Deserialize)]
-struct TrailerWeightProperty {
-    #[serde(rename = "TrailerWeight")]
-    trailer_weight: trailer_v1::trailer::trailer_weight::TYPE,
+#[serde(tag="type")]
+struct WheelchairDistanceProperty {
+    #[serde(rename = "WheelchairDistance")]
+    wheelchair_distance: car_v1::car::car_wheelchair_distance::TYPE,
     #[serde(rename = "$metadata")]
     metadata: Metadata,
 }
@@ -50,23 +51,23 @@ pub struct TopicInfo {
 }
 
 #[derive(Debug)]
-pub struct TrailerPropertiesProviderImpl {
+pub struct WheelchairDistanceDecreasingProviderImpl {
     pub data_stream: watch::Receiver<i32>,
     pub min_interval_ms: u64,
     entity_map: Arc<RwLock<HashMap<String, Vec<TopicInfo>>>>,
 }
 
-/// Create the JSON for the trailer weight property.
+/// Create the JSON for the wheelchair distance property.
 ///
 /// # Arguments
-/// * `trailer_weight` - The trailer weight value.
-fn create_property_json(trailer_weight: i32) -> String {
+/// * `wheelchair_distance` - The wheelchair distance value.
+fn create_property_json(wheelchair_distance: i32) -> String {
     let metadata = Metadata {
-        model: trailer_v1::trailer::trailer_weight::ID.to_string(),
+        model: car_v1::car::car_wheelchair_distance::ID.to_string(),
     };
 
-    let property: TrailerWeightProperty = TrailerWeightProperty {
-        trailer_weight,
+    let property: WheelchairDistanceProperty = WheelchairDistanceProperty {
+        wheelchair_distance,
         metadata,
     };
 
@@ -109,7 +110,7 @@ fn publish_message(broker_uri: &str, topic: &str, content: &str) -> Result<(), S
     Ok(())
 }
 
-impl TrailerPropertiesProviderImpl {
+impl WheelchairDistanceDecreasingProviderImpl {
     /// Initializes provider with entities relevant to itself.
     ///
     /// # Arguments
@@ -121,12 +122,12 @@ impl TrailerPropertiesProviderImpl {
 
         // Insert entry for entity id's associated with provider.
         entity_map.insert(
-            trailer_v1::trailer::trailer_weight::ID.to_string(),
+            car_v1::car::car_wheelchair_distance::ID.to_string(),
             Vec::new(),
         );
 
         // Create new instance.
-        TrailerPropertiesProviderImpl {
+        WheelchairDistanceDecreasingProviderImpl {
             data_stream,
             min_interval_ms,
             entity_map: Arc::new(RwLock::new(entity_map)),
@@ -192,7 +193,7 @@ impl TrailerPropertiesProviderImpl {
                 // Publish message to broker.
                 info!(
                     "Publish to {topic} for {} with value {data}",
-                    trailer_v1::trailer::trailer_weight::NAME
+                    car_v1::car::car_wheelchair_distance::NAME
                 );
 
                 if let Err(err) = publish_message(&broker_uri, &topic, &content) {
@@ -234,7 +235,7 @@ impl TrailerPropertiesProviderImpl {
 }
 
 #[tonic::async_trait]
-impl ManagedSubscribeCallback for TrailerPropertiesProviderImpl {
+impl ManagedSubscribeCallback for WheelchairDistanceDecreasingProviderImpl {
     /// Callback for a provider, will process a provider action.
     ///
     /// # Arguments
