@@ -1,0 +1,7 @@
+#### The Wheelchair Assistant Applications
+This application takes care of the software implementation corresponding to the person arriving at the car, getting in ,driving, getting out and leaving the car.
+ - When a person approaches the car, the car lowers itself, opens the front and the back doors. The seat and the steering wheel get adjusted in order for the person to get in.
+ - A mechanical setting (ramp or a crane) can be used for getting the wheelchair inside the car.
+ - Once the person gets in, the seat and the steering gets adjusted back for driving, while closing the backdoor.
+ - On reaching destination, the car is lowered. As the backdoor opens,the wheelchair is retrieved.
+ - The seats and steering get adjusted for the person to get out of the car. Once they"re out, everything gets readjusted to normal position.
