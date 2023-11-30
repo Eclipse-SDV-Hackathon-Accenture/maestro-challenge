@@ -4,16 +4,16 @@
 
 use std::env;
 
-use digital_twin_model::car_v1;
-use digital_twin_providers_common::constants::chariott::{
+use wheelchair_digital_twin_model::{car_v1, Metadata};
+use wheelchair_digital_twin_providers_common::constants::chariott::{
     INVEHICLE_DIGITAL_TWIN_SERVICE_COMMUNICATION_KIND,
     INVEHICLE_DIGITAL_TWIN_SERVICE_COMMUNICATION_REFERENCE, INVEHICLE_DIGITAL_TWIN_SERVICE_NAME,
     INVEHICLE_DIGITAL_TWIN_SERVICE_NAMESPACE, INVEHICLE_DIGITAL_TWIN_SERVICE_VERSION,
 };
-use digital_twin_providers_common::constants::{
+use wheelchair_digital_twin_providers_common::constants::{
     constraint_type, digital_twin_operation, digital_twin_protocol,
 };
-use digital_twin_providers_common::utils::{
+use wheelchair_digital_twin_providers_common::utils::{
     discover_digital_twin_provider_using_ibeji, discover_service_using_chariott, get_uri,
 };
 use env_logger::{Builder, Target};
