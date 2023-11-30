@@ -1,9 +1,9 @@
-## In-Vehicle Stack with Cloud Connectivity
+# In-Vehicle Stack with Cloud Connectivity
 
 The default in-vehicle stack is all local with no cloud connection. Follow the below steps to
 enable cloud connection with Azure Digital Twins using Eclipse Freyja.
 
-### Create Azure Digital Twins Instance
+## Create Azure Digital Twins Instance
 
 1. Please refer to the following documentation to setup the Azure Digital Twins instance: [Automated Azure Digital Twins Setup for Smart Trailer Example](https://github.com/eclipse-ibeji/ibeji-example-applications/blob/main/cloud_connectors/azure/digital_twins_connector/README.md#automated-azure-digital-twins-setup-for-smart-trailer-example).
 This will create the Azure Digital Twins with the appropriate DTDL for the smart trailer use case.
@@ -12,13 +12,13 @@ This will create the Azure Digital Twins with the appropriate DTDL for the smart
 [Open instance in Azure Digital Twins Explorer](https://learn.microsoft.com/en-us/azure/digital-twins/quickstart-azure-digital-twins-explorer#open-instance-in-azure-digital-twins-explorer)
 to get the url for your instance. Copy this url for later.
 
-### Change In-Vehicle Stack to use Cloud-Connected Components
+## Change In-Vehicle Stack to use Cloud-Connected Components
 
 The following changes will vary depending on which Orchestrator you are using. Broadly, we need to
 change the Freyja container image from the in-memory version to the cloud version and add a
 workload for the Azure cloud connector used by Freyja.
 
-#### Eclipse Ankaios
+### Eclipse Ankaios
 
 1. Change the `digital_twin_cloud_sync` workload in
 [startupState.yaml](../../eclipse-ankaios/config/startupState.yaml) to point to the `cloud-with-ibeji`
@@ -80,7 +80,7 @@ Connector to establish connection. Run:
     To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code <DEVICE_CODE> to authenticate.
     ```
 
-2. Validate you have successfully logged in by re-running
+1. Validate you have successfully logged in by re-running
 
     ```shell
     podman logs cloud-connector
@@ -95,17 +95,20 @@ Connector to establish connection. Run:
 
     If you see the device code login text, wait 10 seconds and try the podman command again.
 
-7. The In-Vehicle Stack is now initialized and connected to the cloud!
+1. The In-Vehicle Stack is now initialized and connected to the cloud!
 
-#### Eclipse BlueChi
+### Eclipse BlueChi
 
 1. In the BlueChi devcontainer, modify the `/usr/local/bin/bluechi-env-bootstrap` to remove `freyja` (this image includes the in-memory mock version of Freyja) and use `cloud-with-ibeji` and `azure-cloud-connector` services instead:
     - Add the following two lines:
+
         ```shell
         systemctl start cloud-with-ibeji
         systemctl start azure-cloud-connector
         ```
+
     - Your complete file should now look like:
+
       ```shell
       #!/bin/bash
 
@@ -164,7 +167,7 @@ Connector to establish connection. Run:
     To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code <DEVICE_CODE> to authenticate.
     ```
 
-2. Validate you have successfully logged in by re-running
+1. Validate you have successfully logged in by re-running
 
     ```shell
     systemctl status azure-cloud-connector
@@ -179,4 +182,4 @@ Connector to establish connection. Run:
 
     If you see the device code login text, wait 10 seconds and try the podman command again.
 
-7. The In-Vehicle Stack is now initialized and connected to the cloud!
+1. The In-Vehicle Stack is now initialized and connected to the cloud!
