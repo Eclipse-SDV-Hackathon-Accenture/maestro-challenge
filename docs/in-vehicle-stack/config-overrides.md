@@ -1,25 +1,25 @@
-## How to Override Configuration for In-Vehicle Stack Containers
+# How to Override Configuration for In-Vehicle Stack Containers
 
 The following In-Vehicle Stack services have configuration that can be overridden:
 
 - Eclipse Agemo:
-    - [Configuration](https://github.com/eclipse-chariott/Agemo/blob/main/docs/config-overrides.md)
+  - [Configuration](https://github.com/eclipse-chariott/Agemo/blob/main/docs/config-overrides.md)
 - Eclipse Freyja:
-    - [Mapping Configuration](https://github.com/eclipse-ibeji/freyja/blob/main/mapping_clients/in_memory_mock_mapping_client/README.md)
-    - [Cloud Connector Configuration](https://github.com/eclipse-ibeji/ibeji-example-applications/blob/main/cloud_connectors/azure/digital_twins_connector/src/core/adt_instance_config.sample.json)
+  - [Mapping Configuration](https://github.com/eclipse-ibeji/freyja/blob/main/mapping_clients/in_memory_mock_mapping_client/README.md)
+  - [Cloud Connector Configuration](https://github.com/eclipse-ibeji/ibeji-example-applications/blob/main/cloud_connectors/azure/digital_twins_connector/src/core/adt_instance_config.sample.json)
 - Eclipse Ibeji:
-    - [In-Vehicle Digtial Twin Configuration](https://github.com/eclipse-ibeji/ibeji/blob/main/core/invehicle-digital-twin/template/invehicle_digital_twin_settings.yaml)
-    - [Managed Subscribe Configuration](https://github.com/eclipse-ibeji/ibeji/blob/main/core/module/managed_subscribe/template/managed_subscribe_settings.yaml)
+  - [In-Vehicle Digtial Twin Configuration](https://github.com/eclipse-ibeji/ibeji/blob/main/core/invehicle-digital-twin/template/invehicle_digital_twin_settings.yaml)
+  - [Managed Subscribe Configuration](https://github.com/eclipse-ibeji/ibeji/blob/main/core/module/managed_subscribe/template/managed_subscribe_settings.yaml)
 
 Please refer to the above links to determine what configuration files you would like to override. Then follow the steps below for the specific orchestrator you are using.
 
-### Override In-Vehicle Stack configuration in Eclipse Ankaios
+## Override In-Vehicle Stack configuration in Eclipse Ankaios
 
-#### Prerequisites
+### Prerequisites
 
 - Follow steps to setup the [Ankaios Development Environment](../../eclipse-ankaios/README.md#ankaios-maestro-challenge-development-environment)
 
-#### Steps
+### Steps
 
 1. In the Ankaios devcontainer, open a terminal and create a directory under `/etc` to store the
 desired project configuration files:
@@ -47,7 +47,7 @@ desired project configuration files:
     ```
 
 1. Populate the newly created configuration files with the configuration you wish to override using
-any text editor. 
+any text editor.
 
 1. Next, we need to pass the configuration into the containers. To do this, we will need to modify
 [startupState.yaml](../../eclipse-ankaios/config/startupState.yaml). This will be done by mounting the
@@ -72,13 +72,13 @@ The In-Vehicle Stack service will now use your modified configuration. Note that
 changes will require a restart of the in-vehicle stack. You can restart the in-vehicle stack by following the steps for
 [Ankaios](../../eclipse-ankaios/README.md#startup-check-before-development).
 
-### Override In-Vehicle Stack configuration in Eclipse BlueChi
+## Override In-Vehicle Stack configuration in Eclipse BlueChi
 
-#### Prerequisites
+### Prerequisites
 
 - Follow steps to setup [Eclipse BlueChi](../../eclipse-bluechi/README.md)
 
-#### Steps
+### Steps
 
 1. In the BlueChi devcontainer, open a terminal and create a directory under `/etc` to store the
 desired project configuration files:
@@ -106,7 +106,7 @@ desired project configuration files:
     ```
 
 1. Populate the newly created configuration files with the configuration you wish to override using
-any text editor. 
+any text editor.
 
 1. Next, we need to pass the configuration into the containers. To do this, we will need to modify
 the `/etc/containers/systemd/<service_name>.yml` file for your service (replace <service_name> with your service name). This will be done by mounting the
@@ -134,6 +134,7 @@ directory created in step 1 into the container using `volumeMounts`. You can see
         ```
 
     - Refer to this volume in the "containers" section, for example:
+
       ```yaml
         containers:
           - name: app
@@ -147,3 +148,5 @@ directory created in step 1 into the container using `volumeMounts`. You can see
 The In-Vehicle Stack service will now use your modified configuration. Note that any configuration
 changes will require a restart of the in-vehicle stack. You can restart the in-vehicle stack by following the steps for
 [BlueChi](../../eclipse-bluechi/README.md#bootstrapping) cleanup and bootstrap again.
+
+<!-- markdownlint-disable-file MD024 -->

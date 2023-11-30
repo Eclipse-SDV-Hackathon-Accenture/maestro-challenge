@@ -2,7 +2,7 @@
 
 For challenges requiring resource usage statistics a workload application is provided that provides you some initial resource statistic values of the host the workload is running on. The statistics can be accessed via a REST API as JSON.
 
-This image is public available: 
+This image is public available:
 
 ```shell
 docker pull ghcr.io/eclipse-ankaios/maestro_resource_monitor:0.1.0

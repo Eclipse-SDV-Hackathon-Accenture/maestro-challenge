@@ -4,9 +4,7 @@ Don't feel like reading instructions? No problem, watch the video explaining the
 
 [![Eclipse Ankaios Development Environment Video](assets/ankaios-hackathon-youtube-image.png)](https://youtu.be/XQVlIctChkI)
 
-
-**Architectural Overview**
-
+## Architectural Overview
 
 ![Smart trailer blueprint](../docs/diagrams/ankaios.png)
 
@@ -37,16 +35,15 @@ The following is provided inside the devcontainer:
 - Pre-configured Ankaios startup config [startupState.yaml](./config/startupState.yaml)
 
 - Automation scripts for starting and stopping all workloads of the challenge:
-    - run_maestro.sh
-    - shutdown_maestro.sh
+  - run_maestro.sh
+  - shutdown_maestro.sh
 
-- REST API providing [resource usage statistics](#resource-usage-statistics) for the sample scenario about intelligent orchestrator
+- REST API providing resource usage statistics for the sample scenario about intelligent orchestrator
 
 - Exposed port:
-    - 25551: for optionally using the Ankaios CLI outside of the devcontainer
+  - 25551: for optionally using the Ankaios CLI outside of the devcontainer
 
 - [Ankaios Control Interface dependencies](#ankaios-control-interface-dependencies)
-
 
 All services are running in the host network meaning those can be accessed by `localhost:<port>`. We recommend that you set the network mode to host for all your developed workloads as well.
 
@@ -63,6 +60,7 @@ Those dependencies are needed for use-cases in which your app needs to use the [
 ## Run devcontainer with VSCode
 
 ### Prerequisites
+
 - [Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) extension installed in VSCode
 
 Open the subfolder containing this README file in VSCode:
@@ -96,59 +94,70 @@ Before starting active development we recommend you start once Ankaios with the 
 **Note:** If you have selected a sample scenario requiring resource usage statistics like cpu or memory usage, uncomment the `resource_monitor` config part in the Ankaios startup config [startupState.yaml](./config/startupState.yaml). If you are using MacOS, please remove the `--pid host` and `--cgroups enabled` parameters from the config part. For more details, see [here](../scenarios/intelligent_orchestrator_use_case/ankaios_resource_statistics_app/README.md).
 
 1. Log in into the Microsoft container registry
-```shell
-podman login sdvblueprint.azurecr.io
-```
+
+    ```shell
+    podman login sdvblueprint.azurecr.io
+    ```
 
 2. Start Ankaios with all workloads inside the startup config:
-```shell
-run_maestro.sh
-```
+
+    ```shell
+    run_maestro.sh
+    ```
 
 3. Next, use the Ankaios CLI to verify that all initial workloads are up and running:
 
-```shell
-ank get workloads
-```
+    ```shell
+    ank get workloads
+    ```
 
 4. Verify that all initial workloads inside the startup config have execution state "Running".
 
-The output looks similar to the following:
-```shell
- WORKLOAD NAME              AGENT     RUNTIME   EXECUTION STATE
- digital_twin_cloud_sync    agent_A   podman    Running
- digital_twin_vehicle       agent_A   podman    Running
- dynamic_topic_management   agent_A   podman    Running
- mqtt_broker                agent_A   podman    Running
- service_discovery          agent_A   podman    Running
-```
+    The output looks similar to the following:
+
+    ```shell
+    WORKLOAD NAME              AGENT     RUNTIME   EXECUTION STATE
+    digital_twin_cloud_sync    agent_A   podman    Running
+    digital_twin_vehicle       agent_A   podman    Running
+    dynamic_topic_management   agent_A   podman    Running
+    mqtt_broker                agent_A   podman    Running
+    service_discovery          agent_A   podman    Running
+    ```
 
 5. Only for the **Smart Trailer scenario**, do the following extra steps:
     - Inside the devcontainer, run the script `start_trailer_applications_ankaios.sh`:
+
         ```shell
         start_trailer_applications_ankaios.sh
         ```
+
     - In another terminal window inside the devcontainer, add the following workload by using the Ankaios CLI to simulate the Smart Trailer connected signal:
+
         ```shell
         ank run workload trailer_connected_provider --runtime podman --config $'image: sdvblueprint.azurecr.io/sdvblueprint/in-vehicle-stack/trailer_connected_provider:0.1.0\ncommandOptions: ["--network", "host", "--name", "trailer_connected_provider"]' --agent agent_A
         ```
+
     - Verify the output of the terminal window of the `start_trailer_applications_ankaios.sh` script. The output should look like the following:
+
         ```shell
         Trailer is connected! Starting workloads to manage it
         Called Ankaios to start the Trailer Properties Digital Twin Provider and Smart Trailer Application
         Check Ankaios status with 'ank get workloads'
         ```
+
     - Check the execution states of the newly added workloads by using the Ankaios CLI.
+
         ```shell
         ank get workloads
         ```
+
     - Run `podman logs -f smart_trailer_application` to check the sample data output of the Smart Trailer App. Feel free to check the logs of the other workloads too.
 
 6. Stop Ankaios and clean up all workloads by running:
 
-```shell
-shutdown_maestro.sh
-```
+    ```shell
+    shutdown_maestro.sh
+    ```
 
 ## Customizing Devcontainer
 
@@ -170,6 +179,7 @@ After customizing the devcontainer, start the development of your workload apps.
 
 Start and stop all workloads according to the section [Startup check before development](#startup-check-before-development).
 Use the Ankaios ClI to check the workload states. For more details display the help of Ankaios CLI by running:
+
 ```shell
 ank --help
 ```
@@ -196,3 +206,5 @@ The Ankaios agent logs can be viewed by executing the following command:
 ```shell
 tail -f /var/log/ankaios-agent_A.log
 ```
+
+<!-- markdownlint-disable-file MD024 -->
