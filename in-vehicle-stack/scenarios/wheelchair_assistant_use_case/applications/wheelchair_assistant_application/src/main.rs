@@ -21,13 +21,18 @@ use interfaces::module::managed_subscribe::v1::managed_subscribe_client::Managed
 use interfaces::module::managed_subscribe::v1::{
     Constraint, SubscriptionInfoRequest, SubscriptionInfoResponse,
 };
-use log::{debug, info, LevelFilter};
+use interfaces::invehicle_digital_twin::v1::invehicle_digital_twin_client::InvehicleDigitalTwinClient;
+use interfaces::invehicle_digital_twin::v1::{EndpointInfo, EntityAccessInfo, RegisterRequest};
+use log::{debug, info, warn, LevelFilter};
 use paho_mqtt as mqtt;
 use tokio::signal;
 use tokio::task::JoinHandle;
 use tokio::time::{sleep, Duration};
 use tonic::{Request, Status};
+use tokio::sync::watch;
 use uuid::Uuid;
+use serde_derive::{Deserialize, Serialize};
+use std::sync::atomic::{AtomicBool, Ordering};
 
 const FREQUENCY_MS_FLAG: &str = "freq_ms=";
 const MQTT_CLIENT_ID: &str = "wheelchair-assistant-consumer";
@@ -42,9 +47,18 @@ const MAX_RETRIES: i32 = 10; // for demo purposes we will retry a maximum of 10 
                              // By default we will wait 5 seconds between retry attempts
 const DURATION_BETWEEN_ATTEMPTS: Duration = Duration::from_secs(5);
 
-let mut door_open: bool = false;
-let mut steering_wheel_up: bool = false;
-let mut driver_seat_back: bool = false;
+static door_open: AtomicBool = AtomicBool::new(false);
+static steering_wheel_up: AtomicBool = AtomicBool::new(false);
+static driver_seat_back: AtomicBool = AtomicBool::new(false);
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(tag="type")]
+struct WheelchairAssistantStateProperty {
+    #[serde(rename = "WheelchairAssistantState")]
+    car_wheelchair_assistant_state: car_v1::car::car_wheelchair_assistant_state::TYPE,
+    #[serde(rename = "$metadata")]
+    metadata: Metadata,
+}
 
 /// Get car adjustment subscription information from managed subscribe endpoint.
 ///
@@ -130,15 +144,17 @@ async fn receive_car_adjust_updates(
                 // Here we log the message received. This could be expanded to parsing the message,
                 // Obtaining the wheelchair assistant state and making decisions based on the weight
                 // For example, adjusting body functions or powertrain of the towing vehicle.
-                let new_state = msg["car_wheelchair_assistant_state"];
+                let payload_str = msg.payload_str();
+                let msg_des: WheelchairAssistantStateProperty = serde_json::from_str(&payload_str).unwrap();
+                let new_state = msg_des.car_wheelchair_assistant_state;
                 info!("{}", new_state);
                 info!("{}", msg);
 
-                if new_state == "HOLD" {
+                if new_state == 3 { //HOLD
                     info!("Adjusting the car!");
-                    door_open = true;
-                    steering_wheel_up = true;
-                    driver_seat_back = true;
+                    door_open.store(true, Ordering::Relaxed);
+                    steering_wheel_up.store(true, Ordering::Relaxed);
+                    driver_seat_back.store(true, Ordering::Relaxed);
                 } else {
                     info!("No need to rearrange");
                 }
@@ -272,16 +288,17 @@ async fn provider_register_steering_wheel_adjustment(
 fn provider_start_seat_adjustment_data_stream() {
     debug!("Starting the Provider's seat adjustment data stream.");
     
-    let (sender, reciever) = watch::channel(driver_seat_back);         
+    let (sender, reciever) = watch::channel(driver_seat_back.load(Ordering::Relaxed));
     tokio::spawn(async move {
 
         loop {
             debug!(
-                "Recording new value for {} of {state_distance}",
-                car_v1::car::is_car_seat_in_assist_position::ID     
+                "Recording new value for {} of {}",
+                car_v1::car::is_car_seat_in_assist_position::ID,
+                driver_seat_back.load(Ordering::Relaxed)
             );
 
-            if let Err(err) = sender.send(driver_seat_back) {
+            if let Err(err) = sender.send(driver_seat_back.load(Ordering::Relaxed)) {
                 warn!("Failed to get new value due to '{err:?}'");
                 break;
             }
@@ -295,16 +312,17 @@ fn provider_start_seat_adjustment_data_stream() {
 fn provider_start_door_adjustment_data_stream() {
     debug!("Starting the Provider's door adjustment data stream.");
     
-    let (sender, reciever) = watch::channel(door_open);         
+    let (sender, reciever) = watch::channel(door_open.load(Ordering::Relaxed));
     tokio::spawn(async move {
 
         loop {
             debug!(
-                "Recording new value for {} of {state_distance}",
-                car_v1::car::is_car_door_open::ID     
+                "Recording new value for {} of {}",
+                car_v1::car::is_car_door_open::ID,
+                door_open.load(Ordering::Relaxed)
             );
 
-            if let Err(err) = sender.send(door_open) {
+            if let Err(err) = sender.send(door_open.load(Ordering::Relaxed)) {
                 warn!("Failed to get new value due to '{err:?}'");
                 break;
             }
@@ -318,16 +336,17 @@ fn provider_start_door_adjustment_data_stream() {
 fn provider_start_steering_wheel_adjustment_data_stream() {
     debug!("Starting the Provider's steering wheel adjustment data stream.");
     
-    let (sender, reciever) = watch::channel(steering_wheel_up);         
+    let (sender, reciever) = watch::channel(steering_wheel_up.load(Ordering::Relaxed));
     tokio::spawn(async move {
 
         loop {
             debug!(
-                "Recording new value for {} of {state_distance}",
-                car_v1::car::is_car_steeringwheel_in_assist_position::ID     
+                "Recording new value for {} of {}",
+                car_v1::car::is_car_steeringwheel_in_assist_position::ID,
+                steering_wheel_up.load(Ordering::Relaxed)
             );
 
-            if let Err(err) = sender.send(steering_wheel_up) {
+            if let Err(err) = sender.send(steering_wheel_up.load(Ordering::Relaxed)) {
                 warn!("Failed to get new value due to '{err:?}'");
                 break;
             }
@@ -350,7 +369,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     const PROVIDER_AUTHORITY_SEAT: &str = "0.0.0.0:4070";
     const PROVIDER_AUTHORITY_DOOR: &str = "0.0.0.0:4080";
     const PROVIDER_AUTHORITY_STEER: &str = "0.0.0.0:4090";
-    let provider_uri; 
+
     // Get the In-vehicle Digital Twin Uri from the service discovery system
     // This could be enhanced to add retries for robustness
     let invehicle_digital_twin_uri = discover_service_using_chariott(
@@ -434,22 +453,22 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     provider_start_seat_adjustment_data_stream();
     signal::ctrl_c().await?;
 
-    provider_uri = format!("http://{PROVIDER_AUTHORITY_SEAT}");
-    provider_register_seat_adjustment(&invehicle_digital_twin_uri, &provider_uri).await?;
+    let provider_uri_seat = format!("http://{PROVIDER_AUTHORITY_SEAT}");
+    provider_register_seat_adjustment(&invehicle_digital_twin_uri, &provider_uri_seat).await?;
     debug!("The Provider Seat has registered with Ibeji.");
 
     provider_start_door_adjustment_data_stream();
     signal::ctrl_c().await?;
 
-    provider_uri = format!("http://{PROVIDER_AUTHORITY_DOOR}");
-    provider_register_door_adjustment(&invehicle_digital_twin_uri, &provider_uri).await?;
+    let provider_uri_door = format!("http://{PROVIDER_AUTHORITY_DOOR}");
+    provider_register_door_adjustment(&invehicle_digital_twin_uri, &provider_uri_door).await?;
     debug!("The Provider Door has registered with Ibeji.");
 
     provider_start_steering_wheel_adjustment_data_stream();
     signal::ctrl_c().await?;
 
-    provider_uri = format!("http://{PROVIDER_AUTHORITY_STEER}");
-    provider_register_steering_wheel_adjustment(&invehicle_digital_twin_uri, &provider_uri).await?;
+    let provider_uri_steer = format!("http://{PROVIDER_AUTHORITY_STEER}");
+    provider_register_steering_wheel_adjustment(&invehicle_digital_twin_uri, &provider_uri_steer).await?;
     debug!("The Provider SteeringWheel has registered with Ibeji.");
 
     info!("The Consumer has completed. Shutting down...");
