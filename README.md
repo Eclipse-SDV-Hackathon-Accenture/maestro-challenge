@@ -20,3 +20,9 @@ All our services are registered by Chariott.
 
 ##### The Wheelchair Assistant Applications
  An explanation of the Wheelchair Assistant Applications can be found in [Wheelchair Assistant Application](./in-vehicle-stack/scenarios/wheelchair_assistant_use_case/applications/wheelchair_assistant_application/).
+
+ ##### State machine overview
+
+ ##### Architecture
+
+ 
