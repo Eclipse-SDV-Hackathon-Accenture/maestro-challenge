@@ -60,7 +60,7 @@ The Trailer Properties Provider supports the ManagedSubscribe operation so that 
 Once you've chosen an orchestrator and gone through their environment setup steps, please refer to [Ankaios's Dev Environment README](./eclipse-ankaios/README.md#startup-check-before-development) or [BlueChi's Dev Environment README](./eclipse-bluechi/README.md#running-the-smart-trailer-example-with-bluechis-devcontainer) for instructions on running this scenario.
 
 #### Wheelchair Assistant Scenario Overview
-In this scenario we try to provide a handicapped person an easier access to a vehicle and thus more mobility. Our system detects that a handicapped person with a wheelchair is approaching a vehicle and aims to provide complete support by personalizing to the individual needs of the user. The system demonstrates a full driving scenario from arriving at the car to reaching the desired destination with maximum support from automation software.
+In this scenario we try to provide a handicapped person an easier access to a vehicle and thus more mobility. Just as musicians in an orchestra must work together and communicate effectively to create beautiful music, various systems and technologies must work seamlessly together to provide complete support to the handicapped person. Our system detects that a handicapped person with a wheelchair is approaching a vehicle and aims to provide complete support by personalizing to the individual needs of the user. The system demonstrates a full driving scenario from arriving at the car to reaching the desired destination with maximum support from automation software.
 
 A signal is raised to the orchestrator to start up the necessary providers and applications to manage the wheelchair as well as to make adjustments inside the car. These include a Digital Twin Provider, which exposes signals from the wheelchair to higher-level applications, and a Wheelchair Assistant application, which makes use of and reacts to these signals. In order to start our orchestra, the tools we use are: Eclipse Chariott, Ibeji, Agemo, Freyja, and an Eclipse Mosquitto MQTT broker.
 
@@ -80,15 +80,6 @@ Every action and state change through transition is uploaded to the cloud throug
 All our services are registered by Chariott.
 
 ##### The Wheelchair Assistant Applications
-
-This application takes care of the software implementation corresponding to the person arriving at the car, getting in ,driving, getting out and leaving the car.
- - When a person approaches the car, the car lowers itself, opens the front and the back doors. The seat and the steering wheel get adjusted in order for the person to get in.
- - A mechanical setting (ramp or a crane) can be used for getting the wheelchair inside the car.
- - Once the person gets in, the seat and the steering gets adjusted back for driving, while closing the backdoor.
- - On reaching destination, the car is lowered. As the backdoor opens,the wheelchair is retrieved.
- - The seats and steering get adjusted for the person to get out of the car. Once they"re out, everything gets readjusted to normal position.
-
-##### Run the use case
 
 
 #### Hack Challenge - Extend the use case
